@@ -182,6 +182,17 @@ ol.tempo b { font: 400 26px/1.1 var(--f-display); color: var(--mar); font-varian
 .esc { display: grid; gap: 10px; align-content: start; min-width: 0; }
 .esc .sem-img { display: grid; place-items: center; aspect-ratio: 4 / 3; background: var(--papel); border: 1px solid var(--fio); font: 400 13px/1.5 var(--f-etiqueta); color: var(--sombra); text-align: center; padding: 16px; }
 .esc p { margin: 0; font-size: 15px; }
+.sub-esc { font-size: 22px; margin: 8px 0 -16px; }
+.bloco-intro { margin: 0; max-width: 60ch; }
+.especial { display: grid; gap: 20px; padding: 24px; background: var(--papel); border: 1px solid var(--fio); scroll-margin-top: 64px; }
+.especial-topo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 28px; align-items: start; }
+.especial-txt h3 { font-size: clamp(26px, 3.5vw, 36px); margin: 4px 0 12px; line-height: 1.1; }
+.especial-txt p { margin: 0 0 12px; }
+.especial dl { margin: 0; display: grid; gap: 10px; }
+.especial dt { font-weight: 600; }
+.especial dd { margin: 0 0 6px; font-size: 15px; }
+.especial-gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .especial { padding: 16px; } .especial-topo { grid-template-columns: 1fr; } }
 section.sala, .artista, .bloco { scroll-margin-top: 64px; }
 
 /* v4: subabas do Ceará, movimentos, períodos e catálogo */
@@ -251,6 +262,7 @@ a.ficha { text-decoration: none; display: inline-block; }
     <p class="rotulo">Arte cearense · 1890–2024</p>
     <h2>Grandes artistas cearenses</h2>
     <p>Dezesseis artistas, de Raimundo Cela a Efrain Almeida, em salas pela ordem de nascimento. Cada sala tem a trajetória, as obras principais explicadas, o estilo e os lugares onde a obra pode ser vista. O ponto de partida é o acervo da Pinacoteca do Ceará, aberta em 2022 na Estação das Artes, em Fortaleza.</p>
+    <p>Veja também o <a href="#teatro-jose-de-alencar">especial sobre o Theatro José de Alencar</a> e os <a href="#esculturas">monumentos de Fortaleza</a>, na aba Esculturas.</p>
   </section>
   <section class="filtros" aria-label="Filtrar por estilo">
     <p class="rotulo">Filtrar por estilo artístico</p>
@@ -364,9 +376,9 @@ a.ficha { text-decoration: none; display: inline-block; }
 <!-- ABA: Esculturas -->
 <div class="aba" id="aba-esculturas" hidden>
   <section class="aba-intro">
-    <p class="rotulo">Escultura · Brasília, Ceará, Rio, São Paulo e além</p>
+    <p class="rotulo">Escultura · Fortaleza, Ceará, Brasília, Rio, São Paulo, Bahia e Minas</p>
     <h2>Esculturas</h2>
-    <p>As principais esculturas de Brasília, do Ceará, do Rio de Janeiro e de São Paulo, com autor, material, data e o lugar onde estão, além de peças importantes de outros lugares e coleções. Quando a fonte não informa o autor ou a data, isso aparece escrito no cartão.</p>
+    <p>Um especial sobre Fortaleza, com o Theatro José de Alencar, e as principais esculturas do Ceará, de Brasília, do Rio de Janeiro, de São Paulo, da Bahia e de Minas Gerais (com destaque para Ouro Preto), com autor, material, data e o lugar onde estão, além de peças importantes de outros lugares e coleções. Quando a fonte não informa o autor ou a data, isso aparece escrito no cartão.</p>
   </section>
   <section class="filtros" aria-label="Filtrar esculturas">
     <p class="rotulo">Lugar</p>
@@ -876,7 +888,19 @@ Object.assign(F, {
   tomieSP: ["Prefeitura de SP — Oitenta Anos da Imigração Japonesa", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/4525"],
   cicDN: ["Diário do Nordeste — Estátua do Padre Cícero completa 50 anos", "https://diariodonordeste.verdesmares.com.br/regiao/emblematica-e-imponente-estatua-do-pe-cicero-completa-50-anos-1.2168918"],
   santosDN: ["Diário do Nordeste — Santos gigantes do Ceará", "https://diariodonordeste.verdesmares.com.br/ceara/ceara-tem-pelo-menos-oito-santos-gigantes-de-ate-54-metros-de-altura-conheca-1.3708632"],
-  iracDN: ["Diário do Nordeste — Fortaleza é composta por Iracemas", "https://diariodonordeste.verdesmares.com.br/metro/fortaleza-e-composta-por-iracemas-1.1541220"]
+  iracDN: ["Diário do Nordeste — Fortaleza é composta por Iracemas", "https://diariodonordeste.verdesmares.com.br/metro/fortaleza-e-composta-por-iracemas-1.1541220"],
+  messDN: ["Diário do Nordeste — Estátua de Iracema da Lagoa de Messejana", "https://diariodonordeste.verdesmares.com.br/ceara/estatua-de-iracema-volta-a-jorrar-agua-na-lagoa-da-messejana-apos-mais-de-5-anos-sem-fonte-funcionar-1.3490845"],
+  tumDN: ["Diário do Nordeste — Monumentos com restos mortais em Fortaleza", "https://diariodonordeste.verdesmares.com.br/ceara/tumulo-fora-de-cemiterio-conheca-monumentos-em-fortaleza-com-restos-mortais-em-areas-publicas-1.3438192"],
+  leoesDN: ["Diário do Nordeste — Estátuas da Praça dos Leões", "https://diariodonordeste.verdesmares.com.br/ceara/estatuas-e-monumentos-da-praca-dos-leoes-serao-restaurados-prefeitura-escolhe-empresa-para-servico-1.3436840"],
+  ferreiraDN: ["Diário do Nordeste — Praça do Ferreira", "https://diariodonordeste.verdesmares.com.br/ceara/praca-do-ferreira-relembre-historias-simbolos-e-reformas-de-quase-200-anos-em-fortaleza-1.3689018"],
+  monarqDN: ["Diário do Nordeste — Símbolos da Monarquia em Fortaleza", "https://diariodonordeste.verdesmares.com.br/metro/simbolos-da-monarquia-resistem-em-fortaleza-1.1851285"],
+  santosFDN: ["Diário do Nordeste — Santos gigantes de Fortaleza", "https://diariodonordeste.verdesmares.com.br/ceara/santos-gigantes-formam-roteiro-da-fe-catolica-em-fortaleza-conheca-obras-1.3785638"],
+  tjaOP: ["O Povo — Theatro José de Alencar, 116 anos", "https://www.opovo.com.br/vidaearte/2026/06/17/theatro-jose-de-alencar-completa-116-anos-veja-historia-e-fotos.html"],
+  tjaDN: ["Diário do Nordeste — Dez curiosidades sobre o Theatro José de Alencar", "https://diariodonordeste.verdesmares.com.br/verso/veja-dez-curiosidades-sobre-o-theatro-jose-de-alencar-1.2956238"],
+  caboCO: ["Correio — No topo do Monumento ao 2 de Julho", "https://www.correio24horas.com.br/salvador/aos-olhos-do-caboclo-chegamos-ao-topo-do-monumento-ao-2-de-julho-0619"],
+  cairuBN: ["Bahia Notícias — Praça Cairu volta a ter monumento de Mário Cravo Jr.", "https://www.bahianoticias.com.br/noticia/276351-praca-cairu-volta-a-ter-monumento-de-mario-cravo-jr-e-ganha-obra-de-tatti-moreno"],
+  ssaBN: ["Bahia Notícias — Monumentos de Salvador", "https://www.bahianoticias.com.br/bnhall/noticia/3323-arte-em-cada-esquina-confira-monumentos-que-fazem-parte-da-historia-de-salvador"],
+  tiraFP: ["Revista Pesquisa FAPESP — A representação de um herói", "https://revistapesquisa.fapesp.br/representacao-de-um-heroi/"]
 });
 const CG = "https://cdn.culturagenial.com/imagens/";
 const TM = "https://static.todamateria.com.br/upload/";
@@ -1203,19 +1227,19 @@ const BRASIL = [
 
 /* Esculturas */
 const ESCULTURAS = [
-  {cid:"Outros", reg:"Brasil", t:"Os Doze Profetas", art:"Aleijadinho", a:"1800–1805", mat:"Pedra-sabão", loc:"Santuário do Bom Jesus de Matosinhos, Congonhas (MG)", exp:"O auge da escultura barroca brasileira: figuras teatrais que dialogam entre si no adro.", img:TM+"al/ei/aleijadinhoprofetasdosantuariodobomjesusdematosinhos-cke.jpg", f:"identTM"},
+  {cid:"Minas Gerais", reg:"Brasil", t:"Os Doze Profetas", art:"Aleijadinho", a:"1800–1805", mat:"Pedra-sabão", loc:"Santuário do Bom Jesus de Matosinhos, Congonhas (MG)", exp:"O auge da escultura barroca brasileira: figuras teatrais que dialogam entre si no adro.", img:TM+"al/ei/aleijadinhoprofetasdosantuariodobomjesusdematosinhos-cke.jpg", f:"identTM"},
   {cid:"São Paulo", reg:"Brasil", t:"Monumento às Bandeiras", art:"Victor Brecheret", a:"Encomendado em 1921, inaugurado em 1953", mat:"Granito", loc:"Parque Ibirapuera, São Paulo", exp:"Bandeirantes, indígenas e negros puxando uma canoa, em blocos geométricos. Glorifica os bandeirantes, hoje questionados pela violência contra indígenas, e virou alvo de protestos.", img:"https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/monumentos-as-bandeiras-victor-brecheret-008-12-foto-cecilia-bastos-48-copia.jpeg.webp?w=760&h=504", f:"bandSP"},
   {cid:"São Paulo", reg:"Brasil", t:"Eva", art:"Victor Brecheret", a:"1919–1920", mat:"Escultura", loc:"Centro Cultural São Paulo", exp:"Nu alongado da fase anterior à Semana de 1922, que fez de Brecheret o escultor do grupo modernista.", f:"brechEB"},
   {cid:"Brasília", reg:"Brasil", t:"Os Candangos (Os Guerreiros)", art:"Bruno Giorgi", a:"1959", mat:"Bronze", loc:"Praça dos Três Poderes, Brasília", exp:"Duas figuras longilíneas de lança em homenagem aos trabalhadores que construíram Brasília.", img:"https://stephendanko.com/blog/wp-content/uploads/2010/11/Dois-Candangos-1024x682.jpg", f:"danko"},
   {cid:"Brasília", reg:"Brasil", t:"Meteoro", art:"Bruno Giorgi", a:"1967–1968", mat:"Mármore", loc:"Espelho d'água do Palácio do Itamaraty, Brasília", exp:"Formas curvas que parecem flutuar sobre a água, em diálogo com a arquitetura de Niemeyer.", img:"https://stephendanko.com/blog/wp-content/uploads/2010/11/Meteor-Sculpture-1024x682.jpg", f:"danko"},
   {cid:"Brasília", reg:"Brasil", t:"Os Evangelistas", art:"Alfredo Ceschiatti", a:"1968", mat:"Bronze", loc:"Entrada da Catedral de Brasília", exp:"Quatro figuras de 3 m que recebem quem entra na catedral de Niemeyer.", img:"https://manchesterhistory.net/architecture/1960/brasilcathedral3.jpg", f:"catMH"},
   {cid:"Outros", reg:"Brasil", t:"Bichos", art:"Lygia Clark", a:"1960", mat:"Alumínio com dobradiças", loc:"MAM Rio, MoMA e outras coleções", exp:"Escultura sem forma fixa, que o público monta e desmonta."},
-  {cid:"Outros", reg:"Brasil", t:"Esculturas de corte e dobra", art:"Amilcar de Castro", a:"A partir dos anos 1950", mat:"Chapa de aço", loc:"Espaços públicos de Belo Horizonte e museus", exp:"Uma única chapa cortada e dobrada vira volume, sem solda; o vazio faz parte da peça."},
+  {cid:"Minas Gerais", reg:"Brasil", t:"Esculturas de corte e dobra", art:"Amilcar de Castro", a:"A partir dos anos 1950", mat:"Chapa de aço", loc:"Espaços públicos de Belo Horizonte e museus", exp:"Uma única chapa cortada e dobrada vira volume, sem solda; o vazio faz parte da peça."},
   {cid:"Outros", reg:"Brasil", t:"Cubo vazado", art:"Franz Weissmann", a:"1951", mat:"Metal", loc:"Coleções diversas", exp:"O cubo aberto, que deixa o espaço atravessar a escultura, é marca do construtivismo brasileiro."},
   {cid:"Outros", reg:"Brasil", t:"Relevos e cilindros", art:"Sergio Camargo", a:"Anos 1960–1980", mat:"Madeira pintada de branco e mármore de Carrara", loc:"Coleções diversas", exp:"Pequenos cilindros cortados em ângulo que fazem a luz e a sombra vibrarem na superfície."},
   {cid:"Outros", reg:"Brasil", t:"Esculturas de madeira calcinada", art:"Frans Krajcberg", a:"A partir de 1972", mat:"Troncos e raízes queimados", loc:"Espaço Krajcberg, Jardim Botânico de Curitiba; Sítio Natura, Nova Viçosa (BA)", exp:"O artista recolhia restos de queimadas da Amazônia e da Mata Atlântica e os pintava com pigmentos naturais: escultura como denúncia ecológica.", f:"krajEB"},
   {cid:"Outros", reg:"Brasil", t:"Bonecos de barro", art:"Mestre Vitalino", a:"Anos 1940–1960", mat:"Cerâmica", loc:"Casa-Museu Mestre Vitalino, Caruaru (PE)", exp:"A escultura popular do sertão em pequena escala."},
-  {cid:"Outros", reg:"Brasil", t:"True Rouge", art:"Tunga", a:"1997", mat:"Vidro, redes, líquido vermelho", loc:"Inhotim, Brumadinho (MG)", exp:"Escultura-instalação suspensa que lembra um organismo."},
+  {cid:"Minas Gerais", reg:"Brasil", t:"True Rouge", art:"Tunga", a:"1997", mat:"Vidro, redes, líquido vermelho", loc:"Inhotim, Brumadinho (MG)", exp:"Escultura-instalação suspensa que lembra um organismo."},
   {cid:"Brasília", reg:"Brasil", t:"A Justiça", art:"Alfredo Ceschiatti", a:"1961", mat:"Granito", loc:"Em frente ao Supremo Tribunal Federal, Praça dos Três Poderes, Brasília", exp:"Mulher sentada, de olhos vendados e com a espada no colo: a imagem mais conhecida do Judiciário brasileiro.", img:SD+"Justice-682x1024.jpg", f:"danko"},
   {cid:"Brasília", reg:"Brasil", t:"Os Anjos", art:"Alfredo Ceschiatti", a:"1970", mat:"Alumínio suspenso por cabos de aço", loc:"Nave da Catedral de Brasília", exp:"Três anjos que parecem voar sob os vitrais da catedral de Niemeyer.", img:MH+"brasilcathedral6.jpg", f:"catMH"},
   {cid:"Brasília", reg:"Brasil", t:"As Iaras", art:"Alfredo Ceschiatti", a:"Data não informada pela fonte", mat:"Bronze", loc:"Espelho d'água do Palácio da Alvorada, Brasília", exp:"Figuras femininas das águas que acompanham a fachada do palácio presidencial.", f:"ceschWP"},
@@ -1232,11 +1256,34 @@ const ESCULTURAS = [
   {cid:"São Paulo", reg:"Brasil", t:"Oitenta Anos da Imigração Japonesa", art:"Tomie Ohtake", a:"1988", mat:"Concreto", loc:"Avenida 23 de Maio, São Paulo", exp:"Quatro grandes ondas abstratas que celebram a chegada dos imigrantes japoneses em 1908.", f:"tomieSP"},
   {cid:"Ceará", reg:"Ceará", t:"Estátua do Padre Cícero", art:"Armando Lacerda", a:"1969", mat:"Concreto", loc:"Colina do Horto, Juazeiro do Norte", exp:"Com 27 m, é destino de milhões de romeiros e símbolo da fé popular do Cariri.", img:DN+"policy:1.3708653:1762880820/padre%20c%C3%ADcero%20juazeiro%20do%20norte.webp?q=0.8&$p$q=f7b516c", f:"cicDN"},
   {cid:"Ceará", reg:"Ceará", t:"São Francisco das Chagas", art:"Autoria não informada pela fonte", a:"2005", mat:"Escultura monumental", loc:"Canindé", exp:"Com 30 m, recebe os romeiros de um dos maiores centros franciscanos do mundo.", img:DN+"policy:1.3708641:1762880553/s%C3%A3o%20francisco%20de%20canind%C3%A9%20hln.webp?q=0.8&$p$q=9d26d41", f:"santosDN"},
-  {cid:"Ceará", reg:"Ceará", t:"Iracema do Mucuripe", art:"José Corbiniano Lins", a:"Data não informada pela fonte", mat:"Escultura pública", loc:"Praia do Mucuripe, Fortaleza", exp:"A personagem de José de Alencar olhando o mar, uma das várias Iracemas espalhadas por Fortaleza.", f:"iracDN"},
-  {cid:"Ceará", reg:"Ceará", t:"Monumento a José de Alencar", art:"Autoria não informada pela fonte", a:"1929", mat:"Granito", loc:"Praça José de Alencar, Fortaleza", exp:"Inaugurado no centenário do escritor, com a estátua de Alencar de quase 7 m, no centro da cidade.", f:"iracDN"},
-  {cid:"Ceará", reg:"Ceará", t:"Iracema Guardiã", art:"Zenon Barreto", a:"1995–1996", mat:"Fibra de vidro", loc:"Praia de Iracema, Fortaleza", exp:"Homenagem a José de Alencar que virou símbolo da orla; tombou em 2022.", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/iracema_guardia_zenon_barreto3_gigapixel_standard_scale_2_00x-17892412.jpg", f:"zenOP"},
-  {cid:"Ceará", reg:"Ceará", t:"Rendeira, Cafuné, Mulher ao Pilão, Mulher com Pote", art:"Zenon Barreto", a:"1971", mat:"Ferrocimento", loc:"Residência Oficial do Governador, Fortaleza", exp:"Figuras de mulheres trabalhadoras do Nordeste.", f:"zenBNB"},
-  {cid:"Ceará", reg:"Ceará", t:"La Femme Bateau", art:"Sérvulo Esmeraldo", a:"1994", mat:"Escultura pública", loc:"Ponte dos Ingleses, Fortaleza", exp:"Mulher e barco numa só forma; levada pelo mar, reconstruída e depois vandalizada.", img:DN+"policy:7.5328867:1772819261/07.La%20Femme%20Bateau%20-%20Cr%C3%A9dito%20Thiago%20Gadelha%20(4).webp?q=0.8&$p$q=68e3b54", f:"servDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Iracema do Mucuripe", art:"José Corbiniano Lins", a:"Data não informada pela fonte", mat:"Escultura pública", loc:"Praia do Mucuripe, Fortaleza", exp:"A personagem de José de Alencar olhando o mar, uma das várias Iracemas espalhadas por Fortaleza.", f:"iracDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Monumento a José de Alencar", art:"Autoria não informada pela fonte", a:"1929", mat:"Granito", loc:"Praça José de Alencar, Fortaleza", exp:"Inaugurado no centenário do escritor, com a estátua de Alencar de quase 7 m, no centro da cidade.", f:"iracDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Iracema da Lagoa de Messejana", art:"Autoria não informada pela fonte", a:"2004", mat:"Fibra de vidro sobre estrutura de aço, 12 m e 16 toneladas", loc:"Lagoa de Messejana, Fortaleza", exp:"Feita para os 175 anos de nascimento de José de Alencar, mostra Iracema no banho, de pé sobre a lagoa onde se passa o romance.", img:DN+"policy:1.3491166:1710868052/image.webp?f=16x9&$p$f=e6fd59f", f:"messDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Monumento ao General Tibúrcio", art:"Autoria não informada pela fonte", a:"1888", mat:"Ferro, sobre pedestal de cerca de 2,5 m", loc:"Praça dos Leões (Praça General Tibúrcio), Centro, Fortaleza", exp:"A primeira estátua de Fortaleza, em homenagem ao general cearense herói da Guerra do Paraguai. Desde 1952 guarda os seus restos mortais.", img:DN+"policy:7.4900801:1698921365/t%C3%BAmulo%203.webp?q=0.8&$p$q=b539a7c", f:"tumDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Estátua de Rachel de Queiroz", art:"Autoria não informada pela fonte", a:"Data não informada pela fonte", mat:"Escultura em tamanho natural, sentada num banco", loc:"Praça dos Leões, Centro, Fortaleza", exp:"A autora de O Quinze sentada num banco da praça, convidando quem passa a sentar ao lado. Fica junto aos leões que dão nome popular à praça.", img:DN+"policy:1.3436842:1698682427/image.webp?f=16x9&%24p%24f=e6fd59f", f:"leoesDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Coluna da Hora", art:"Fausto Nilo e Delberg Ponce de Leon (versão de 1991)", a:"1933; reconstruída em 1991", mat:"Coluna de 13 m com relógio de quatro faces", loc:"Praça do Ferreira, Centro, Fortaleza", exp:"O relógio original de 1933 foi derrubado em 1969. A coluna atual, de 1991, é o símbolo da praça que é o coração do Centro.", f:"ferreiraDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Estátua de D. Pedro II", art:"Autoria não informada pela fonte", a:"1912", mat:"Não informado", loc:"Praça Pedro II (Praça da Sé), Centro, Fortaleza", exp:"Um dos poucos símbolos da Monarquia que restam na cidade, ao lado da Catedral.", f:"monarqDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Monumento a Gustavo Barroso", art:"Autoria não informada pela fonte", a:"1962", mat:"Não informado", loc:"Praça do Liceu (Praça Gustavo Barroso), Jacarecanga, Fortaleza", exp:"Homenagem ao escritor e fundador do Museu Histórico Nacional, nascido em Fortaleza. Seus restos mortais estão no monumento desde 1965.", img:DN+"policy:7.4900799:1698921064/tumulo%202.webp?q=0.8&$p$q=b8d46c1", f:"tumDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Monumento ao General Sampaio", art:"Autoria não informada pela fonte", a:"Data não informada pela fonte", mat:"Não informado", loc:"Em frente ao Forte de Nossa Senhora da Assunção, Centro, Fortaleza", exp:"Homenagem ao cearense patrono da Infantaria do Exército, cujos restos mortais foram levados para lá em 1996.", img:DN+"policy:7.4900800:1698921183/tumulo%201.webp?q=0.8&$p$q=d39b1ca", f:"tumDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Nossa Senhora da Assunção", art:"Franciné Diniz", a:"2007", mat:"Estátua monumental de 15 m", loc:"Avenida Dom Aloísio Lorscheider, Vila Velha, Fortaleza", exp:"A maior das santas gigantes da cidade, dedicada à padroeira de Fortaleza. Franciné Diniz foi o maior construtor de monumentos religiosos da capital.", img:DN+"policy:7.5378744:1787244452/WhatsApp%20Image%202026-08-19%20at%2017.02.04%20%2821%29.webp?q=0.8&%24p%24q=bc06ef4", f:"santosFDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Nossa Senhora de Fátima", art:"Franciné Diniz", a:"Data não informada pela fonte", mat:"Estátua monumental de 14 m", loc:"Praça em frente ao Santuário de Fátima, Avenida 13 de Maio, Fortaleza", exp:"Marco da avenida 13 de Maio e ponto de chegada das procissões de Fátima.", img:DN+"policy:7.5378748:1787244614/DANIEL%20ROMAN%203.webp?q=0.8&%24p%24q=a1c190a", f:"santosFDN"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Santa Edwiges", art:"Franciné Diniz", a:"2008", mat:"Estátua monumental de 11 m", loc:"Avenida Presidente Castelo Branco (Leste-Oeste), Moura Brasil, Fortaleza", exp:"Marca a paisagem da Leste-Oeste, perto do Centro.", img:DN+"policy:7.5378752:1787246310/Imagem%20Santa%20Edwirges%203%20-%20Cr%C3%A9dito%20Fabiane%20de%20Paula.webp?q=0.8&%24p%24q=bc40cd9", f:"santosFDN"},
+  {cid:"Bahia", reg:"Brasil", t:"Monumento ao Dois de Julho (O Caboclo)", art:"Carlo Nicoli (autoria atribuída)", a:"1895", mat:"Bronze, mármore de Carrara, ferro fundido e granito", loc:"Largo do Campo Grande, Salvador", exp:"No alto da coluna, o Caboclo mata uma serpente que representa o domínio português: celebra a vitória baiana na guerra de Independência, em 2 de julho de 1823.", img:"https://midias.correio24horas.com.br/2023/03/19/-1390709.jpg", f:"caboCO"},
+  {cid:"Bahia", reg:"Brasil", t:"Monumento à Cidade de Salvador (Fonte da Rampa do Mercado)", art:"Mário Cravo Júnior", a:"1970; reconstruído em 2023", mat:"Fibra e estrutura de aço, 22 m", loc:"Praça Cairu, ao lado do Mercado Modelo, Salvador", exp:"Grande escultura-fonte abstrata da Cidade Baixa. Foi destruída por um incêndio em 2019 e refeita com resina antichamas.", img:"https://www.bahianoticias.com.br/fotos/principal_noticias/276351/mg/WhatsApp%20Image%202023-01-11%20at%2018.54.36..jpg", f:"cairuBN"},
+  {cid:"Bahia", reg:"Brasil", t:"Sereia de Itapuã", art:"Mário Cravo Júnior", a:"1958", mat:"Aço carbono sobre bloco de granito", loc:"Avenida Octávio Mangabeira, orla de Itapuã, Salvador", exp:"A sereia virou símbolo de Itapuã, o bairro cantado por Vinicius e Caymmi.", img:"https://www.bahianoticias.com.br/fotos/hall_noticias/3323/mg/WhatsApp%20Image%202023-03-29%20at%2018.52.56..jpg", f:"ssaBN"},
+  {cid:"Bahia", reg:"Brasil", t:"Cruz Caída", art:"Mário Cravo Júnior", a:"1999", mat:"Escultura pública", loc:"Praça da Sé, Centro Histórico de Salvador", exp:"Lembra a antiga Sé de Salvador, demolida nos anos 1930, com uma cruz tombada diante da Baía de Todos os Santos.", img:"https://www.bahianoticias.com.br/fotos/hall_noticias/3323/mg/WhatsApp%20Image%202023-03-29%20at%2018.52.56%20%281%29..jpg", f:"ssaBN"},
+  {cid:"Bahia", reg:"Brasil", t:"Orixás do Dique do Tororó", art:"Tatti Moreno", a:"1996", mat:"Esculturas monumentais sobre a água", loc:"Dique do Tororó, Salvador", exp:"Oito orixás gigantes sobre o espelho d'água: a presença do candomblé na paisagem da cidade.", img:"https://www.bahianoticias.com.br/fotos/hall_noticias/3323/mg/WhatsApp%20Image%202023-03-29%20at%2018.52.55%20%282%29..jpg", f:"ssaBN"},
+  {cid:"Bahia", reg:"Brasil", t:"Jorge Amado e Zélia Gattai", art:"Tatti Moreno", a:"2012", mat:"Escultura em tamanho natural", loc:"Rio Vermelho, Salvador", exp:"O casal de escritores sentado num banco do bairro onde viveu.", img:"https://www.bahianoticias.com.br/fotos/hall_noticias/3323/mg/jorge%20e%20zelia.jpg", f:"ssaBN"},
+  {cid:"Bahia", reg:"Brasil", t:"As Meninas do Brasil (Gordinhas de Ondina)", art:"Eliana Kertész", a:"Data de inauguração não confirmada", mat:"Bronze", loc:"Orla de Ondina, Salvador", exp:"Três mulheres volumosas e alegres que viraram cartão-postal da orla.", img:"https://www.bahianoticias.com.br/fotos/hall_noticias/3323/mg/WhatsApp%20Image%202023-03-29%20at%2018.54.17..jpg", f:"ssaBN"},
+  {cid:"Bahia", reg:"Brasil", t:"Monumento a Clériston Andrade", art:"Mário Cravo Júnior", a:"1983", mat:"Alumínio, fibra de vidro, chapas de cobre, mármore e concreto", loc:"Avenida Anita Garibaldi, Salvador", exp:"Escultura abstrata monumental do principal escultor moderno da Bahia.", img:"https://www.bahianoticias.com.br/fotos/hall_noticias/3323/mg/WhatsApp%20Image%202023-03-29%20at%2018.52.55%20%281%29..jpg", f:"ssaBN"},
+  {cid:"Minas Gerais", sub:"Ouro Preto", reg:"Brasil", t:"Portada, lavabo e púlpitos da Igreja de São Francisco de Assis", art:"Aleijadinho", a:"Projeto a partir de 1766; púlpitos de 1771", mat:"Pedra-sabão", loc:"Igreja de São Francisco de Assis, Ouro Preto", exp:"A obra-prima de Aleijadinho como arquiteto e escultor: a portada com o medalhão de São Francisco, o lavabo da sacristia e os púlpitos em pedra-sabão. O forro foi pintado por Mestre Ataíde.", img:CG+"igreja-sao-francisco-de-assis.jpg?class=article", f:"cgAleijadinho"},
+  {cid:"Minas Gerais", sub:"Ouro Preto", reg:"Brasil", t:"São Pedro Nolasco e São Raimundo Nonato", art:"Aleijadinho", a:"Contratadas em 1775", mat:"Pedra-sabão", loc:"Igreja de Nossa Senhora das Mercês e Perdões, Ouro Preto", exp:"Duas imagens de santos da Ordem das Mercês, típicas da fase madura do escultor.", img:CG+"1078px-igreja-n-s-merces-perdoes-ouro-preto-mg-cke.jpg?class=article", f:"cgAleijadinho"},
+  {cid:"Minas Gerais", sub:"Ouro Preto", reg:"Brasil", t:"Chafariz do Alto da Cruz", art:"Aleijadinho (busto feminino)", a:"Busto de 1761", mat:"Pedra-sabão", loc:"Largo do Alto da Cruz, Ouro Preto", exp:"Um dos primeiros trabalhos do jovem Aleijadinho: o busto de mulher que coroa o chafariz público.", img:CG+"obra-de-aleijadinho-chafariz.jpg?class=article", f:"cgAleijadinho"},
+  {cid:"Minas Gerais", sub:"Ouro Preto", reg:"Brasil", t:"Monumento a Tiradentes", art:"Virgílio Cestari", a:"1894", mat:"Bronze", loc:"Praça Tiradentes, Ouro Preto", exp:"Escolhido em concurso do governo mineiro, o Tiradentes no alto da coluna se baseou num desenho de Angelo Agostini de 1890. Domina a praça principal da cidade.", f:"tiraFP"},
+  {cid:"Minas Gerais", reg:"Brasil", t:"Passos da Paixão", art:"Aleijadinho e oficina", a:"Encomendados em 1796", mat:"Madeira policromada", loc:"Capelas dos Passos, Santuário do Bom Jesus de Matosinhos, Congonhas", exp:"Sessenta e seis figuras em tamanho natural contam a Paixão de Cristo em seis capelas na subida do santuário.", img:CG+"aleijadinho-crucificac-a-o-de-jesus-santua-rio-do-bom-jesus-de-matosinhos-congonhas-cke.jpg?class=article", f:"cgAleijadinho"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Iracema Guardiã", art:"Zenon Barreto", a:"1995–1996", mat:"Fibra de vidro", loc:"Praia de Iracema, Fortaleza", exp:"Homenagem a José de Alencar que virou símbolo da orla; tombou em 2022.", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/iracema_guardia_zenon_barreto3_gigapixel_standard_scale_2_00x-17892412.jpg", f:"zenOP"},
+  {cid:"Fortaleza", reg:"Ceará", t:"Rendeira, Cafuné, Mulher ao Pilão, Mulher com Pote", art:"Zenon Barreto", a:"1971", mat:"Ferrocimento", loc:"Residência Oficial do Governador, Fortaleza", exp:"Figuras de mulheres trabalhadoras do Nordeste.", f:"zenBNB"},
+  {cid:"Fortaleza", reg:"Ceará", t:"La Femme Bateau", art:"Sérvulo Esmeraldo", a:"1994", mat:"Escultura pública", loc:"Ponte dos Ingleses, Fortaleza", exp:"Mulher e barco numa só forma; levada pelo mar, reconstruída e depois vandalizada.", img:DN+"policy:7.5328867:1772819261/07.La%20Femme%20Bateau%20-%20Cr%C3%A9dito%20Thiago%20Gadelha%20(4).webp?q=0.8&$p$q=68e3b54", f:"servDN"},
   {cid:"Ceará", reg:"Ceará", t:"Excitáveis", art:"Sérvulo Esmeraldo", a:"Desde 1964", mat:"Acrílico e elementos leves com eletricidade estática", loc:"Instituto Sérvulo Esmeraldo e coleções", exp:"Escultura cinética que se move quando o espectador se aproxima.", f:"servOP"},
   {cid:"Ceará", reg:"Ceará", t:"Pirâmides", art:"Sérvulo Esmeraldo", a:"2008", mat:"Metal", loc:"Encosta do Seminário, Crato", exp:"Doação do artista à cidade natal.", img:"https://mais.opovo.com.br/_midias/jpg/2021/09/08/gb_servulo_expo_cariri_2016_09img_2932-17002804.jpg", f:"servOP2"},
   {cid:"Ceará", reg:"Ceará", t:"Uma coisa linda", art:"Efrain Almeida", a:"2014", mat:"Bronze e óleo, 50 peças", loc:"Exposta na Pinacoteca do Ceará", exp:"Um bando de galos-de-campina pousado no chão do museu.", img:DN+"policy:7.4743119:1672063347/WhatsApp%20Image%202022-12-23%20at%2010.46.36%20(20).webp?q=0.8&$p$q=3179480", f:"dezDN"},
@@ -1246,6 +1293,25 @@ const ESCULTURAS = [
   {cid:"Ceará", reg:"Ceará", t:"Esculturas de santos e Padre Cícero", art:"Mestre Noza", a:"A partir de 1930", mat:"Madeira", loc:"Juazeiro do Norte", exp:"O santeiro que também abriu o caminho da xilogravura do Cariri.", f:"nozaP"},
   {cid:"Ceará", reg:"Ceará", t:"Esculturas híbridas", art:"Júlio Jardim", a:"Anos 2020", mat:"Não informado", loc:"Cave Galeria", exp:"Formas entre animal e planta.", f:"rotas"}
 ];
+
+/* Especial: Theatro José de Alencar */
+const TEATRO = {
+  t: "Theatro José de Alencar", a: "1910", art: "Fortaleza",
+  img: "https://www.opovo.com.br/_midias/jpg/2025/06/13/theatro_jose_de_alencar_115_anos_34-35140524.jpg", f: "tjaOP",
+  intro: "O palco mais importante do Ceará e um dos teatros mais singulares do país, inaugurado em 17 de junho de 1910 na Praça José de Alencar, no Centro de Fortaleza.",
+  fatos: [
+    ["Estrutura de ferro escocesa", "A sala de espetáculos é uma estrutura metálica importada de Glasgow, na Escócia, fundida pela Walter MacFarlane & Co. As peças chegaram a Fortaleza em 1908 e foram expostas numa praça antes da montagem. É a única estrutura desse tipo preservada e aparente num teatro brasileiro."],
+    ["Fachada e interior", "O prédio da frente é neoclássico. Por dentro há vitrais coloridos, piso de mosaico e 19 camarotes batizados com títulos de livros de José de Alencar, como Iracema, Senhora e O Guarani. A sala principal tem 752 lugares."],
+    ["As pinturas do teto", "As pinturas do forro são atribuídas a Ramos Cotoco. Na restauração de 1989 a 1991, raspando as camadas de tinta do painel Céu aberto, os restauradores acharam o rosto de um homem negro escondido, cujo significado ainda é discutido."],
+    ["O jardim de Burle Marx", "O jardim projetado por Roberto Burle Marx ficou pronto em 1975, com mais de 50 espécies dos cinco continentes. É apresentado como o único teatro do Brasil com jardim."],
+    ["Primeira peça e tombamento", "A primeira apresentação foi O Dote, de Artur Azevedo, em 23 de setembro de 1910. O teatro é tombado pelo Iphan desde 1964 e tem como anexo o Centro de Artes Cênicas (CENA), aberto em 1991."]
+  ],
+  galeria: [
+    { t: "Vista aérea do Theatro José de Alencar", img: "https://www.opovo.com.br/_midias/jpg/2025/06/13/theatro_jose_de_alencar_drone_115_anos_12-35138057.jpg", f: "tjaOP" },
+    { t: "Sala de espetáculos, com 752 lugares", img: DN + "policy:7.4452586:1592401871/tja%2020.webp?q=0.8&%24p%24q=6155e75", f: "tjaDN" },
+    { t: "Jardim de Burle Marx", img: DN + "policy:7.4452589:1592402074/tja%2040.webp?q=0.8&%24p%24q=0549414", f: "tjaDN" }
+  ]
+};
 
 /* Fora do Ceará: onde ver cearenses e brasileiros */
 const ONDE_BR = [
@@ -1404,6 +1470,7 @@ BRASIL.forEach(b => {
 Object.assign(F, {
   maspCastagneto: ["MASP — Acervo: Castagneto", "https://masp.org.br/acervo/busca?author=castagneto"],
   wikiCastagneto: ["Wikipedia — Giovanni Battista Castagneto", "https://en.wikipedia.org/wiki/Giovanni_Battista_Castagneto"],
+  castIC: ["Enciclopédia Itaú Cultural — Obras de Castagneto", "https://enciclopedia.itaucultural.org.br/pessoas/6098-castagneto/obras"],
   maspGomide: ["MASP — Acervo: Antonio Gomide", "https://masp.org.br/acervo/busca?author=gomide"],
   danGomide: ["Dan Galeria — Antônio Gomide", "https://www.dangaleria.com.br/en/artists/antonio-gomide"],
   maspGerchman: ["MASP — Acervo: Rubens Gerchman", "https://masp.org.br/acervo/busca?author=gerchman"],
@@ -1421,12 +1488,19 @@ Object.assign(F, {
 PERIODOS.splice(PERIODOS.findIndex(p => p[0] === "popular"), 0, ["novafig", "Nova Figuração e arte pop (anos 1960)"]);
 
 BRASIL.push(
-  {p:"academico", nome:"João Batista Castagneto", datas:"Gênova (Itália), 1851 — Rio de Janeiro, 1900", ling:["Pintura"], uf:"RJ",
-   bio:"Ex-marinheiro italiano, chegou ao Brasil em 1874 e frequentou como ouvinte a Academia Imperial de Belas Artes, com Victor Meirelles e Zeferino da Costa. Trabalhou com Georg Grimm entre 1882 e 1884 e foi um dos primeiros do \"Grupo Grimm\", que levou os pintores a pintar a paisagem ao ar livre. Tornou-se o grande pintor de marinhas do país; nos últimos anos pintava sobretudo na ilha de Paquetá.",
+  {p:"academico", nome:"Giovanni Battista Castagneto", datas:"Gênova (Itália), 1851 — Rio de Janeiro, 1900", ling:["Pintura"], uf:"RJ",
+   bio:"No Brasil, ficou conhecido como João Batista Castagneto. Ex-marinheiro italiano, chegou ao Brasil em 1874 e frequentou como ouvinte a Academia Imperial de Belas Artes, com Victor Meirelles e Zeferino da Costa. Trabalhou com Georg Grimm entre 1882 e 1884 e foi um dos primeiros do \"Grupo Grimm\", que levou os pintores a pintar a paisagem ao ar livre. Tornou-se o grande pintor de marinhas do país; nos últimos anos pintava sobretudo na ilha de Paquetá.",
    obras:[
      {t:"Uma salva em dia de grande gala na Baía do Rio de Janeiro", a:"1887", loc:"MASP, São Paulo", exp:"Navios embandeirados disparando salvas na baía de Guanabara, do ano seguinte à primeira exposição do pintor.", img:MA+"WEB_JM_MASP_00296_01.jpg", f:"maspCastagneto"},
      {t:"Marinha com barco", a:"1895", loc:"MASP, São Paulo", exp:"O tema que o consagrou: o barco, a água e o céu pintados com pinceladas rápidas, depois da temporada em Toulon (1890–1893).", img:MA+"WEB_JM_MASP_00297_01.jpg", f:"maspCastagneto"},
-     {t:"Paisagem com rio e barco ao seco em São Paulo (Ponte Grande)", a:"1895", loc:"MASP, São Paulo", exp:"Uma das raras paisagens paulistas do artista, às margens do rio Tietê.", img:MA+"WEB_JM_MASP_00536_01.jpg", f:"maspCastagneto"}
+     {t:"Paisagem com rio e barco ao seco em São Paulo (Ponte Grande)", a:"1895", loc:"MASP, São Paulo", exp:"Uma das raras paisagens paulistas do artista, às margens do rio Tietê.", img:MA+"WEB_JM_MASP_00536_01.jpg", f:"maspCastagneto"},
+     {t:"Embarcações fundeadas no Porto do Rio de Janeiro (Manhã de verão)", a:"1888", loc:"Coleção não informada pela fonte", exp:"Óleo sobre tela. Navios parados na baía sob a luz da manhã, pintados ao ar livre como ensinava Grimm.", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/kztx56ddqchvnphe49ok2cljedln", f:"castIC"},
+     {t:"Antigo Arsenal de Guerra do Império do Rio de Janeiro", a:"1889", loc:"Coleção não informada pela fonte", exp:"Óleo sobre tela. O porto militar do Rio no ano da Proclamação da República.", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/kcl6w2ojjfjn68x85sfwjy2z781j", f:"castIC"},
+     {t:"Barco de pesca ancorado em Toulon (França)", a:"1893", loc:"Coleção não informada pela fonte", exp:"Óleo sobre tela da temporada na França, quando sua pincelada ficou mais solta e rápida.", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/z761e4v3gkg7t3uin4sgxdz38zh2", f:"castIC"},
+     {t:"Casa e canoas a seco na Praia de Itaipu em Niterói", a:"1898", loc:"Coleção não informada pela fonte", exp:"Óleo sobre tela. Canoas de pescadores puxadas para a areia, tema que repetiu muitas vezes.", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/8xjeiqtsyjjcte13qsmlyptlmrpr", f:"castIC"},
+     {t:"Bote a seco na praia de Paquetá", a:"1898", loc:"Coleção não informada pela fonte", exp:"Óleo sobre madeira, em pequeno formato. Paquetá foi o refúgio dos seus últimos anos.", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/sqx0jdoe7m9byoe5rdqz73pko9u8", f:"castIC"},
+     {t:"Brigue, encouraçado e chalupas na Baía do Rio de Janeiro", a:"1899", loc:"Coleção não informada pela fonte", exp:"Óleo sobre madeira. Veleiros e um navio de guerra lado a lado, no fim do século.", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/4c6e2umzjdbsm0ar35nmjfi6b16n", f:"castIC"},
+     {t:"Cruzador Deodoro", a:"1900", loc:"Coleção não informada pela fonte", exp:"Óleo sobre madeira do ano de sua morte.", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/dplehsix9xemzhl3oozcn1g8w3j8", f:"castIC"}
    ], onde:["MASP (São Paulo)"]},
   {p:"moderno1", nome:"Antonio Gomide", datas:"Itapetininga, SP, 1895 — Ubatuba, SP, 1967", ling:["Pintura","Gravura e desenho"], uf:"SP",
    bio:"Estudou na Academia de Belas Artes de Genebra até 1918 e viveu na França nos anos 1920, onde absorveu o cubismo e o art déco. Não participou da Semana de 1922, mas ao voltar ao Brasil, em 1929, ajudou a fundar a Sociedade Pró-Arte Moderna e o Clube de Artistas Modernos (1932). Com a irmã, Regina Gomide Graz, e o cunhado, John Graz, foi um dos introdutores do art déco no país, em vitrais e projetos decorativos. A partir de 1940 voltou-se para temas brasileiros, como danças e rodas de samba.",
@@ -1669,12 +1743,26 @@ montarBR();
 
 /* ---------- Aba: Esculturas ---------- */
 const escs = document.getElementById("escs");
-const CIDADES = [["Brasília", "Brasília"], ["Ceará", "Ceará"], ["Rio de Janeiro", "Rio de Janeiro"], ["São Paulo", "São Paulo"], ["Outros", "Outros lugares e coleções"]];
+const CIDADES = [["Fortaleza", "Especial Fortaleza"], ["Ceará", "Ceará: interior e coleções"], ["Brasília", "Brasília"], ["Rio de Janeiro", "Rio de Janeiro"], ["São Paulo", "São Paulo"], ["Bahia", "Bahia"], ["Minas Gerais", "Minas Gerais"], ["Outros", "Outros lugares e coleções"]];
 CIDADES.forEach(([cid, nome]) => {
   const bl = el("section", "bloco"); bl.dataset.cid = cid;
-  const grade = el("div", "escs");
-  bl.append(el("h2", null, nome), grade);
-  ESCULTURAS.filter(e => e.cid === cid).forEach(e => {
+  bl.append(el("h2", null, nome));
+  if (cid === "Fortaleza") {
+    bl.append(el("p", "bloco-intro", "Os principais monumentos e esculturas públicas da capital, do Centro à orla, e um especial sobre o Theatro José de Alencar."));
+    bl.append(especialTeatro());
+  }
+  const lista = ESCULTURAS.filter(e => e.cid === cid);
+  const subs = [...new Set(lista.map(e => e.sub || ""))].sort((x, y) => (y ? 1 : 0) - (x ? 1 : 0));
+  subs.forEach(sub => {
+    const grade = el("div", "escs");
+    if (subs.length > 1) bl.append(el("h3", "sub-esc", sub ? "Em destaque: " + sub : "Outras cidades de " + nome));
+    bl.append(grade);
+    lista.filter(e => (e.sub || "") === sub).forEach(e => montarEsc(e, grade));
+  });
+  escs.append(bl);
+});
+function montarEsc(e, grade) {
+  {
     const card = el("div", "esc"); card.id = "esc-" + slug(e.t + "-" + e.art);
     if (e.img) {
       const o = { t: e.t, a: e.a, img: e.img, f: e.f, leg: e.art + " — " + [e.t, e.a, e.mat, e.loc].join(" · ") };
@@ -1688,10 +1776,26 @@ CIDADES.forEach(([cid, nome]) => {
     }
     card.append(el("p", null, e.exp));
     grade.append(card);
-  });
-  escs.append(bl);
-});
-fichas(document.getElementById("filtro-reg"), [["", "Todas"], ...CIDADES.map(([c, n]) => [c, c === "Outros" ? "Outros" : n])], v => {
+  }
+}
+function especialTeatro() {
+  const T = TEATRO;
+  const box = el("article", "especial"); box.id = "teatro-jose-de-alencar";
+  const topo = el("div", "especial-topo");
+  const o = { t: T.t, a: T.a, img: T.img, f: T.f, leg: "Theatro José de Alencar, Fortaleza · 1910" };
+  topo.append(figura(o, "Fortaleza", ["Inaugurado em 1910", "Praça José de Alencar, Centro"]));
+  const txt = el("div", "especial-txt");
+  txt.append(el("p", "rotulo", "Especial"), el("h3", null, T.t), el("p", null, T.intro));
+  const dl = el("dl");
+  T.fatos.forEach(([k, v]) => dl.append(el("dt", null, k), el("dd", null, v)));
+  txt.append(dl);
+  topo.append(txt);
+  const gal = el("div", "especial-gal");
+  T.galeria.forEach(g => gal.append(figura({ t: g.t, a: "", img: g.img, f: g.f, leg: g.t }, "Theatro José de Alencar", [])));
+  box.append(topo, gal);
+  return box;
+}
+fichas(document.getElementById("filtro-reg"), [["", "Todas"], ...CIDADES.map(([c]) => [c, c])], v => {
   escs.querySelectorAll(".bloco").forEach(b => { b.hidden = !!v && b.dataset.cid !== v; });
 });
 
