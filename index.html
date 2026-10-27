@@ -2377,8 +2377,8 @@ btnIdx.addEventListener("click", () => painel.hidden ? abrirPainel() : fecharPai
 document.getElementById("painel-fechar").addEventListener("click", fecharPainel);
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !painel.hidden) fecharPainel(); });
 btnTopo.addEventListener("click", () => window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
-function marcar(pares) {
-  const lim = topoEl.offsetHeight + 100; let atual = null;
+function marcar(pares, extra = 0) {
+  const lim = topoEl.offsetHeight + 100 + extra; let atual = null;
   let melhor = -Infinity;
   pares.forEach(([a, sec]) => { if (!sec || sec.hidden || sec.offsetParent === null) return; const t = sec.getBoundingClientRect().top; if (t < lim && t > melhor + 1) { atual = a; melhor = t; } });
   const h = location.hash.slice(1); const fixo = pares.find(([, sec]) => sec && sec.id === h);
@@ -2401,7 +2401,7 @@ function aoRolar() {
     const sal = brasil.querySelector(".g-saltos");
     if (sal) { const a = marcar([...sal.querySelectorAll("a")].map(a => [a, document.getElementById("br-g-" + a.dataset.g)])); if (a) { cor = a.style.getPropertyValue("--c"); centrar(sal, a); } }
   }
-  if (abaAtual === "museus") { const a = marcar([...atalhosMus.querySelectorAll("a")].map(a => [a, document.getElementById(a.dataset.alvo)])); centrar(atalhosMus, a); }
+  if (abaAtual === "museus") { const a = marcar([...atalhosMus.querySelectorAll("a")].map(a => [a, document.getElementById(a.dataset.alvo)]), atalhosMus.offsetHeight); centrar(atalhosMus, a); }
   raizEl.style.setProperty("--cor-ativa", cor || "var(--mar)");
   if (!painel.hidden) marcar(itensIdx);
 }
