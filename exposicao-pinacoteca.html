@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mar, Sertão e Cidade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: uma "planta" de museu — salas numeradas na ordem da visita, parede branca de cal, fichas técnicas em tipo mono como etiquetas de parede */
+:root {
+  --cal: #F2F1EC;        /* parede caiada */
+  --papel: #FBFAF7;      /* etiqueta */
+  --tinta: #1A1D22;      /* texto */
+  --sombra: #5D6068;     /* texto secundário */
+  --fio: #D9D6CC;        /* linhas */
+  --mar: #1E4C86;        /* azul de jangada, acento */
+  --urucum: #B5502A;     /* alerta de atribuição */
+  --ocre: #9A6B12;       /* exibida, outra coleção */
+  --verde: #2F6B45;      /* confirmado no acervo */
+  --f-display: "Gloock", "Georgia", "Times New Roman", serif;
+  --f-texto: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-etiqueta: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cal: #15171B; --papel: #1D2025; --tinta: #ECEAE4; --sombra: #A3A5AC; --fio: #33363D;
+    --mar: #8DB4EA; --urucum: #E58A64; --ocre: #D9AE57; --verde: #7CC495; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --cal: #15171B; --papel: #1D2025; --tinta: #ECEAE4; --sombra: #A3A5AC; --fio: #33363D;
+  --mar: #8DB4EA; --urucum: #E58A64; --ocre: #D9AE57; --verde: #7CC495; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--cal); color: var(--tinta);
+  font: 400 17px/1.6 var(--f-texto);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+img { max-width: 100%; }
+a { color: var(--mar); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--mar); outline-offset: 3px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; }
+.rotulo { font: 500 12px/1.4 var(--f-etiqueta); letter-spacing: .08em; text-transform: uppercase; color: var(--sombra); }
+
+/* Abertura */
+header.abertura { padding-block: 56px 40px; border-bottom: 1px solid var(--fio); display: grid; gap: 28px; }
+header.abertura h1 { font-size: clamp(48px, 9vw, 112px); line-height: .95; letter-spacing: -.01em; }
+header.abertura h1 span { display: block; color: var(--mar); }
+.abertura .lead { max-width: 62ch; font-size: 19px; color: var(--tinta); margin: 0; }
+.fatos { display: flex; flex-wrap: wrap; gap: 12px 32px; margin: 0; padding: 0; list-style: none; }
+.fatos li { display: grid; gap: 2px; min-width: 0; }
+.fatos b { font: 400 30px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+
+/* Legenda de atribuição */
+.legenda { display: grid; gap: 10px; padding-block: 24px; border-bottom: 1px solid var(--fio); }
+.legenda ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.legenda li { display: flex; gap: 8px; align-items: baseline; font-size: 15px; max-width: 44ch; }
+.selo { display: inline-block; font: 500 11px/1 var(--f-etiqueta); letter-spacing: .06em; text-transform: uppercase; padding: 5px 7px; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.selo.acervo { color: var(--verde); }
+.selo.exposta { color: var(--ocre); }
+.selo.nc { color: var(--urucum); }
+
+/* Planta / índice */
+nav.planta { padding-block: 24px; border-bottom: 1px solid var(--fio); display: grid; gap: 12px; }
+nav.planta ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+nav.planta a { display: flex; gap: 10px; align-items: baseline; text-decoration: none; color: var(--tinta); padding: 10px 12px; border: 1px solid var(--fio); background: var(--papel); }
+nav.planta a:hover { border-color: var(--mar); }
+nav.planta a span { font: 500 12px var(--f-etiqueta); color: var(--mar); }
+
+/* Sala */
+section.sala { padding-block: 64px 24px; border-bottom: 1px solid var(--fio); display: grid; gap: 32px; }
+.sala-topo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+@media (min-width: 900px) { .sala-topo { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; } }
+.sala h2 { font-size: clamp(38px, 6vw, 64px); line-height: 1; }
+.sala .datas { font: 400 14px var(--f-etiqueta); color: var(--sombra); margin-top: 10px; }
+.bio { display: grid; gap: 14px; max-width: 66ch; min-width: 0; }
+.bio p { margin: 0; }
+.nota { font-size: 15px; padding: 12px 14px; border-left: 3px solid var(--urucum); background: var(--papel); }
+.nota.ok { border-left-color: var(--verde); }
+.destaques { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.destaques article { display: grid; gap: 8px; align-content: start; padding-top: 14px; border-top: 2px solid var(--tinta); min-width: 0; }
+.destaques h3 { font-size: 24px; line-height: 1.15; }
+.destaques p { margin: 0; font-size: 16px; }
+
+/* Parede de obras */
+.parede { columns: 3 280px; column-gap: 20px; }
+figure.obra { break-inside: avoid; margin: 0 0 24px; display: grid; gap: 10px; }
+.obra button { all: unset; cursor: zoom-in; display: block; background: var(--papel); border: 1px solid var(--fio); padding: 10px; }
+.obra button:focus-visible { outline: 2px solid var(--mar); outline-offset: 3px; }
+.obra img { display: block; width: 100%; height: auto; min-height: 120px; background: var(--fio); object-fit: contain; }
+.obra .falha { display: grid; place-items: center; min-height: 160px; padding: 16px; text-align: center; font: 400 13px/1.5 var(--f-etiqueta); color: var(--sombra); }
+figcaption { display: grid; gap: 4px; font: 400 13px/1.5 var(--f-etiqueta); color: var(--sombra); }
+figcaption .tit { font: italic 400 16px/1.35 var(--f-texto); color: var(--tinta); }
+figcaption .linha { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+
+/* Fontes */
+footer { padding-block: 56px 72px; display: grid; gap: 16px; }
+footer h2 { font-size: 36px; }
+footer ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; columns: 1; }
+footer li { overflow-wrap: anywhere; }
+
+/* Visor (lightbox) */
+dialog#visor { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; }
+dialog#visor::backdrop { background: rgba(10, 11, 13, .92); }
+.visor-in { width: 100%; height: 100%; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 12px; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.visor-in img { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
+.visor-in p { margin: 0; color: #ECEAE4; font: 400 14px/1.5 var(--f-etiqueta); text-align: center; }
+.visor-ctl { display: flex; justify-content: center; gap: 10px; }
+.visor-ctl button { font: 500 13px var(--f-etiqueta); color: #ECEAE4; background: transparent; border: 1px solid #6B6E76; padding: 8px 14px; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="abertura">
+  <p class="rotulo">Exposição virtual · grandes artistas cearenses · 1890–2024</p>
+  <h1>Mar, Sertão <span>e Cidade</span></h1>
+  <p class="lead">Dezesseis artistas cearenses, de Raimundo Cela (1890) a Efrain Almeida (1964), em salas organizadas pela ordem de nascimento. O ponto de partida é o acervo e as exposições da Pinacoteca do Ceará, aberta em 3 de dezembro de 2022 no Complexo Cultural Estação das Artes, em Fortaleza. Cada sala traz um resumo da trajetória do artista, a explicação das obras principais e uma parede com as imagens encontradas em fontes verificáveis.</p>
+  <ul class="fatos">
+    <li><b>982</b><span class="rotulo">obras na abertura (759 do acervo)</span></li>
+    <li><b>170</b><span class="rotulo">artistas em "Se arar"</span></li>
+    <li><b>600+</b><span class="rotulo">itens de Bandeira no acervo</span></li>
+    <li><b>484</b><span class="rotulo">obras em "Existências paralelas"</span></li>
+  </ul>
+</header>
+
+<section class="legenda" aria-label="Como ler as etiquetas">
+  <p class="rotulo">Como ler as etiquetas</p>
+  <ul>
+    <li><span class="selo acervo">Acervo Pinacoteca</span> A fonte credita a obra ao acervo da Pinacoteca do Ceará.</li>
+    <li><span class="selo exposta">Exposta na Pinacoteca</span> Mostrada na Pinacoteca, mas pertencente a outra coleção ou sem crédito de acervo.</li>
+    <li><span class="selo nc">Acervo não confirmado</span> Obra do artista em outra coleção ou espaço público, sem confirmação de que esteja na Pinacoteca. Entra para mostrar a linguagem do artista.</li>
+  </ul>
+</section>
+
+<nav class="planta" aria-label="Planta da exposição">
+  <p class="rotulo">Planta da exposição</p>
+  <ol id="planta"></ol>
+</nav>
+
+<main id="salas"></main>
+<section class="sala" id="tambem">
+  <div class="sala-topo">
+    <div><p class="rotulo">Nota final</p><h2>Também essenciais</h2><p class="datas">Sem imagens verificáveis encontradas</p></div>
+    <div class="bio">
+      <p>Estes nomes são centrais na história da arte cearense, mas não encontrei reproduções de obras com título e fonte confiáveis. Por isso aparecem só com o texto.</p>
+      <p><b>Estrigas</b> (Nilo de Brito Firmeza, Fortaleza, 1919–2014). Pintor, ilustrador, crítico e historiador da arte. Entrou na SCAP em 1950, presidiu a sociedade em 1953 e expôs em quase todos os Salões de Abril até 1975, com medalha de prata em 1954. Sua pintura transitou entre o figurativo e o abstrato. Escreveu livros fundamentais sobre Chico da Silva, Raimundo Cela, Barrica e o Salão de Abril, e fundou com Nice o Minimuseu Firmeza.</p>
+      <p><b>Barrica</b> (Guilherme Clidenor de Moura Capibaribe, Juazeiro do Norte, 1908 — Fortaleza, 1993). Desenhista, pintor e ceramista, aluno de Gérson Faria. Cofundador do Centro Cultural de Belas Artes (1941) e da SCAP (1944), fez mais de cem exposições individuais, inclusive no Rio, em São Paulo e nos Estados Unidos.</p>
+      <p><b>Mário Baratta</b>. Fundou com Raimundo Cela o Centro Cultural de Belas Artes, em 1941, e esteve entre os principais organizadores da SCAP, o grupo que levou o modernismo a Fortaleza.</p>
+      <p><b>Jean-Pierre Chabloz</b> (Suíça, 1910–1984). Não era cearense, mas mudou a arte do estado nos anos 1940: deu papel e guache a Chico da Silva, apoiou a ida de Antonio Bandeira para o Rio em 1945 e deu aulas de pintura a Sérvulo Esmeraldo.</p>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <h2>Fontes</h2>
+  <p>As imagens são carregadas diretamente dos sites de origem (Pinacoteca do Ceará, jornais O Povo e Diário do Nordeste, Enciclopédia Itaú Cultural e blogs de memória de Fortaleza). Títulos, datas e técnicas seguem as legendas dessas fontes. Quando uma fonte não informa um dado, a etiqueta diz isso. Se uma imagem deixar de carregar, o link "fonte" abre a página original.</p>
+  <ul id="fontes"></ul>
+</footer>
+
+</div>
+
+<dialog id="visor" aria-label="Obra ampliada">
+  <div class="visor-in">
+    <img id="visor-img" alt="" referrerpolicy="no-referrer">
+    <div>
+      <p id="visor-leg"></p>
+      <div class="visor-ctl">
+        <button type="button" id="ant">← Anterior</button>
+        <button type="button" id="fechar">Fechar</button>
+        <button type="button" id="prox">Próxima →</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const F = {
+  searar: ["Pinacoteca do Ceará — Se arar", "https://pinacotecadoceara.org.br/exposicoes/bonito-pra-chover/se-arar/"],
+  exist: ["Pinacoteca do Ceará — Existências paralelas", "https://pinacotecadoceara.org.br/exposicoes/existencias-paralelas-acervo-em-desconstrucao/"],
+  helo: ["Pinacoteca do Ceará — Heloysa Juaçaba: um olhar oblíquo", "https://pinacotecadoceara.org.br/heloysa-juacaba-um-olhar-obliquo/"],
+  chico: ["Pinacoteca do Ceará — Chico da Silva e a Escola do Pirambu", "https://pinacotecadoceara.org.br/exposicoes/chico-da-silva-e-a-escola-do-pirambu/"],
+  bandeira: ["Pinacoteca do Ceará — Amar se aprende amando", "https://pinacotecadoceara.org.br/exposicoes/bonito-pra-chover/amar-se-aprende-amando/"],
+  bonito: ["Catálogo Bonito pra chover (PDF)", "https://pinacotecadoceara.org.br/wp-content/uploads/2025/01/Bonito-pra-chover_download.pdf"],
+  niceDN: ["Diário do Nordeste — Nos cem anos de Nice Firmeza", "https://diariodonordeste.verdesmares.com.br/verso/nos-cem-anos-de-nice-firmeza-entrevista-recupera-o-pioneirismo-da-pintora-e-sua-trajetoria-na-scap-1.3110111"],
+  niceOP: ["O Povo — 100 anos de Nice Firmeza", "https://mais.opovo.com.br/jornal/vidaearte/2021/07/16/100-anos-de-nice-firmeza--elaboracoes-do-legado-da-artista-no-contemporaneo.html"],
+  niceMM: ["Minimuseu Firmeza — Nice", "https://www.minimuseufirmeza.org/nice"],
+  dgMauc: ["Mauc/UFC — Coleção Descartes Gadelha", "https://mauc.ufc.br/pt/acervo-colecoes/colecao-descartes-gadelha/"],
+  dgBlog: ["Secult-Arte UFC — A obra de Descartes Gadelha", "http://secultarte.blogspot.com/2012/09/a-obra-de-descartes-gadelha.html"],
+  dgOP: ["O Povo — Exposição sobre o lixão do Jangurussu", "https://mais.opovo.com.br/jornal/vidaearte/2024/06/26/exposicao-de-descartes-gadelha-sobre-lixao-do-jangurussu-inspira-livro.html"],
+  dgMM: ["Minimuseu Firmeza — Descartes Gadelha", "https://www.minimuseufirmeza.org/descartes-gadelha"],
+  heloMM: ["Minimuseu Firmeza — Heloysa Juaçaba", "https://www.minimuseufirmeza.org/heloysa-juacaba"],
+  zenOP: ["O Povo — 20 anos sem Zenon", "https://mais.opovo.com.br/jornal/vidaearte/2022/01/18/20-anos-sem-zenon-livro-e-cessao-de-direitos-da-iracema-guardia-marcam-a-data.html"],
+  zenBNB: ["Banco do Nordeste — livro Zenon Barreto (PDF)", "https://app.bnb.gov.br/documents/136060/784935/Zenon+Barreto/7192bf26-275c-4ec0-8594-4c0dc8e1e10d"],
+  zenMM: ["Minimuseu Firmeza — Zenon Barreto", "https://www.minimuseufirmeza.org/zenon-barreto"],
+  bandDN: ["Diário do Nordeste — Autorretratos de artistas cearenses", "https://diariodonordeste.verdesmares.com.br/verso/artistas-cearenses-produzem-autorretratos-como-elaboracao-de-sentimentos-memorias-e-invencoes-de-si-1.3462968"],
+  bandOP: ["O Povo — Antonio Bandeira, o centenário", "https://mais.opovo.com.br/jornal/vidaearte/2022/05/10240838-antonio-bandeira-o-centenario-de-um-artista-agitador.html"],
+  abertDN: ["Diário do Nordeste — Por que visitar a Pinacoteca", "https://diariodonordeste.verdesmares.com.br/verso/por-que-visitar-a-pinacoteca-do-ceara-pode-ser-uma-experiencia-impressionante-1.3308502"],
+  dezDN: ["Diário do Nordeste — 10 obras da Pinacoteca", "https://diariodonordeste.verdesmares.com.br/verso/10-obras-incriveis-da-pinacoteca-do-ceara-para-voce-conhecer-a-arte-cearense-1.3316559"],
+  pele: ["O Povo — Pelé na Pinacoteca do Ceará", "https://www.opovo.com.br/vidaearte/2022/12/30/pele-na-pinacoteca-do-ceara-obra-de-aldemir-martins-compoe-exposicao.html"],
+  aldOP: ["O Povo — Centenário de Aldemir Martins", "https://mais.opovo.com.br/jornal/vidaearte/2022/11/08/centenario-de-aldemir-martins-o-referencial-de-brasil-a-partir-do-nordeste.html"],
+  celaIC: ["Enciclopédia Itaú Cultural — Raimundo Cela", "https://enciclopedia.itaucultural.org.br/pessoas/7391-raimundo-cela/obras"],
+  celaFF: ["Fortaleza em Fotos — Raimundo Cela", "http://www.fortalezaemfotos.com.br/2010/10/raimundo-cela_25.html"],
+  celaAD: ["Almeida & Dale — Raimundo Cela (PDF)", "https://www.almeidaedale.com.br/assets/pdfs/publicacoes/Raimundo_Cela.pdf"],
+  artebr: ["ARTE!Brasileiros — Existências paralelas", "https://artebrasileiros.com.br/arte/pinacoteca-do-ceara-repensa-acervo-em-existencias-paralelas/"]
+};
+
+const P = "https://pinacotecadoceara.org.br/wp-content/uploads/";
+const BL = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/";
+
+const SALAS = [
+{
+  id: "nice", n: 1921, nome: "Nice Firmeza", datas: "Aracati, CE, 1921 — Fortaleza, CE, 2013",
+  bio: [
+    "Maria de Castro Osório, a Nice, chegou a Fortaleza aos 12 anos e, em 1950, tornou-se a primeira mulher admitida na Sociedade Cearense de Artes Plásticas (SCAP), onde estudou desenho e pintura e depois trabalhou como secretária e bibliotecária. Expôs a partir de 1951 e circulou por mostras no Brasil e na Europa.",
+    "Recusou desde criança a cópia como método e pintou do seu jeito: paisagens numa fase mais acadêmica, máscaras e figuras humanas numa fase mais moderna, crianças e, sobretudo, bordados que a crítica chamou de alta-costura. A obra costuma ser ligada à arte naïf, mas atravessa a fronteira entre arte popular e erudita. Ensinou arte a crianças por cerca de 50 anos.",
+    "Em 1961 casou-se com o pintor e crítico Nilo Firmeza, o Estrigas. Em 1969 os dois fundaram o Minimuseu Firmeza, no Mondubim, casa e acervo abertos à comunidade. Foi nomeada Tesouro Vivo da Cultura pela Secult em 2007."
+  ],
+  nota: ["nc", "Nice está na lista de artistas das mostras \"Se arar\" (2022) e \"Existências paralelas\" (2025) da Pinacoteca, mas as fontes públicas não identificam quais obras dela pertencem ao acervo. As telas abaixo vêm do Minimuseu Firmeza e da coleção Rachel Gadelha."],
+  destaques: [
+    ["Dunas da Majorlândia, 1953", "Óleo sobre madeira pintado três anos depois da entrada na SCAP. Majorlândia é uma praia de Aracati, a cidade natal da artista. A obra pertence à fase de paisagens que a crítica associa ao período de formação, quando a SCAP difundia o modernismo em Fortaleza."],
+    ["Despedida, 1991", "Guache sobre papel do mesmo ano da exposição de guaches sobre a infância que Nice realizou em 1991. Pertence à fase madura, em que crianças e figuras humanas substituem as paisagens do início."],
+    ["Os sem-título dos anos 1970 a 1990", "As pequenas telas e eucatex do Minimuseu e da coleção Rachel Gadelha mostram a variedade de cores que virou marca da artista. São obras de pequeno formato, pensadas para a escala da casa, o que combina com o projeto do Minimuseu."]
+  ],
+  obras: [
+    {t:"Dunas da Majorlândia", a:"1953", tec:"Óleo sobre madeira", col:"Coleção não informada", s:"nc", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3110163:1626368752/WhatsApp%20Image%202021-07-15%20at%2012.38.26.webp?q=0.8&$p$q=01e2c8c", f:"niceDN"},
+    {t:"Despedida", a:"1991", tec:"Guache sobre papel", col:"Coleção não informada", s:"nc", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3110164:1626368703/WhatsApp%20Image%202021-07-15%20at%2012.37.42.webp?q=0.8&$p$q=0844132", f:"niceDN"},
+    {t:"Sem título (legenda: \"uma diversidade de cores\")", a:"Data não informada", tec:"Técnica não informada", col:"Coleção não informada", s:"nc", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3110174:1626364454/tela%20nice%202%20-%20jpeg.webp?q=0.8&$p$q=0bbc58a", f:"niceDN"},
+    {t:"Sem título", a:"1953", tec:"Óleo sobre tela, 16 × 23 cm", col:"Acervo Minimuseu Firmeza", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2021/07/15/obranice_semtitulo_oleosobretela_16x23cm_1953_acervominimuseufirmeza-16420953.jpg", f:"niceOP"},
+    {t:"Sem título", a:"1977", tec:"Óleo sobre eucatex, 24 × 30 cm", col:"Acervo Minimuseu Firmeza", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2021/07/15/obranice_semtitulo_oleosobreeucatex_24x30cm_1977_acervominimuseufirmeza-16420874.jpg", f:"niceOP"},
+    {t:"Sem título", a:"1979", tec:"Óleo sobre eucatex, 28 × 36 cm", col:"Acervo Minimuseu Firmeza", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2021/07/15/obranice_semtitulo_oleosobreeucatex_28x36cm_1979_acervominimuseufirmeza-16420937.jpg", f:"niceOP"},
+    {t:"Sem título", a:"1993", tec:"Óleo sobre tela, 22 × 31 cm", col:"Coleção Rachel Gadelha", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2021/07/15/obranice_semtitulo_oleosobretela_22x31cm_1993_acervorachelgadelha-16421194.jpg", f:"niceOP"},
+    {t:"Sem título", a:"1993", tec:"Óleo sobre tela, 20 × 13 cm", col:"Coleção Rachel Gadelha", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2021/07/15/obranice_semtitulo_oleosobretela_20x13cm_1993_acervorachelgadelha-16421171.jpg", f:"niceOP"},
+    {t:"Sem título", a:"Sem data", tec:"Óleo sobre eucatex, 31 × 36,5 cm", col:"Coleção Rachel Gadelha", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2021/07/15/obranice_semtitulo_oleosobreeucatex_31x36_5cm_semdata_acervorachelgadelha-16421158.jpg", f:"niceOP"}
+  ]
+},
+{
+  id: "descartes", n: 1943, nome: "Descartes Gadelha", datas: "Fortaleza, CE, 1943",
+  bio: [
+    "Pintor, desenhista, escultor e músico autodidata, Descartes Marques Gadelha começou a pintar em 1962. Trabalhou de 1957 a 1986 como desenhista da Rede Ferroviária Federal e é figura de frente do Maracatu Solar. A UFC lhe concedeu o título de doutor honoris causa em 2015.",
+    "Sua pintura é expressionista: rostos nordestinos aflitos, famintos, em grito silencioso, e cenas do sertão e de Fortaleza tratadas como ruína. Antes de cada série, faz pesquisa histórica. O tema de Canudos o acompanha há mais de 40 anos.",
+    "Em 2006 doou cerca de 200 obras ao Museu de Arte da UFC (Mauc), onde tem sala permanente. Em 2023, aos 80 anos, ganhou a retrospectiva \"Descartes Griô Profeta\" no Mauc."
+  ],
+  nota: ["nc", "Descartes está entre os artistas de \"Se arar\", a mostra de abertura feita com o acervo do Governo do Estado, e uma imagem da galeria dessa mostra leva o nome dele no arquivo. O site da Pinacoteca, porém, não informa título nem crédito de acervo dessa obra. O grosso da produção dele está no Mauc/UFC."],
+  destaques: [
+    ["Catadores do Jangurussu, 1989", "Série nascida quando o artista viu, de um pôr do sol em Fortaleza, a fumaça do lixão do Jangurussu, que recebeu o lixo da cidade de 1978 a 1998. Pediu a um menino que o levasse até lá e pintou os catadores como heróis e mártires: telas como \"Herói do Aterro\", \"Pietá do Lixo\", \"Vida de Chorume\", \"Vigia\" e \"Menino do Buraco\". É a obra que mais claramente transforma denúncia social em pintura religiosa às avessas."],
+    ["Cicatrizes Submersas, 1997", "Mais de cem óleos de médio e grande formato, além de esculturas, cerâmicas, gravuras e desenhos, sobre Antônio Conselheiro e a guerra de Canudos, a partir de \"Os Sertões\". Exposta no Palácio da Abolição e depois doada ao Mauc. A escala da série dá ao massacre o peso de um painel histórico."],
+    ["De um Alguém para Outro Alguém, 1990", "Série sobre a antiga zona do Curral das Éguas, no Arraial Moura Brasil, apagada pela Avenida Leste-Oeste nos anos 1970. O título vem das dedicatórias de música feitas no alto-falante do bairro."]
+  ],
+  obras: [
+    {t:"Obra exposta em \"Se arar\" (título não informado)", a:"Data não informada", tec:"Técnica não informada", col:"Galeria da mostra de abertura da Pinacoteca", s:"exposta", img:P+"2022/11/0735_Gadelha_Descartes_1600px72dpi-scaled.jpg", f:"searar"},
+    {t:"Obra sem título identificado na fonte", a:"—", tec:"Pintura", col:"Fonte: blog Secult-Arte UFC", s:"nc", img:BL+"AVvXsEhQnsqUTOqCTLVaLeKsaEoG5z4m8etwT0LLRVAdf5ZMshrU4DUN4d_xMGlwbNYwycihZj4Wy6sIe5_I63_P4lyohcfEgaLDg4anu0lik0t9wt1_55UxSvXKgcTCgwu9eGzMh6U9UQs_2ctC/s1600/DGadelha_000.jpg", f:"dgBlog"},
+    {t:"Obra sem título identificado na fonte", a:"—", tec:"Pintura", col:"Fonte: blog Secult-Arte UFC", s:"nc", img:BL+"AVvXsEim7L6q-eKOWLau6dvM9to2hCrsNlJgsEZ0rFBoAa_ZFgkgpVOvSKf4fa6kV7Ft0fneylVMxyTNBm7jj_MflvziyuGwLwIodEqotvUScinUW33Jhx3o4VMiS0qvSIR4EG9xDguX0Q-nCrzn/s1600/DGadelha_001.jpg", f:"dgBlog"},
+    {t:"Obra sem título identificado na fonte", a:"—", tec:"Pintura", col:"Fonte: blog Secult-Arte UFC", s:"nc", img:BL+"AVvXsEhjfIl-gsQ1Bo4DKBv1uIN7tF78eIWZIfgbXvhS2B-L9HpQ5KM4-7bcnxMhFfOX3a8pQPmkqhv7veB0A27yjwdOjdX8ZACJLMN2-Q8ch7qS7f26uTqV1ZmZxe8HQn63fX12iWlFgJwxmrOW/s1600/DGadelha_002.jpg", f:"dgBlog"},
+    {t:"Obra sem título identificado na fonte", a:"—", tec:"Pintura", col:"Fonte: blog Secult-Arte UFC", s:"nc", img:BL+"AVvXsEiyJ_bqkEcCgiit768XS4qxmXB2dFb9jYf9-o9WiZukLBb1ZnbaQSeZ1newHHCf13gCdixYUYHrXhBCNRSq4sClRYdnuJuZQduhRhibXiZdBsH2tGypnNxLKgpylPasONpSncrnw6UdHCzU/s1600/DGadelha_003.jpg", f:"dgBlog"},
+    {t:"Obra sem título identificado na fonte", a:"—", tec:"Pintura", col:"Fonte: blog Secult-Arte UFC", s:"nc", img:BL+"AVvXsEjm3-Mce4s8niWynzZdot7_hLozKHT-K3F91PCCD3Re5oSE0eIUVBIrzx15QrEJ1QsePyT4dP49Q-9N-Lo9xGt3pwbEzrSXc9CjQ23EvPe_c5HA0iX0OQMuhKcUdTnfBmbskH3-2omLvy3c/s1600/DGadelha_006.jpg", f:"dgBlog"},
+    {t:"Obra sem título identificado na fonte", a:"—", tec:"Pintura", col:"Fonte: blog Secult-Arte UFC", s:"nc", img:BL+"AVvXsEjS0W3KwCyu_QXu0t18aNAn0V4zc_asLBET7LE86Vhvm7AgWYHcA3qRDS4A4JEC-FwHPqPhCQPCwSGo9Qd34mu5q9OQj4TdJfgYjyCWXM9ECuFAZALNHXQwwydaRl4Rq81rPjerE7odIUf7/s1600/DGadelha_007.jpg", f:"dgBlog"},
+    {t:"Obra sem título identificado na fonte", a:"—", tec:"Pintura", col:"Fonte: blog Secult-Arte UFC", s:"nc", img:BL+"AVvXsEilNh4jm4KFbbVQ8lWQ0vYlJfxkjTBGMN7xloN5AMOpuXvuQj2fY3bQn2QkaZXRUekSzTctoc5f54BqFcrfrnIabet0dFJowxKoLcVf41eCZz_fzkP_tQ_xTroTPjBk2Js-clIhbTk85YQA/s1600/DGadelha_008.jpg", f:"dgBlog"}
+  ]
+},
+{
+  id: "heloysa", n: 1926, nome: "Heloysa Juaçaba", datas: "Guaramiranga, CE, 1926 — Fortaleza, CE, 2013",
+  bio: [
+    "Pintora, escultora, tapeceira, desenhista e gravadora. Estudou no curso livre da SCAP em 1950 e, em 1956, num curso livre no Louisiana Museum of Art, em Nova Orleans. Estreou no I Salão dos Novos (1952), foi premiada no Salão de Abril em 1953, 1967 e 1972, ganhou sala especial em 1975 e participou da Bienal de São Paulo de 1974.",
+    "Foi também uma das grandes agitadoras culturais do Ceará: integrou a comissão que criou o Mauc (1961), fundou o Centro de Artes Visuais que virou Casa de Raimundo Cela (1967), dirigiu o Departamento de Cultura de Fortaleza, organizou as pinacotecas do Palácio da Abolição (1972) e do Paço Municipal (1974) e idealizou o Museu de Arte e Cultura Popular, ao qual doou mais de 800 peças.",
+    "Trabalhou com figuração, abstração e arte concreta, sempre perto da paisagem da serra onde nasceu e das tradições populares, que ela via como expressão livre de academicismo."
+  ],
+  nota: ["nc", "Heloysa integra \"Se arar\" (2022) e \"Existências paralelas\" (2025). As obras dela mostradas nessas exposições estão creditadas à coleção da família, não ao acervo da Pinacoteca."],
+  destaques: [
+    ["Relevos brancos, 1983", "Linha de algodão sobre eucatex, 56,5 × 124,1 cm. Cordas de algodão, as mesmas dos punhos de rede, formam relevos brancos sobre branco. A curadoria de \"Se arar\" colocou a obra no núcleo \"Dilatações visuais\": é abstração geométrica feita com a matéria do artesanato cearense, o ponto em que o moderno e o trançado popular se encontram."],
+    ["Fiandeira, sem data", "Óleo sobre tela, 50 × 60 cm. Representa a fase figurativa, com o trabalho manual feminino no centro. Vista ao lado dos relevos, mostra que o fio é tema e matéria ao longo da carreira."]
+  ],
+  obras: [
+    {t:"Relevos brancos", a:"1983", tec:"Linha de algodão sobre eucatex, 56,5 × 124,1 × 2,9 cm", col:"Coleção da família · exposta em \"Se arar\"", s:"exposta", img:P+"2023/03/DSC9221_site-5.png", f:"helo"},
+    {t:"Série Relevo Branco sobre Branco", a:"1983", tec:"Técnica não informada na legenda", col:"Coleção Ana Virgínia Juaçaba · exposta em \"Existências paralelas\"", s:"exposta", img:P+"2025/05/Serie-Relevo-Branco-sobre-Branco-Heloysa-Juacaba-1983-Colecao-Ana-Virginia-Juacaba.-Foto_-Jorge-Silvestre-scaled.jpg", f:"exist"},
+    {t:"Fiandeira", a:"Sem data", tec:"Óleo sobre tela, 50 × 60 cm", col:"Coleção da família", s:"exposta", img:P+"2023/03/04-Dia-das-mulheres-obra-4.jpg", f:"helo"},
+    {t:"Vista do núcleo \"Dilatações visuais\", mostra \"Se arar\"", a:"2023", tec:"Fotografia de exposição (Marília Camelo)", col:"Pinacoteca do Ceará", s:"exposta", img:P+"2023/03/20230308_OBRA_Eloisa_Juacaba_Se-Arar__Marilia_Camelo4.png", f:"helo"}
+  ]
+},
+{
+  id: "zenon", n: 1918, nome: "Zenon Barreto", datas: "Sobral, CE, 1918 — Fortaleza, CE, 2002",
+  bio: [
+    "Zenon da Cunha Mendes Barreto ia seguir carreira militar até um acidente a cavalo na Escola Militar do Ceará. A pintura foi receitada como terapia e virou ofício. Entrou no curso livre da SCAP em 1949, ensinou lá e presidiu a sociedade em 1956. Estreou no Salão de Abril de 1950, onde ganhou cinco prêmios ao longo da carreira, e expôs na Bienal de São Paulo.",
+    "Foi pintor, desenhista, gravador, escultor, cenógrafo e chargista (assinava a coluna \"Museu\" em O Povo como Salvador Daky). Com Antonio Bandeira fundou o Grupo dos Independentes (1951). Foi o único cearense na equipe dos vitrais da FAAP, em São Paulo, ao lado de Portinari e Tarsila.",
+    "Seu nome está ligado à arte pública de Fortaleza: painéis de azulejo e esculturas em ferrocimento que dão protagonismo ao trabalhador, à rendeira, à louceira e ao jangadeiro."
+  ],
+  nota: ["nc", "Zenon consta entre os artistas de \"Se arar\", mostra feita com o acervo do Estado, mas as fontes públicas não identificam quais obras dele estão na Pinacoteca. As imagens disponíveis são de obras públicas e charges."],
+  destaques: [
+    ["Jangadas, 1965", "Painel de azulejo de 8,20 × 5,80 m na fachada do Mauc/UFC. Leva o tema da jangada, central na arte cearense desde Raimundo Cela, para a escala da arquitetura e para o espaço público."],
+    ["Estivadores, 1963", "Painel de azulejo de 7,30 × 8,70 m feito para o antigo Centro dos Exportadores, no centro econômico da cidade. O estivador, trabalhador braçal do porto, vira o herói da cena."],
+    ["Iracema Guardiã, 1995–1996", "Figura em fibra de vidro na Praia de Iracema, homenagem a José de Alencar. É a obra mais conhecida do artista e virou símbolo da orla. O jornal O Povo data a inauguração em 1995; o livro do Banco do Nordeste, em 1996. A estátua foi reformada em 2012 e tombou em 2022."]
+  ],
+  obras: [
+    {t:"Jangadas (painel)", a:"1965", tec:"Painel de azulejo, 8,20 × 5,80 m", col:"Mauc/UFC, Fortaleza", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/painelzenonbarreto_mauc-17892911.jpg", f:"zenOP"},
+    {t:"Iracema Guardiã", a:"1995–1996", tec:"Fibra de vidro (reformada em 2012)", col:"Espaço público, Praia de Iracema", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/iracema_guardia_zenon_barreto3_gigapixel_standard_scale_2_00x-17892412.jpg", f:"zenOP"},
+    {t:"Charge (publicação \"Salvador Daky e Zenon Barreto\")", a:"Data não informada", tec:"Desenho", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/_cartoon_zenon_salvador_daky4-17892480.jpg", f:"zenOP"},
+    {t:"Cartum (publicação \"Salvador Daky e Zenon Barreto\")", a:"Data não informada", tec:"Desenho", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/_cartoon_zenon_salvador_daky-17892463.jpg", f:"zenOP"}
+  ]
+},
+{
+  id: "chico", n: 1910, nome: "Chico da Silva", datas: "Alto Tejo, AC, entre 1910 e 1922 — Fortaleza, CE, 1985",
+  bio: [
+    "Filho de mãe cearense e pai indígena peruano, Francisco Domingos da Silva chegou ao Ceará por volta dos seis anos. Nos anos 1940 pintava pássaros e peixes nos muros da Praia Formosa com carvão, caco de telha e folhas. O suíço Jean-Pierre Chabloz viu esses murais, deu-lhe papel e guache, e a obra passou a circular internacionalmente.",
+    "Suas composições são povoadas de bichos fantásticos, dragões, seres míticos e espíritos da floresta, vindos da memória da Amazônia e do Nordeste. Recebeu menção honrosa na Bienal de Veneza de 1966.",
+    "No Pirambu, por volta de 1963, formou com Babá, Chica da Silva, Claudionor, Garcia e Ivan de Assis a Escola do Pirambu, ateliê coletivo de formação e renda para a comunidade."
+  ],
+  nota: ["ok", "Todas as obras desta sala estão creditadas pelo site da Pinacoteca ao \"Acervo da Pinacoteca do Ceará\" (fotos de Cesar Barreto), na exposição \"Chico da Silva e a Escola do Pirambu\", com 148 obras. As datas de nascimento e morte do artista vêm da biografia corrente; a Pinacoteca registra o nascimento entre 1910 e 1922."],
+  destaques: [
+    ["Caboclo peruano, 1944", "Dos primeiros anos no papel, logo depois do encontro com Chabloz. O título remete à origem paterna do artista, filho de indígena peruano, e a obra abre a exposição da Pinacoteca como documento do início da carreira."],
+    ["Os sem-título de 1943", "As obras mais antigas da sala são da década em que Chico ainda pintava nos muros da Praia Formosa, com pássaros e peixes. Mostram a passagem do muro para o papel."],
+    ["Os sem-título de 1974 a 1982", "Fase do ateliê coletivo. Segundo a curadoria, os membros da Escola dividiam tarefas: Claudionor e Ivan de Assis faziam desenhos de base, Garcia cuidava de pontilhados e preenchimentos, Chica da Silva introduziu rosetas e fundos pretos, Babá as formas de mandala. Os bichos fantásticos e dragões se tornaram a marca do grupo."]
+  ],
+  obras: [
+    {t:"Caboclo peruano", a:"1944", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Caboclo-peruano-1944-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto.jpg", f:"chico"},
+    {t:"Sem título", a:"1943", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-1943-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-1.jpg", f:"chico"},
+    {t:"Sem título", a:"1943", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-1943-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-2.jpg", f:"chico"},
+    {t:"Sem título", a:"1974", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-1974-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto.jpg", f:"chico"},
+    {t:"Sem título", a:"1978", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-1978-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-2.jpg", f:"chico"},
+    {t:"Sem título", a:"1982", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-1982-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto.jpg", f:"chico"},
+    {t:"Sem título", a:"Sem data", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-sem-data-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-1.jpg", f:"chico"},
+    {t:"Sem título", a:"Sem data", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-sem-data-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-2.jpg", f:"chico"},
+    {t:"Sem título", a:"Sem data", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-sem-data-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-3.jpg", f:"chico"},
+    {t:"Sem título", a:"Sem data", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-sem-data-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-4.jpg", f:"chico"},
+    {t:"Sem título", a:"Sem data", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-sem-data-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-5.jpg", f:"chico"},
+    {t:"Sem título", a:"Sem data", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:P+"2023/07/Chico-da-Silva-Sem-titulo-sem-data-Acervo-da-Pinacoteca-do-Ceara-Foto-de-Cesar-Barreto-6.jpg", f:"chico"},
+    {t:"Obra exposta em \"Se arar\" (título não informado)", a:"Data não informada", tec:"Técnica não informada", col:"Galeria da mostra de abertura", s:"exposta", img:P+"2022/11/759_DA_SILVA_Chico_1600px72dpi.jpg", f:"searar"},
+    {t:"Obra exposta em \"Se arar\" (título não informado)", a:"Data não informada", tec:"Técnica não informada", col:"Galeria da mostra de abertura", s:"exposta", img:P+"2022/11/785_da_Silva_Chico-9240_1600px72dpi.jpg", f:"searar"}
+  ]
+},
+{
+  id: "bandeira", n: 1922, nome: "Antonio Bandeira", datas: "Fortaleza, CE, 1922 — Paris, 1967",
+  bio: [
+    "Filho do ferreiro Sabino e de dona Maria do Carmo, Bandeira cresceu no centro de Fortaleza. Em 1941 ajudou a fundar o Centro Cultural de Belas Artes, depois SCAP, com Mário Baratta, Raimundo Cela e Aldemir Martins, e venceu o primeiro Salão de Abril, em 1942.",
+    "Com bolsa do governo francês, chegou a Paris em 1946, estudou na École des Beaux-Arts e na Grande Chaumière e formou com Wols e Camille Bryen o grupo Banbryols. Por volta de 1949 passou à abstração lírica, que o tornou um dos principais nomes do abstracionismo brasileiro: Prêmio Fiat na II Bienal de São Paulo (1953), Bienal de Veneza (1954 e 1960).",
+    "A Pinacoteca guarda mais de 600 itens dele, a maioria adquirida no início dos anos 2000: cadernos, desenhos automáticos, colagens, estudos e pinturas. A mostra do centenário, \"Amar se aprende amando\" (2022–2024), destacou o processo criativo, a afetividade com Fortaleza e a dimensão afro-indígena do artista, incluindo uma parede de desenhos de Exu exibidos pela primeira vez."
+  ],
+  nota: ["nc", "Os autorretratos de 1945 e 1946 estão creditados ao acervo da Pinacoteca. As pinturas abstratas reproduzidas pelo O Povo no centenário não têm coleção informada e podem não estar na Pinacoteca."],
+  destaques: [
+    ["Autorretrato no espelho, 1945", "Feito no ano em que Bandeira deixou Fortaleza. A curadoria do centenário usa os autorretratos para mostrar o artista como homem negro e o rosto como lugar de invenção de si, antes da virada para a abstração."],
+    ["Autorretrato na garrafa, 1946", "Pintado no ano da chegada a Paris. Junto com o autorretrato de 1945, é uma das peças centrais da mostra do centenário, que apresentou Bandeira pelo processo criativo e não como retrospectiva de obras-primas."],
+    ["Ferro (1961) e Crepúsculo (1966)", "Exemplos da abstração lírica que Bandeira desenvolveu depois do contato com Wols, na fase final entre o Brasil e a Europa. Bandeira dizia: \"Nunca pinto quadros. Tento fazer pintura.\""]
+  ],
+  obras: [
+    {t:"Autorretrato no espelho", a:"1945", tec:"Técnica não informada", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3462969:1704383957/image.webp?f=16x9&$p$f=e6fd59f", f:"bandDN"},
+    {t:"Vista de \"Amar se aprende amando\", com Autorretrato na garrafa (1946) à direita", a:"1946 (obra)", tec:"Fotografia de exposição (Marília Camelo)", col:"Acervo da Pinacoteca do Ceará", s:"acervo", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4932532:1704477222/Vista%20da%20exposi%C3%A7%C3%A3o%20_Amar%20se%20aprende%20amando_,%20de%20Antonio%20Bandeira,%20com%20destaque%20para%20a%20obra%20da%20direita_%20Autorretrato%20na%20garrafa,%201946,%20Acervo%20da%20Pinacoteca%20do%20Cear%C3%A1__Foto%20Marilia%20Camelo_Easy-Resize.com.webp?q=0.8&$p$q=c3e36ad", f:"bandDN"},
+    {t:"Vista de \"Amar se aprende amando\" (645 obras)", a:"2022", tec:"Fotografia de exposição", col:"Pinacoteca do Ceará", s:"exposta", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4732278:1670195572/WhatsApp%20Image%202022-12-04%20at%2014.15.55%20(2).webp?q=0.8&$p$q=1b66e6e", f:"abertDN"},
+    {t:"Espaço com obras, rabiscos e cartas de Bandeira", a:"2022", tec:"Fotografia de exposição", col:"Pinacoteca do Ceará", s:"exposta", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4732279:1670195654/WhatsApp%20Image%202022-12-04%20at%2014.17.26%20(4).webp?q=0.8&$p$q=caf88b7", f:"abertDN"},
+    {t:"Autorretratos (mostra do centenário)", a:"Data não informada", tec:"Técnica não informada", col:"Exibidos na Pinacoteca", s:"exposta", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4743117:1672063244/WhatsApp%20Image%202022-12-23%20at%2010.41.27%20(1).webp?q=0.8&$p$q=a786a5f", f:"dezDN"},
+    {t:"Retrato de Menino", a:"1942", tec:"Óleo sobre madeira, 39,8 × 28,5 cm", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/18/16__retrato_de_menino_iab_0185-18776769.jpg", f:"bandOP"},
+    {t:"Floresta de Carnaúba", a:"1951", tec:"Óleo sobre tela, 64 × 54 cm", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/18/04__floresta_de_carnauba_iab__1007-18776681.jpg", f:"bandOP"},
+    {t:"Samba na Roça", a:"1958", tec:"Técnica não informada", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/20/capa_foto_principal___obra_samba_na_roca__de_antonio_bandeira__1958-18791828.jpg", f:"bandOP"},
+    {t:"Série Poemalhitos", a:"1960", tec:"Litografia, 48 × 34,5 cm", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/18/750x500/1_07__album_5_poemalhitos_iab_0191__1_-18776859.jpg", f:"bandOP"},
+    {t:"Ferro", a:"1961", tec:"Óleo sobre tela, 100 × 80 cm", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/18/750x500/1_05__ferro_iab__1003-18776686.jpg", f:"bandOP"},
+    {t:"Crepuscular", a:"1965", tec:"Óleo sobre tela, 44,5 × 33 cm", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/18/09__crepuscular_iab__0120-18776722.jpg", f:"bandOP"},
+    {t:"Crepúsculo", a:"1966", tec:"Óleo e técnica mista sobre tela, 73 × 53 cm", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/18/01__crepusculo__iab_0215___ano_1966-18776661.jpg", f:"bandOP"},
+    {t:"Madrugada Violenta", a:"Data não informada", tec:"Técnica não informada", col:"Coleção não informada", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2022/05/18/bandeira_obramadrugadaviolenta_fotode12101987-18776313.jpg", f:"bandOP"},
+    {t:"Autorretrato (fase abstrata)", a:"1965", tec:"Técnica não informada", col:"Coleção não informada", s:"nc", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4931880:1704384045/autorretrato-antoniobandeira-1965-dingmusadivulgacao.webp?q=0.8&$p$q=7247645", f:"bandDN"}
+  ]
+},
+{
+  id: "aldemir", n: 1922.5, nome: "Aldemir Martins", datas: "Ingazeiras, Aurora, CE, 1922 — São Paulo, 2006",
+  bio: [
+    "Autodidata, Aldemir passou a infância mudando de cidade com o pai, que trabalhava na construção de ferrovias, até a família se fixar em Pacatuba. Fez parte do Grupo Artys e da fundação da SCAP. Mudou-se para o Rio em 1945 e para São Paulo em 1946, onde estudou história da arte com Pietro Maria Bardi e gravura com Poty.",
+    "Teve reconhecimento rápido: prêmios nas primeiras Bienais de São Paulo e o prêmio de melhor desenhista internacional na Bienal de Veneza de 1956. Galos, gatos, peixes, jangadas, rendeiras, cangaceiros e retirantes viraram um repertório que chegou a capas de livro, louças, roupas e novelas e ajudou a formar uma imagem do Nordeste para o país.",
+    "No centenário, a Pinacoteca montou \"No lápis da vida não tem borracha\" (2022), com 168 obras dos anos 1940 aos 1960, incluindo esculturas de galos, ilustrações de literatura e a instalação \"sol de Martins\"."
+  ],
+  nota: ["nc", "\"Pelé\" (1966) está creditado à Pinacoteca. As demais imagens são vistas da mostra do centenário ou obras sem coleção informada."],
+  destaques: [
+    ["Pelé, 1966", "O jogador aparece de costas, com a camisa 10, no instante do chute. Pelé foi o atleta que Aldemir mais desenhou e pintou. A obra integrou a mostra do centenário na Pinacoteca."],
+    ["Os galos", "Tema recorrente em todas as técnicas, do desenho à escultura em metal e acrílico. Na mostra do centenário, as esculturas foram dispostas para refletir a luz da sala. O galo de briga condensa o que Aldemir buscava: cor, energia e um símbolo popular nordestino."],
+    ["Três Gatos, 2004", "Acrílica sobre tela, 80 × 100 cm, pintada dois anos antes da morte do artista. O gato é outro dos temas que a crítica liga às cores intensas e à figuração que tornaram Aldemir popular."]
+  ],
+  obras: [
+    {t:"Pelé (à esquerda, a obra da Pinacoteca)", a:"1966", tec:"Desenho/pintura (a fonte usa os dois termos)", col:"Pinacoteca do Ceará", s:"acervo", img:"https://www.opovo.com.br/_midias/jpg/2022/12/30/750x500/1_aldemirmartins_pele_menor-20682708.jpg", f:"pele"},
+    {t:"Galos, esculturas", a:"Data não informada", tec:"Metal e acrílico", col:"Exibidas em \"No lápis da vida não tem borracha\"", s:"exposta", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4743118:1672063296/WhatsApp%20Image%202022-12-23%20at%2010.41.27%20(11).webp?q=0.8&$p$q=56e1f62", f:"dezDN"},
+    {t:"Painel de abertura da mostra do centenário", a:"2022", tec:"Fotografia de exposição", col:"Pinacoteca do Ceará", s:"exposta", img:"https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4732280:1670240855/image.webp?f=16x9&$p$f=e6fd59f", f:"abertDN"},
+    {t:"Três Gatos", a:"2004", tec:"Acrílica sobre tela, 80 × 100 cm", col:"Coleção não informada", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2022/06/30/1_cap_1___tre__s_gatos___acri__lica_s_tela___80x100_cm___2004-19100959.jpg", f:"aldOP"},
+    {t:"Pássaro Colorido", a:"Data não informada", tec:"Ilustração", col:"Coleção não informada", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2022/07/14/passaro_colorido_aldemir_martins_capitulo_da_cultura_anuario_do_ceara-19205237.jpg", f:"aldOP"}
+  ]
+},
+{
+  id: "cela", n: 1890, nome: "Raimundo Cela", datas: "Sobral, CE, 1890 — Niterói, RJ, 1954",
+  bio: [
+    "Filho de mecânico espanhol e de professora, cresceu em Camocim. No Rio, estudou ao mesmo tempo na Escola Nacional de Belas Artes, com Eliseu Visconti e Batista da Costa, e na Escola Politécnica, onde se formou engenheiro. Em 1917 ganhou o Prêmio de Viagem ao Exterior com \"Último Diálogo de Sócrates\" e foi estudar gravura com Frank Brangwyn na Europa.",
+    "De volta a Camocim, dirigiu uma empresa de energia e quase parou de pintar. Retomou por volta de 1929, voltado para o trabalhador e o litoral. Entre 1938 e 1945, em Fortaleza, pintou o mural \"Abolição dos Escravos\" e a série de jangadeiros que o tornou o grande pintor do mar cearense. Ajudou a fundar o Centro Cultural de Belas Artes, origem da SCAP. Terminou a vida como professor de gravura na ENBA.",
+    "Seu nome batiza a Casa de Cultura Raimundo Cela, criada em 1967 como Centro de Artes Visuais."
+  ],
+  nota: ["nc", "Cela está entre os artistas de \"Se arar\" e \"Existências paralelas\". O catálogo da Almeida & Dale lista obras na coleção do Governo do Estado do Ceará, de onde vem o acervo da Pinacoteca (Autorretrato, 1921; Praia em Camocim, 1932; Catequese; Consertando o arrastão, 1947), mas não encontramos imagens verificáveis delas. As obras abaixo estão no Mauc/UFC, no Museu Nacional de Belas Artes ou sem coleção informada."],
+  destaques: [
+    ["Abolição dos Escravos, 1938", "Óleo de 2,25 × 3,92 m. Alegoria da abolição no Ceará (1884): a Liberdade chega numa jangada, entre figuras como Francisco José do Nascimento, o Dragão do Mar. Hoje está no antigo Palácio da Luz, sede da Academia Cearense de Letras."],
+    ["A série de jangadeiros, 1938–1945", "\"Jangadeiros entrando no mar\", \"Jangada rolando para o mar\", \"A Arrebentação\", \"Jangadeiros em Palestra\". Desenho preciso e cor solta mostram homens enfrentando o mar com dignidade. Nas \"pinturas brancas\" desse período, céu, areia e mar quase se dissolvem na luz."],
+    ["Cabeças de 1931 e 1933", "\"Cabeça de homem\", \"Rendeira\" e \"Cabeça de jangadeiro\", óleos sobre madeira de pequeno formato. São retratos de tipos populares feitos na volta à pintura, quando Cela troca o tema acadêmico pelo trabalhador cearense."]
+  ],
+  obras: [
+    {t:"Cabeça de homem", a:"1931", tec:"Óleo sobre madeira", col:"Mauc/UFC (segundo catálogo Almeida & Dale)", s:"nc", img:BL+"AVvXsEge4S7VSiEX9tGiUFYArCnyg4le7x9Bg8_wD4oK92ut0WCtEhx3Sq9_PcpW7lJcVuz87aTnab0StxHAKkeX-SgGqxabPnkz63aNA0tUK1QbvDvziW6YSn3g5gyMNu2r0um4Ll6DZ-wLM9I/s1600/cabe%C3%A7a+de+homem.jpg", f:"celaFF"},
+    {t:"Rendeira", a:"1931", tec:"Óleo sobre madeira, 32 × 40,5 cm", col:"Mauc/UFC (segundo catálogo Almeida & Dale)", s:"nc", img:BL+"AVvXsEhmNmwesyE2ujZqNZ0UTqACAgyEOHgkimGh_Wl1aWRYb091MkMYHa3Aigw_7_gxF45VJQtYJpT4hAmyKLwJOZw-RzTkQhqElBw6YSvr1zXunoeQPMW_EOn-jQvJWm6l9EPtO-CzwdzhrY0/s1600/imgRendeira.jpg", f:"celaFF"},
+    {t:"Cabeça de jangadeiro", a:"1933", tec:"Óleo sobre madeira, 38 × 46 cm", col:"Mauc/UFC (segundo catálogo Almeida & Dale)", s:"nc", img:BL+"AVvXsEjxdFicgh-0ZA9F0rWEIDLUAjvEdLXybmH_nbQVtwFgjfRsYD2CBTpwlPNrRBvpQ4KrJqgrRuVj5m3HWkU2IedNnwBsiwlb5O_dMonIUlugyvQYDw8oi9l1kt-MnNjelCPYKnhLoN5cKSg/s1600/cabe%C3%A7a+de+jangadeiro+-+JPG.jpg", f:"celaFF"},
+    {t:"Jangadeiros entrando no mar", a:"1940", tec:"Técnica não informada", col:"Coleção não informada", s:"nc", img:BL+"AVvXsEjhe5_a-JdK8QuvALZXfc7h60SeZTlXJwikd4dmS4_V_LmubzyNK-PiEPJVZIHC_qXwIywzoiXBTfNcLcChQte3yDIVEJC3qIwFZ39p4R__tFY_utlowVcF8zEkfN4TMEg8V1Z5VWHWuUw/s1600/jangada+entrando+no+mar.jpg", f:"celaFF"},
+    {t:"Jangada Rolando para o Mar", a:"1950 segundo o Itaú Cultural (1941 segundo Almeida & Dale)", tec:"Óleo sobre tela", col:"Museu Nacional de Belas Artes (segundo Almeida & Dale)", s:"nc", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/vd2jzkx9hvgh067pbhkohx6h03lh", f:"celaIC"},
+    {t:"Consertando a Rede", a:"1947", tec:"Óleo sobre tela", col:"Museu Nacional de Belas Artes (segundo Almeida & Dale)", s:"nc", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/qc29fn03zeki65qwvuj7ttzskrp0", f:"celaIC"},
+    {t:"Arrastão", a:"Data não informada", tec:"Óleo sobre tela", col:"Coleção não informada", s:"nc", img:"https://midias-publicas.enciclopedia.itaucultural.org.br/ed3hn9xigt5yokjfynt486tfczfo", f:"celaIC"},
+    {t:"Gravura (água-forte)", a:"Data não informada", tec:"Água-forte sobre papel", col:"Mauc/UFC", s:"nc", img:BL+"AVvXsEhOugq6Qn2jyynT1YT16waKsjO6VkgbHBRGnG0TE9BejpOoU9KKmu3gQWPmopKEi0gRV50UV1fjBMfjMl40DluJXNTMzi_w3rUKE2fkinPpgYN1j45x4418ADPNwrv_1jaH2ilu0vS66Dc/s1600/agua+forte+sobre+papel+-+JPG.jpg", f:"celaFF"}
+  ]
+},
+{
+  id: "outras", n: 9999, nome: "Outras vozes do acervo", datas: "Obras creditadas à Pinacoteca nas mostras de 2022 e 2025",
+  bio: [
+    "Em 2025, a exposição \"Existências paralelas – acervo em (des)construção\" reuniu 484 obras de 63 artistas, com cinco núcleos (Formas votivas e celebrações, Modos de produção e circulação, Memórias territoriais, Moderno Popular e Miscelânea documental). A curadoria de Lisette Lagnado, José Eduardo Ferreira Santos e Yuri Firmeza procurou lacunas do cânone, sobretudo de mulheres artistas, e trabalhou com curadores comunitários.",
+    "Esta sala reúne obras de outros artistas que a Pinacoteca credita ao próprio acervo e algumas da galeria de \"Se arar\" em que só o nome do artista aparece no arquivo da imagem."
+  ],
+  nota: ["ok", "As duas primeiras obras têm crédito explícito de \"Acervo Pinacoteca do Ceará\". As da galeria de \"Se arar\" estavam expostas na Pinacoteca, mas o site não traz título nem crédito."],
+  destaques: [
+    ["Reconciliação, Mariza Viana, 1999", "Uma das obras do acervo escolhidas para \"Existências paralelas\", mostra que buscou dar mais espaço às artistas mulheres."]
+  ],
+  obras: [
+    {t:"Reconciliação — Mariza Viana", a:"1999", tec:"Técnica não informada", col:"Acervo Pinacoteca do Ceará", s:"acervo", img:P+"2025/05/Reconciliacao-Mariza-Viana-1999-Acervo-Pinacoteca-do-Ceara.-Foto_-Jorge-Silvestre-scaled.jpg", f:"exist"},
+    {t:"Sem título — Nino", a:"Sem data", tec:"Técnica não informada", col:"Acervo Pinacoteca do Ceará", s:"acervo", img:P+"2025/05/Sem-titulo-Nino-sem-data-acervo-Pinacoteca-do-Ceara.-Foto_-Jorge-Silvestre-scaled.jpg", f:"exist"},
+    {t:"Sérgio Pinheiro (título não informado)", a:"Data não informada", tec:"Técnica não informada", col:"Galeria de \"Se arar\"", s:"exposta", img:P+"2022/11/0719_Pinheiro_Sergio_02-9153.jpg", f:"searar"},
+    {t:"Izaías Silva (título não informado)", a:"Data não informada", tec:"Técnica não informada", col:"Galeria de \"Se arar\"", s:"exposta", img:P+"2022/11/0729_Isaias-9143.jpg", f:"searar"}
+  ]
+}
+];
+
+Object.assign(F, {
+  leon: ["Pinacoteca do Ceará — Leonilson e Das Amizades", "https://pinacotecadoceara.org.br/exposicoes/leonilson-montanhas-protetoras-e-ao-longe-vulcoes-rios-furacoes-mares-abismos-e-das-amizades/"],
+  leonDN: ["Diário do Nordeste — Leonilson na Pinacoteca", "https://diariodonordeste.verdesmares.com.br/verso/exposicao-gratuita-com-obras-de-leonilson-e-artistas-cearenses-chega-a-pinacoteca-do-ceara-1.3451694"],
+  efrDN: ["Diário do Nordeste — Efrain Almeida deu asas a um sertão particular", "https://diariodonordeste.verdesmares.com.br/verso/cearense-efrain-almeida-referencia-das-artes-visuais-no-brasil-deu-asas-a-um-sertao-particular-1.3562813"],
+  efrMeer: ["Meer — Efrain Almeida, Uma coisa linda", "https://www.meer.com/pt/11941-efrain-almeida-uma-coisa-linda"],
+  servDN: ["Diário do Nordeste — Obras de arte sofrem com vandalismo", "https://diariodonordeste.verdesmares.com.br/ceara/obras-de-arte-sofrem-com-vandalismo-e-deterioracao-em-fortaleza-1.3748123"],
+  servOP: ["O Povo — Esse é Sérvulo Esmeraldo", "https://mais.opovo.com.br/jornal/vidaearte/2024/08/17/esse-e-servulo-esmeraldo-para-abracar-o-cariri-e-expandir-o-mundo.html"],
+  servOP2: ["O Povo — Festival Sérvulo Esmeraldo", "https://mais.opovo.com.br/jornal/vidaearte/2021/09/12/festival-servulo-esmeraldo-destaca-obras-do-artista-em-espacos-urbanos.html"],
+  servCCBB: ["O Povo — Retrospectiva Linha e Luz (CCBB-SP)", "https://www.opovo.com.br/noticias/brasil/2023/08/30/geometria-e-arte-cinetica-compoem-retrospectiva-de-servulo-esmeraldo.html"],
+  servMorte: ["Diário do Nordeste — Morre Sérvulo Esmeraldo", "https://diariodonordeste.verdesmares.com.br/metro/morre-o-artista-plastico-servulo-esmeraldo-1.1697816"],
+  zeDN: ["Diário do Nordeste — Onde ver obras de Zé Tarcísio", "https://diariodonordeste.verdesmares.com.br/verso/onde-apreciar-obras-do-artista-cearense-ze-tarcisio-em-fortaleza-1.3726646"],
+  telmaMAR: ["Sopa Cultural — Telma Saraiva no Museu de Arte do Rio", "https://sopacultural.com/museu-de-arte-do-rio-inaugura-exposicao-em-homenagem-a-telma-saraiva/"],
+  vicOP: ["O Povo — Pintura de Vicente Leite volta ao Teatro São José", "https://www.opovo.com.br/vidaearte/2021/11/09/pintura-de-vicente-leite-e-restaurada-e-retorna-ao-teatro-sao-jose.html"],
+  nozaB: ["Blombo — Via Sacra, Mestre Noza", "https://art.blombo.com/via-sacra"],
+  nozaP: ["Printed Editions — Mestre Noza", "https://www.printed-editions.com/artist/mestre-noza"],
+  estrV: ["Vermelho — 100 anos de Estrigas", "https://vermelho.org.br/?p=402376"],
+  estrMM: ["Minimuseu Firmeza — Estrigas", "https://www.minimuseufirmeza.org/estrigas"],
+  barMM: ["Minimuseu Firmeza — Barrica", "https://www.minimuseufirmeza.org/barrica"]
+});
+const DN = "https://diariodonordeste.verdesmares.com.br/image/contentid/";
+SALAS.push(
+{
+  id: "noza", n: 1897, nome: "Mestre Noza", datas: "Taquaritinga do Norte, PE, 1897 — São Paulo, 1983 · artista do Cariri",
+  bio: [
+    "Inocêncio Medeiros da Costa nasceu em Pernambuco e chegou a pé a Juazeiro do Norte em 1912, como romeiro, depois de caminhar cerca de 600 km. Foi soldado de polícia e ferroviário da Rede Cearense antes de se firmar, a partir de 1930, como santeiro e xilogravador. Sua primeira escultura foi um São Sebastião; a primeira gravura, uma capa de cordel.",
+    "Esculpiu estatuetas do Padre Cícero e de santos, fez capas de folheto e rótulos de cachaça e séries gravadas como \"Os Doze Apóstolos\" e \"A vida de Lampião\". É uma referência da xilogravura popular do Cariri."
+  ],
+  nota: ["nc", "Mestre Noza está entre os artistas de \"Se arar\" (2022), mas as fontes não identificam obras dele no acervo da Pinacoteca. Encontrei uma única imagem verificável, a capa do álbum Via Sacra."],
+  destaques: [
+    ["Via Sacra, 1965", "Quinze xilogravuras encomendadas em 1963 por Sérvulo Esmeraldo, que levou as matrizes para Paris. O editor Robert Morel publicou o álbum em 1965: a primeira tiragem especial, de 22 exemplares impressos à mão, esgotou, e uma segunda saiu com mil. Foi o momento em que a gravura de Juazeiro chegou ao circuito europeu."]
+  ],
+  obras: [
+    {t:"Via Sacra (álbum, capa)", a:"1965 (o anúncio indica 1969)", tec:"Xilogravura, assinada", col:"Exemplar à venda na galeria Blombo", s:"nc", img:"https://art.blombo.com/media/webp/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/t/i/ti_tulo_via_sacra_-_a_lbum_png.webp", f:"nozaB"}
+  ]
+},
+{
+  id: "vicente", n: 1900, nome: "Vicente Leite", datas: "Crato, CE, 1900 — 1941",
+  bio: [
+    "Pintor do Crato que começou a carreira no Ceará e se mudou para o Rio de Janeiro, onde estudou na Escola Nacional de Belas Artes com Lucílio de Albuquerque, Batista da Costa e Rodolfo Chambelland. Ficou conhecido como paisagista, com obras como \"Jangadeiros do Ceará\" e \"Dois Irmãos e Pedra da Gávea\".",
+    "Morreu aos 41 anos. Dá nome ao museu de arte do Crato."
+  ],
+  nota: ["nc", "Vicente Leite está em \"Se arar\", e a galeria da mostra traz uma obra dele (sem título informado). A grande tela da Sagrada Família, abaixo, fica no Teatro São José, em Fortaleza."],
+  destaques: [
+    ["Sagrada Família do Teatro São José", "Óleo sobre tela de 2,60 × 3,20 m sobre o palco do teatro, com Maria, o menino Jesus e São José representados como trabalhadores. Foi restaurado em 2021 e devolvido ao lugar original. A fonte diz que a obra tem quase um século, sem data exata."]
+  ],
+  obras: [
+    {t:"Obra exposta em \"Se arar\" (título não informado)", a:"Data não informada", tec:"Técnica não informada", col:"Galeria da mostra de abertura", s:"exposta", img:P+"2022/11/0649_LEITE_Vicente_1600px72dpi-scaled.jpg", f:"searar"},
+    {t:"Sagrada Família (pintura do Teatro São José)", a:"Data não informada", tec:"Óleo sobre tela, 2,60 × 3,20 m", col:"Teatro São José, Fortaleza", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2021/11/09/750x500/1_vicente_leite_teatro_sao_jose-17449140.jpg", f:"vicOP"},
+    {t:"A pintura restaurada no teatro", a:"2021 (foto)", tec:"Fotografia (Thiago Matine)", col:"Teatro São José, Fortaleza", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2021/11/09/750x500/1_teatro_sao_jose-17449162.jpg", f:"vicOP"}
+  ]
+},
+{
+  id: "telma", n: 1928, nome: "Telma Saraiva", datas: "1928 — 2015 · Crato, CE",
+  bio: [
+    "A partir dos anos 1940, Telma Saraiva comandou no Crato o Foto Saraiva, único estúdio fotográfico da região dirigido por uma mulher. Sua técnica foi a fotopintura: retratos coloridos à mão com tinta, entre a precisão do ofício e a imaginação.",
+    "Fotografou casamentos, batizados, aniversários de 15 anos e carnavais e fez autorretratos em que encarna estrelas do cinema de Hollywood dos anos 1950, às vezes com os filhos. Em 2025 ganhou a individual \"Telma Saraiva e a fascinação do mundo\", com mais de 200 fotopinturas, no Museu de Arte do Rio."
+  ],
+  nota: ["nc", "As obras de Telma mostradas em \"Existências paralelas\" (2025) pertencem à Casa de Telma Saraiva, Museu da Fotografia do Cariri, e não ao acervo da Pinacoteca."],
+  destaques: [
+    ["Ernesto vestido de noiva e Flash com grinalda, década de 1970", "Fotopinturas em que o filho Ernesto e a própria artista encenam papéis, como noiva e noivo. A curadoria de \"Existências paralelas\" usou essas obras para falar de performance de identidade e de reinvenção de si dentro do retrato de estúdio."]
+  ],
+  obras: [
+    {t:"Ernesto vestido de noiva", a:"Década de 1970", tec:"Fotopintura", col:"Casa de Telma Saraiva – Museu da Fotografia do Cariri", s:"exposta", img:P+"2025/05/Ernesto-vestido-de-noiva-Telma-Saraiva-decada-de-1970.-Acervo-da-Casa-de-Telma-Saraiva-Museu-da-Fotografia-do-Cariri.-Foto_-Jorge-Silvestre.jpg", f:"exist"},
+    {t:"Flash com grinalda", a:"Década de 1970", tec:"Fotopintura", col:"Casa de Telma Saraiva – Museu da Fotografia do Cariri", s:"exposta", img:P+"2025/05/Flash-com-grinalda-Telma-Saraiva-decada-de-1970.-Acervo-da-Casa-de-Telma-Saraiva-Museu-da-Fotografia-do-Cariri.-Foto_-Jorge-Silvestre.jpg", f:"exist"},
+    {t:"Fotopintura (título não informado)", a:"Data não informada", tec:"Fotopintura", col:"Coleção não informada", s:"nc", img:DN+"policy:7.4932527:1704476466/VERSO%20FOTOS_Easy-Resize.com.webp?q=0.8&$p$q=e0586ce", f:"bandDN"},
+    {t:"Imagem de divulgação da mostra no MAR (título não informado)", a:"Data não informada", tec:"Fotopintura", col:"Coleção não informada", s:"nc", img:"https://sopacultural.com/wp-content/uploads/2025/07/TS_cromo_34_alt-1024x771.jpg", f:"telmaMAR"}
+  ]
+},
+{
+  id: "servulo", n: 1929, nome: "Sérvulo Esmeraldo", datas: "Crato, CE, 1929 — Fortaleza, CE, 2017",
+  bio: [
+    "Cresceu no sítio Bebida Nova, no Crato, e começou na SCAP no fim dos anos 1940, com aulas de pintura com Jean-Pierre Chabloz. Em São Paulo ajudou a montar a I Bienal (1951) e foi ilustrador e crítico do Correio Paulistano. Em 1957 foi para Paris com bolsa do governo francês, estudou gravura em metal com Johnny Friedlaender e ficou na França até 1978, convivendo com Lygia Clark e Sergio Camargo.",
+    "Foi um dos pioneiros da arte cinética: a série \"Excitáveis\", iniciada em 1964, tem pequenas formas que se movem pela eletricidade estática gerada pelo espectador. De volta a Fortaleza, passou ao metal e à arte pública, com dezenas de esculturas na cidade. Participou de mais de 160 exposições."
+  ],
+  nota: ["nc", "Sérvulo está no núcleo \"Dilatações visuais\" de \"Se arar\", mas as fontes não identificam quais obras dele são do acervo da Pinacoteca. As imagens abaixo são de obras públicas e de ateliê."],
+  destaques: [
+    ["Excitáveis, desde 1964", "Objetos em que pequenas formas reagem à aproximação do corpo, movidas por eletricidade estática. Colocam o espectador como parte da obra e situam Sérvulo entre os pioneiros europeus da arte cinética."],
+    ["La Femme Bateau, 1994", "Escultura da Ponte dos Ingleses, em Fortaleza, que junta a forma da mulher e a do barco. Já foi levada pelo mar e reconstruída e voltou a sofrer vandalismo. O caso virou exemplo do abandono da arte pública na cidade."],
+    ["Monumento ao Saneamento Básico (1977/1978) e Pirâmides (2008)", "Duas pontas da arte pública do artista: o monumento geométrico de Fortaleza e as pirâmides doadas ao Crato, instaladas na Encosta do Seminário."]
+  ],
+  obras: [
+    {t:"La Femme Bateau (após o vandalismo)", a:"1994", tec:"Escultura pública", col:"Ponte dos Ingleses, Fortaleza", s:"nc", img:DN+"policy:7.5328860:1772819032/05.%20La%20Femme%20Bateau%20-%20Cr%C3%A9dito%20Thiago%20Gadelha%20(3).webp?q=0.8&$p$q=c2097a5", f:"servDN"},
+    {t:"La Femme Bateau", a:"1994", tec:"Escultura pública", col:"Ponte dos Ingleses, Fortaleza", s:"nc", img:DN+"policy:7.5328867:1772819261/07.La%20Femme%20Bateau%20-%20Cr%C3%A9dito%20Thiago%20Gadelha%20(4).webp?q=0.8&$p$q=68e3b54", f:"servDN"},
+    {t:"Cones (caída, em deterioração)", a:"1997", tec:"Escultura em metal", col:"Espaço público, Fortaleza", s:"nc", img:DN+"policy:7.5328836:1772818368/01.%20Escultura%20Cones,%20de%20S%C3%A9rvulo%20Esmeraldo%20-%20Cr%C3%A9dito%20Ismael%20Soares%20(4).webp?q=0.8&$p$q=64b56ce", f:"servDN"},
+    {t:"Pirâmides", a:"2008 (instalada em 2016)", tec:"Escultura pública", col:"Encosta do Seminário, Crato", s:"nc", img:"https://mais.opovo.com.br/_midias/jpg/2021/09/08/gb_servulo_expo_cariri_2016_09img_2932-17002804.jpg", f:"servOP2"},
+    {t:"Obras do ateliê do artista", a:"Datas não informadas", tec:"Fotografia de Fco Fontenele", col:"Ateliê / Instituto Sérvulo Esmeraldo", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2024/08/06/especial_servulo_26-29508721.jpg", f:"servOP"},
+    {t:"Obras do ateliê do artista", a:"Datas não informadas", tec:"Fotografia de Fco Fontenele", col:"Ateliê / Instituto Sérvulo Esmeraldo", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2024/08/06/especial_servulo_20-29508525.jpg", f:"servOP"},
+    {t:"Obras do ateliê do artista", a:"Datas não informadas", tec:"Fotografia de Fco Fontenele", col:"Ateliê / Instituto Sérvulo Esmeraldo", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2024/08/06/especial_servulo_9-29508054.jpg", f:"servOP"},
+    {t:"Vista da retrospectiva \"Linha e Luz\", CCBB São Paulo", a:"2023", tec:"Fotografia de exposição (Rovena Rosa/Agência Brasil)", col:"110 obras", s:"nc", img:"https://www.opovo.com.br/_midias/jpg/2023/08/30/818x460/1_img_8176-23187866.jpg", f:"servCCBB"}
+  ]
+},
+{
+  id: "zetarcisio", n: 1941, nome: "Zé Tarcísio", datas: "1941 — 2026",
+  bio: [
+    "Artista multidisciplinar e prolífico, atuou por 65 anos em pintura, gravura, desenho, instalação e performance. Tratou de política, religiosidade, território e ecologia. Morreu em 2026, aos 84 anos, e foi velado no Centro Dragão do Mar.",
+    "Tem obras no acervo da Pinacoteca do Ceará, do Museu de Arte Contemporânea do Ceará (MAC), do Mauc/UFC, do Minimuseu Firmeza e da Fundação Edson Queiroz."
+  ],
+  nota: ["ok", "As obras sem título de 2005 e 2006 estão creditadas ao acervo da Pinacoteca do Ceará. As demais pertencem ao MAC, ao Minimuseu Firmeza, à Fundação Edson Queiroz ou à coleção do artista."],
+  destaques: [
+    ["Um anjo na contramão, 1972", "Registro de performance feito em plena ditadura, mostrado em 2024 na exposição \"Bloco do Prazer\". Marca o lado experimental e político do artista."],
+    ["Loteamento – Canoa Quebrada, 1981", "Guache e carvão sobre papel sobre a ocupação imobiliária da praia de Canoa Quebrada. É um dos exemplos da preocupação com território e ecologia."],
+    ["Relicários, série Relicários da Seca, 2013", "Obra da Fundação Edson Queiroz que trata a seca como matéria de memória e religiosidade."]
+  ],
+  obras: [
+    {t:"Sem título", a:"2006", tec:"Técnica não informada", col:"Acervo Pinacoteca do Ceará", s:"acervo", img:P+"2025/05/Sem-titulo-Ze-Tarcisio-2006.-Acervo-Pinacoteca-do-Ceara.-Foto_-Jorge-Silvestre-scaled.jpg", f:"exist"},
+    {t:"Sem título", a:"2005", tec:"Técnica não informada", col:"Exposta em \"Existências paralelas\" (acervo da Pinacoteca, segundo o Diário do Nordeste)", s:"acervo", img:DN+"policy:7.5305948:1767985989/Z%C3%A9%20Tarc%C3%ADsio,%20_Sem%20t%C3%ADtulo_,%202005.%20Exposi%C3%A7%C3%A3o%20_Exist%C3%AAncias%20paralelas%20-%20acervo%20em%20(des)constru%C3%A7%C3%A3o__Foto_%20Marilia%20Camelo.webp?q=0.8&$p$q=982a1ab", f:"zeDN"},
+    {t:"Nordestinidade", a:"1985", tec:"Técnica não informada", col:"Coleção do artista · exposta na Pinacoteca", s:"exposta", img:P+"2023/12/Ze-Tarcisio-Nordestinidade-1985-Colecao-do-artista.-Foto_-Marilia-Camelo-scaled.jpg", f:"leon"},
+    {t:"Sem título", a:"1967", tec:"Acrílica e nanquim sobre eucatex", col:"MAC-CE", s:"nc", img:DN+"policy:7.5305930:1767985142/Z%C3%A9%20Tarc%C3%ADsio%20-%20Sem%20t%C3%ADtulo,%201967,%20acr%C3%ADlica%20e%20nanquim%20sobre%20eucatex.%20Foto%20Artur%20Bluz.webp?q=0.8&$p$q=458952b", f:"zeDN"},
+    {t:"Um anjo na contramão", a:"1972", tec:"Registro de performance (foto Chico Cavalcante Porto)", col:"MAC-CE", s:"nc", img:DN+"policy:7.5305927:1767985125/Z%C3%A9%20Tarc%C3%ADsio%20-%20Um%20anjo%20na%20contram%C3%A3o,%201972.%20Registro%20de%20performance.%20Foto%20Chico%20Cavalcante%20Porto%20-%20montagem.webp?q=0.8&$p$q=3ff60f4", f:"zeDN"},
+    {t:"Loteamento – Canoa Quebrada e Loteamento (1981); Estudo para regador (1974)", a:"1974–1981", tec:"Guache e carvão sobre papel; serigrafia", col:"MAC-CE", s:"nc", img:DN+"policy:7.5305933:1767985246/Z%C3%A9%20Tarc%C3%ADsio%20-%20Loteamento%20-%20Canoa%20Quebrada,%201981.%20Guache%20e%20carv%C3%A3o%20s%20papel.%20Cole%C3%A7%C3%A3o%20do%20MAC%20.%20Loteamento,%201981.%20Guache%20e%20carv%C3%A3o%20s%20papel.%20Cole%C3%A7%C3%A3o%20do%20MAC.%20Estudo%20para%20regador,%201974.%20Areth.webp?q=0.8&$p$q=9e43725", f:"zeDN"},
+    {t:"Sem título", a:"1986", tec:"Pastel sobre papel", col:"Minimuseu Firmeza", s:"nc", img:DN+"policy:7.5305954:1767986295/Z%C3%A9%20Tarc%C3%ADsio%20-%20Sem%20t%C3%ADtulo,%201986.%20Pastel%20sobre%20papel.%20Reprodu%C3%A7%C3%A3o..webp?q=0.8&$p$q=431dbb8", f:"zeDN"},
+    {t:"Relicários (série Relicários da Seca)", a:"2013", tec:"Técnica não informada", col:"Fundação Edson Queiroz", s:"nc", img:DN+"policy:7.5305955:1767986383/relic%C3%A1rios%20-%20obra%20de%20z%C3%A9%20tarc%C3%ADsio%20-%20funda%C3%A7%C3%A3o%20edson%20queiroz.webp?q=0.8&$p$q=10a12db", f:"zeDN"}
+  ]
+},
+{
+  id: "hermano", n: 1954, nome: "Luiz Hermano", datas: "Cascavel, CE, 1954",
+  bio: [
+    "Luiz Hermano Façanha Farias começou a carreira nos anos 1970, trabalhou no Sudeste e expôs no exterior, em cidades como Paris e Havana. Amigo de Leonilson, integrou o núcleo \"Das amizades\" da exposição sobre Leonilson na Pinacoteca (2023).",
+    "O MAC-CE guarda obras dele como \"Brejo\" e \"Ilha do Mel\", mostradas em 2024 no Museu de Arte do Rio."
+  ],
+  nota: ["nc", "A obra abaixo foi exposta na Pinacoteca, mas pertence à coleção da família."],
+  destaques: [
+    ["Sem título, 1987", "Peça da geração dos anos 1980 exibida ao lado das obras de Leonilson, para mostrar a rede de amizades e trocas entre artistas cearenses que viviam no Sudeste."]
+  ],
+  obras: [
+    {t:"Sem título", a:"1987", tec:"Técnica não informada", col:"Coleção da família · exposta na Pinacoteca", s:"exposta", img:P+"2023/12/Luiz-Hermano-Sem-titulo-1987-Colecao-da-familia.-Foto_-Marilia-Camelo.jpg", f:"leon"}
+  ]
+},
+{
+  id: "leonilson", n: 1957, nome: "Leonilson", datas: "Fortaleza, CE, 1957 — São Paulo, 1993",
+  bio: [
+    "José Leonilson Bezerra Dias nasceu em Fortaleza e se mudou ainda criança para São Paulo. Estudou na Escola Panamericana de Arte e na FAAP e fez parte da Geração 80, que voltou à pintura; esteve na mostra \"Como vai você, Geração 80?\", em Bienais e nos Panoramas da Arte Brasileira.",
+    "Sua obra é autobiográfica: desenho, pintura e, cada vez mais, bordado e costura, com palavras escritas sobre o tecido. Em 1991 soube que vivia com HIV e passou a tratar da doença, do medo e da finitude. Morreu aos 36 anos, deixando cerca de 4.000 obras.",
+    "Em 2023–2024 a Pinacoteca dedicou a ele a exposição \"Montanhas protetoras e ao longe vulcões, rios, furacões, mares, abismos e Das amizades\", com 117 obras."
+  ],
+  nota: ["nc", "As obras abaixo foram mostradas na Pinacoteca, mas pertencem a coleções particulares, ao MAC-CE e ao MAM-SP."],
+  destaques: [
+    ["Incêndio a bordo, 1987", "Obra destacada pela imprensa na exposição da Pinacoteca. O título, como em boa parte da obra, nomeia uma imagem de perigo e travessia, tema que volta nas montanhas, vulcões e mares do título da mostra."],
+    ["Montanhas sob a neve, 1989 e Globo, 1980", "Duas obras do Museu de Arte Contemporânea do Ceará. As montanhas, que dão nome à exposição, aparecem como figura protetora ao longo de toda a carreira."],
+    ["Se você sonha com nuvens, 1991", "Do acervo do MAM-SP, feita no ano do diagnóstico. A frase como título mostra a escrita poética que marca as obras finais."]
+  ],
+  obras: [
+    {t:"Viver amigos", a:"1980", tec:"Técnica não informada", col:"Coleção particular, SP", s:"exposta", img:P+"2023/12/Leonilson-Viver-amigos-1980-Colecao-particular-SP.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Globo", a:"1980", tec:"Técnica não informada", col:"Museu de Arte Contemporânea do Ceará", s:"exposta", img:P+"2023/12/Leonilson-Globo-1980-Acervo-do-Museu-de-Arte-Contemporanea-do-Ceara.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Colcha de algodão pintado em preto", a:"1980", tec:"Técnica não informada", col:"Coleção particular", s:"exposta", img:P+"2023/12/Leonilson-Colcha-de-algodao-pintado-em-preto-1980-Colecao-particular.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_.jpg", f:"leon"},
+    {t:"Montanha", a:"1981", tec:"Técnica não informada", col:"Coleção particular", s:"exposta", img:P+"2023/12/Leonilson-Montanha-1981-Colecao-particular.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Sem título", a:"1984", tec:"Técnica não informada", col:"Coleção particular", s:"exposta", img:P+"2023/12/Leonilson-Sem-titulo-1984-Colecao-particular.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Incêndio a bordo", a:"1987", tec:"Técnica não informada", col:"Coleção particular", s:"exposta", img:P+"2023/12/Leonilson-Incendio-a-bordo-1987-Colecao-particular.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_.jpg", f:"leon"},
+    {t:"Como as cataratas", a:"1988", tec:"Técnica não informada", col:"Coleção particular", s:"exposta", img:P+"2023/12/Leonilson-Como-as-cataratas-1988-Colecao-particular.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Montanhas sob a neve", a:"1989", tec:"Técnica não informada", col:"Museu de Arte Contemporânea do Ceará", s:"exposta", img:P+"2023/12/Leonilson-Montanhas-sob-a-neve-1989-Acervo-do-Museu-de-Arte-Contemporanea-do-Ceara.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Foge para procurar", a:"1990", tec:"Técnica não informada", col:"Coleção particular", s:"exposta", img:P+"2023/12/Leonilson-Foge-para-procurar-1990-Colecao-particular.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Sem título", a:"1990", tec:"Técnica não informada", col:"Acervo MAC-CE · exposta em \"Existências paralelas\"", s:"exposta", img:P+"2025/05/Sem-titulo-Leonilson-1990-Acervo-MAC-CE.-Foto_-Rodrigo-Patrocinio.png", f:"exist"},
+    {t:"Se você sonha com nuvens", a:"1991", tec:"Técnica não informada", col:"Museu de Arte Moderna de São Paulo", s:"exposta", img:P+"2023/12/Leonilson-Se-voce-sonha-com-nuvens-1991-Acervo-do-Museu-de-Arte-Moderna-de-Sao-Paulo.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"},
+    {t:"Sapatinhos com montanha de sal", a:"1991", tec:"Técnica não informada", col:"Coleção particular, SP", s:"exposta", img:P+"2023/12/Leonilson-Sapatinhos-com-montanha-de-sal-1991-Colecao-particular-SP.-Credito_-Arquivo-Fotografico-Projeto-Leonilson_-scaled.jpg", f:"leon"}
+  ]
+},
+{
+  id: "efrain", n: 1964, nome: "Efrain Almeida", datas: "Boa Viagem, CE, 1964 — Rio de Janeiro, 2024",
+  bio: [
+    "Nascido no sertão central do Ceará, Efrain mudou-se cedo para o Rio de Janeiro, onde construiu uma carreira de mais de 30 anos e coordenou grupos de estudo ligados ao Parque Lage. Trabalhou sobretudo com escultura em madeira, como a umburana, e depois também em bronze, além de aquarelas.",
+    "A obra é autobiográfica e vem da memória do sertão: pássaros (que ele ligava à migração), ex-votos e objetos religiosos, pequenas figuras e autorretratos nus. As visitas de infância às salas de ex-votos de Canindé formaram seu olhar. Morreu em 2024, aos 60 anos."
+  ],
+  nota: ["nc", "Obras de Efrain foram mostradas na Pinacoteca (\"Negros na Piscina\", 2022, e \"Existências paralelas\", 2025), mas a imprensa registra que ele não tem obras no acervo da instituição."],
+  destaques: [
+    ["Uma coisa linda, 2014", "Cerca de cinquenta galos-de-campina em bronze e óleo, de 12 cm cada, espalhados pelo chão. Foram inspirados num bando que pousou no quintal dos pais do artista. Foi sua primeira obra em bronze, e na Pinacoteca atraiu sobretudo crianças."],
+    ["Pintinhos, 2006–2007", "Trinta e duas peças em umburana. A escala mínima e a madeira entalhada remetem diretamente aos ex-votos de Canindé."],
+    ["Duas cabeças (autorretrato), 2014 e O Sozinho, 2012", "O próprio corpo do artista como tema, tratado com a mesma delicadeza dos santos de madeira."]
+  ],
+  obras: [
+    {t:"O Sozinho", a:"2012", tec:"Técnica não informada", col:"Reprodução Galeria Fortes D'Aloia & Gabriel", s:"nc", img:DN+"policy:7.5078727:1727382910/O%20Sozinho,%202012,%20Efrain%20Almeida%20-%20reprodu%C3%A7%C3%A3o%20Fortes%20D'Aloia%20&%20Gabriel.webp?q=0.8&$p$q=e832cda", f:"efrDN"},
+    {t:"Duas cabeças (autorretrato)", a:"2014", tec:"Aquarela (díptico)", col:"Reprodução Galeria Fortes D'Aloia & Gabriel", s:"nc", img:DN+"policy:7.5079261:1727465647/Duas%20cabe%C3%A7as%20(autorretrato),%202014,%20Efrain%20Almeida%20-%20reprodu%C3%A7%C3%A3o%20Fortes%20D'Aloia%20&%20Gabriel_Easy-Resize.com.webp?q=0.8&$p$q=77ac0b6", f:"efrDN"},
+    {t:"Pintinhos", a:"2006–2007", tec:"32 peças em umburana", col:"Reprodução Galeria Fortes D'Aloia & Gabriel", s:"nc", img:DN+"policy:7.5079259:1727465495/ea10035-pintinhos-ddh-1200x678_Easy-Resize.com.webp?q=0.8&$p$q=f30fd63", f:"efrDN"},
+    {t:"Uma coisa linda (na Pinacoteca)", a:"2014", tec:"Bronze e óleo, 50 peças de 12 × 7 × 4 cm", col:"Exposta em \"Negros na Piscina\"", s:"exposta", img:DN+"policy:7.4743119:1672063347/WhatsApp%20Image%202022-12-23%20at%2010.46.36%20(20).webp?q=0.8&$p$q=3179480", f:"dezDN"},
+    {t:"Uma coisa linda (foto Fabiane de Paula)", a:"2014", tec:"Bronze e óleo", col:"Exposta na Pinacoteca do Ceará", s:"exposta", img:DN+"policy:7.5078724:1727382825/efrain%20almeida%20-%20uma%20coisa%20linda%20-%20fabiane%20de%20paula.webp?q=0.8&$p$q=6491b92", f:"efrDN"},
+    {t:"Beija-flores", a:"2014", tec:"Bronze policromado, 10 peças de 13 × 8 × 12 cm", col:"Galeria Fortes Vilaça", s:"nc", img:"https://www.meer.com/attachments/215c564e23cf0751e6e02e3d2ff0210b583a5099/store/fill/860/645/e7e323820cbb9c416a42b4e537e638d47274f6c0eb51780106cbe840a7f3/Efrain-Almeida-Hummingbirds-2014-Bronze-policromatico-10-pecas-13-x-8-x-12-cm-cada-Edicao-de-3.jpg", f:"efrMeer"},
+    {t:"Cabeça Transe com Lágrimas de Nossa Senhora", a:"2020", tec:"Técnica não informada", col:"Exposta em \"Existências paralelas\" (foto Marília Camelo)", s:"exposta", img:"https://artebrasileiros.com.br/wp-content/uploads/2025/12/Pinacoteca-do-Ceara_2.jpg", f:"artebr"},
+    {t:"Soldadinho-do-Araripe", a:"2023", tec:"Técnica não informada", col:"Coleção não informada", s:"nc", img:DN+"policy:7.5079265:1727465812/Soldadinho-do-Araripe%20-%202023%20-%20Efrain%20Almeida%20-%20foto%20Eduardo%20Ortega%20jpg_Easy-Resize.com.webp?q=0.8&$p$q=8453fc3", f:"efrDN"},
+    {t:"Vaso-flor", a:"2024", tec:"Técnica não informada", col:"Mostra \"O Jardim\", Museu Oscar Niemeyer", s:"nc", img:DN+"policy:7.5078719:1727382334/Vaso-flor%20-%202024%20-%20Efrain%20Almeida%20-%20Eduardo%20Ortega_Easy-Resize.com.webp?q=0.8&$p$q=97a24b1", f:"efrDN"},
+    {t:"Vista da exposição \"Encarnado\", Centro Cultural do Cariri", a:"2023", tec:"Fotografia de exposição (Samuel Macedo)", col:"Curadoria de Bitu Cassundé", s:"nc", img:DN+"policy:7.5078713:1727381925/-2023SAMUPrepara%C3%A7%C3%A3o%20e%20Montagem%20exposi%C3%A7%C3%A3o%20Encarnado,%20Galeria%20de%20artes%203._K5A9878_Easy-Resize.com.webp?q=0.8&$p$q=93daf02", f:"efrDN"}
+  ]
+}
+);
+
+SALAS.sort((a, b) => a.n - b.n);
+
+const SELO = { acervo: "Acervo Pinacoteca", exposta: "Exposta na Pinacoteca", nc: "Acervo não confirmado" };
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+const planta = document.getElementById("planta");
+const salas = document.getElementById("salas");
+const todas = [];
+
+SALAS.forEach((s, i) => {
+  const n = String(i + 1).padStart(2, "0");
+  const li = el("li"); const a = el("a"); a.href = "#" + s.id;
+  a.append(el("span", null, "Sala " + n), document.createTextNode(s.nome));
+  li.append(a); planta.append(li);
+
+  const sec = el("section", "sala"); sec.id = s.id;
+  const topo = el("div", "sala-topo");
+  const cab = el("div");
+  cab.append(el("p", "rotulo", "Sala " + n + " · " + s.obras.length + " obras"), el("h2", null, s.nome), el("p", "datas", s.datas));
+  const bio = el("div", "bio");
+  s.bio.forEach(p => bio.append(el("p", null, p)));
+  bio.append(el("p", "nota" + (s.nota[0] === "ok" ? " ok" : ""), s.nota[1]));
+  topo.append(cab, bio); sec.append(topo);
+
+  const dest = el("div", "destaques");
+  s.destaques.forEach(([h, p]) => { const ar = el("article"); ar.append(el("p", "rotulo", "Obra em destaque"), el("h3", null, h), el("p", null, p)); dest.append(ar); });
+  sec.append(dest);
+
+  const parede = el("div", "parede");
+  s.obras.forEach(o => {
+    const idx = todas.length; todas.push(o);
+    const fig = el("figure", "obra");
+    const btn = el("button"); btn.type = "button"; btn.setAttribute("aria-label", "Ampliar: " + o.t);
+    const img = el("img"); img.loading = "lazy"; img.decoding = "async"; img.referrerPolicy = "no-referrer";
+    img.alt = o.t + ", " + s.nome + ", " + o.a; img.src = o.img;
+    img.addEventListener("error", () => {
+      const f = el("div", "falha", "A imagem não carregou a partir do site de origem. Use o link \"fonte\" abaixo.");
+      img.replaceWith(f); btn.disabled = true; btn.style.cursor = "default";
+    });
+    btn.append(img); btn.addEventListener("click", () => abrir(idx));
+    const cap = el("figcaption");
+    cap.append(el("span", "tit", o.t), el("span", null, [o.a, o.tec].join(" · ")), el("span", null, o.col));
+    const linha = el("span", "linha");
+    linha.append(el("span", "selo " + o.s, SELO[o.s]));
+    const fa = el("a", null, "fonte ↗"); fa.href = F[o.f][1]; fa.target = "_blank"; fa.rel = "noopener";
+    linha.append(fa); cap.append(linha);
+    fig.append(btn, cap); parede.append(fig);
+    o.artista = s.nome;
+  });
+  sec.append(parede);
+  salas.append(sec);
+});
+
+const fontes = document.getElementById("fontes");
+Object.values(F).forEach(([nome, url]) => { const li = el("li"); const a = el("a", null, nome); a.href = url; a.target = "_blank"; a.rel = "noopener"; li.append(a); fontes.append(li); });
+
+const visor = document.getElementById("visor"), vImg = document.getElementById("visor-img"), vLeg = document.getElementById("visor-leg");
+let atual = 0;
+function abrir(i) {
+  atual = (i + todas.length) % todas.length;
+  const o = todas[atual];
+  vImg.src = o.img; vImg.alt = o.t;
+  vLeg.textContent = o.artista + " — " + o.t + " · " + o.a + " · " + o.tec + " · " + o.col;
+  if (!visor.open) visor.showModal();
+}
+document.getElementById("fechar").onclick = () => visor.close();
+document.getElementById("ant").onclick = () => abrir(atual - 1);
+document.getElementById("prox").onclick = () => abrir(atual + 1);
+visor.addEventListener("click", e => { if (e.target === visor) visor.close(); });
+document.addEventListener("keydown", e => {
+  if (!visor.open) return;
+  if (e.key === "ArrowRight") abrir(atual + 1);
+  if (e.key === "ArrowLeft") abrir(atual - 1);
+});
+</script>
+</body>
+</html>
