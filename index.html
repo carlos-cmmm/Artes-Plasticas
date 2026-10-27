@@ -393,6 +393,13 @@ footer { margin-bottom: 72px; }
 .galeria-txt p { margin: 0; font-size: 15px; }
 .galeria-txt .end { font: 400 13px/1.5 var(--f-etiqueta); color: var(--sombra); }
 .galeria-txt .art { font-size: 14px; }
+.g-saltos.atalhos { flex-wrap: wrap; overflow: visible; gap: 8px; padding-block: 14px; }
+.g-saltos.atalhos a::before { display: none; }
+#aba-museus .bloco, #aba-museus .galeria-card { scroll-margin-top: calc(var(--topo-h) + 128px); }
+@media (max-width: 760px) { #aba-museus .bloco, #aba-museus .galeria-card { scroll-margin-top: calc(var(--topo-h) + 76px); } }
+.g-saltos.atalhos a { font-size: 14px; padding: 10px 14px; border-left: 4px solid var(--c); border-radius: 10px; }
+.g-saltos.atalhos a:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 10%, var(--papel)); }
+@media (max-width: 760px) { .g-saltos.atalhos { flex-wrap: nowrap; overflow-x: auto; } }
 .galeria-txt .linha { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; }
 </style>
 </head>
@@ -2034,6 +2041,12 @@ montarBR();
 
 /* ---------- Subaba: Museus e galerias de Fortaleza ---------- */
 const museusLista = document.getElementById("museus-lista");
+const atalhosMus = el("nav", "g-saltos atalhos"); atalhosMus.setAttribute("aria-label", "Ir para o museu ou galeria");
+[...MUSEUS_FOR.map(m => [m.nome.replace("Museu de Arte da UFC (Mauc)", "Mauc"), "museu-" + m.id, "var(--mar)", "🏛"]), ...GALERIAS_FOR.map(x => [x.nome, "gal-" + slug(x.nome), "var(--ocre)", "🖼"])].forEach(([n, id, c, ic]) => {
+  const a = el("a"); a.href = "#" + id; a.dataset.alvo = id; a.style.setProperty("--c", c);
+  a.append(document.createTextNode(ic + " " + n)); atalhosMus.append(a);
+});
+museusLista.append(atalhosMus);
 MUSEUS_FOR.forEach(m => {
   const sec = el("section", "bloco museu"); sec.id = "museu-" + m.id;
   const cab = el("div", "mov-cab");
@@ -2366,7 +2379,10 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && !painel.hi
 btnTopo.addEventListener("click", () => window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
 function marcar(pares) {
   const lim = topoEl.offsetHeight + 100; let atual = null;
-  pares.forEach(([a, sec]) => { if (!sec || sec.hidden || sec.offsetParent === null) return; if (sec.getBoundingClientRect().top < lim) atual = a; });
+  let melhor = -Infinity;
+  pares.forEach(([a, sec]) => { if (!sec || sec.hidden || sec.offsetParent === null) return; const t = sec.getBoundingClientRect().top; if (t < lim && t > melhor + 1) { atual = a; melhor = t; } });
+  const h = location.hash.slice(1); const fixo = pares.find(([, sec]) => sec && sec.id === h);
+  if (fixo && atual) { const t = fixo[1].getBoundingClientRect().top; if (Math.abs(t - melhor) < 2) atual = fixo[0]; }
   pares.forEach(([a]) => { if (a === atual) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
   return atual;
 }
@@ -2385,6 +2401,7 @@ function aoRolar() {
     const sal = brasil.querySelector(".g-saltos");
     if (sal) { const a = marcar([...sal.querySelectorAll("a")].map(a => [a, document.getElementById("br-g-" + a.dataset.g)])); if (a) { cor = a.style.getPropertyValue("--c"); centrar(sal, a); } }
   }
+  if (abaAtual === "museus") { const a = marcar([...atalhosMus.querySelectorAll("a")].map(a => [a, document.getElementById(a.dataset.alvo)])); centrar(atalhosMus, a); }
   raizEl.style.setProperty("--cor-ativa", cor || "var(--mar)");
   if (!painel.hidden) marcar(itensIdx);
 }
