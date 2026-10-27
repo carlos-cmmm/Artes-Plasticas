@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hub de Artes Plásticas</title>
+<title>Atlas da Arte Brasileira</title>
+<meta name="description" content="Guia da arte brasileira e cearense: artistas, obras, movimentos, esculturas e onde ver.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -116,12 +117,6 @@ dialog#visor::backdrop { background: rgba(10, 11, 13, .92); }
 .visor-ctl { display: flex; justify-content: center; gap: 10px; }
 .visor-ctl button { font: 500 13px var(--f-etiqueta); color: #ECEAE4; background: transparent; border: 1px solid #6B6E76; padding: 8px 14px; cursor: pointer; }
 /* Hub: barra de abas fixa no topo, filtros em fichas, cartões para artistas e lugares */
-nav.abas { position: sticky; top: 0; z-index: 5; background: var(--cal); border-bottom: 1px solid var(--fio); margin-inline: -16px; padding: 10px 16px; }
-nav.abas ul { list-style: none; margin: 0 auto; padding: 0; max-width: 1180px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
-nav.abas ul::-webkit-scrollbar { display: none; }
-nav.abas a { display: block; white-space: nowrap; text-decoration: none; color: var(--tinta); font: 500 13px/1 var(--f-etiqueta); letter-spacing: .04em; text-transform: uppercase; padding: 10px 12px; border: 1px solid var(--fio); background: var(--papel); }
-nav.abas a:hover { border-color: var(--mar); }
-nav.abas a[aria-current="page"] { background: var(--tinta); color: var(--cal); border-color: var(--tinta); }
 [hidden] { display: none !important; }
 .aba-intro { padding-block: 48px 24px; border-bottom: 1px solid var(--fio); display: grid; gap: 14px; }
 .aba-intro h2 { font-size: clamp(36px, 6vw, 60px); line-height: 1; }
@@ -227,34 +222,227 @@ a.ficha { text-decoration: none; display: inline-block; }
 .az li a:hover { color: var(--mar); }
 .az li span { font: 400 12px var(--f-etiqueta); color: var(--sombra); display: block; }
 .uf { font: 500 11px/1 var(--f-etiqueta); letter-spacing: .05em; text-transform: uppercase; color: var(--ocre); border: 1px solid currentColor; padding: 5px 7px; border-radius: 2px; }
+
+/* ===== v5: Atlas — barra fixa, início, navegação e movimentos ===== */
+:root { --topo-h: 64px; --raio: 12px; --sombra-c: 0 1px 2px rgba(20,22,26,.06), 0 4px 16px rgba(20,22,26,.06); --sombra-h: 0 2px 4px rgba(20,22,26,.08), 0 10px 28px rgba(20,22,26,.12); }
+:root[data-theme="dark"] { --sombra-c: 0 1px 2px rgba(0,0,0,.4); --sombra-h: 0 6px 22px rgba(0,0,0,.5); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --sombra-c: 0 1px 2px rgba(0,0,0,.4); --sombra-h: 0 6px 22px rgba(0,0,0,.5); } }
+.aba { --cor: var(--mar); }
+header.topo { position: sticky; top: 0; z-index: 20; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); background: color-mix(in srgb, var(--cal) 88%, transparent); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--fio); }
+.topo-in { max-width: 1212px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 18px; }
+.marca { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tinta); font: 400 20px/1 var(--f-display); white-space: nowrap; flex: none; }
+.marca em { font-style: normal; color: var(--mar); }
+.marca-sinal { width: 22px; height: 22px; border-radius: 6px; background: conic-gradient(from 200deg, #B8860B, #D2452B, #6B4E9B, #1E6FB8, #2E8B57, #B8860B); flex: none; }
+nav.abas { min-width: 0; flex: 1; position: relative; }
+nav.abas ul { list-style: none; margin: 0; padding: 2px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; }
+nav.abas ul::-webkit-scrollbar { display: none; }
+nav.abas a { display: block; white-space: nowrap; text-decoration: none; color: var(--sombra); font: 500 14px/1 var(--f-texto); padding: 10px 13px; border-radius: 999px; transition: background .15s, color .15s; }
+nav.abas a:hover { color: var(--tinta); background: var(--papel); }
+nav.abas a[aria-current="page"] { background: var(--tinta); color: var(--cal); }
+@media (max-width: 760px) {
+  .topo-in { flex-direction: column; align-items: stretch; gap: 6px; padding-block: 8px 6px; }
+  .marca { font-size: 18px; }
+  nav.abas::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 28px; background: linear-gradient(to right, transparent, var(--cal)); pointer-events: none; }
+}
+.progresso { height: 3px; background: transparent; }
+.progresso span { display: block; height: 100%; width: 0; background: var(--cor-ativa, var(--mar)); transition: width .1s linear; }
+nav.trilha { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; padding-top: 14px; font: 400 13px/1.4 var(--f-etiqueta); color: var(--sombra); min-height: 32px; }
+nav.trilha a { color: var(--sombra); text-decoration: none; }
+nav.trilha a:hover { color: var(--mar); text-decoration: underline; }
+nav.trilha .sep { opacity: .5; }
+nav.trilha b { font-weight: 500; color: var(--tinta); }
+section.sala, .artista, .bloco, .az h3, .especial, .mov-sec, .g-sec { scroll-margin-top: calc(var(--topo-h) + 64px); }
+.mov-sec { scroll-margin-top: calc(var(--topo-h) + 56px); }
+
+/* Botões */
+.botao { display: inline-flex; align-items: center; gap: 8px; font: 600 15px/1 var(--f-texto); padding: 13px 18px; border-radius: 999px; border: 1px solid var(--mar); background: var(--mar); color: var(--cal); cursor: pointer; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+.botao:hover { transform: translateY(-1px); box-shadow: var(--sombra-c); }
+.botao.claro { background: var(--papel); color: var(--tinta); border-color: var(--fio); }
+.botao.claro:hover { border-color: var(--mar); }
+
+/* Início */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; padding-block: 28px 48px; border-bottom: 1px solid var(--fio); align-items: center; }
+@media (min-width: 980px) { .hero { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 56px; padding-block: 40px 64px; } }
+.hero-txt { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; min-width: 0; }
+.hero-acoes .botao { white-space: normal; }
+.hero h1 { font-size: clamp(48px, 8.5vw, 104px); line-height: .92; letter-spacing: -.015em; }
+.hero h1 span { display: block; color: var(--mar); }
+.hero .lead { max-width: 58ch; font-size: 19px; margin: 0; }
+.hero-busca { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; max-width: 560px; }
+.hero-busca-linha { display: flex; gap: 8px; }
+.hero-busca input { flex: 1; min-width: 0; width: 100%; font: 400 17px var(--f-texto); padding: 12px 16px; border-radius: 999px; border: 1px solid var(--fio); background: var(--papel); color: var(--tinta); }
+.hero-busca input:focus-visible { outline: 2px solid var(--mar); outline-offset: 2px; }
+.hero-acoes { display: flex; flex-wrap: wrap; gap: 10px; }
+.mosaico { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; gap: 10px; }
+@media (min-width: 980px) { .mosaico { grid-auto-rows: 170px; } }
+.mosaico button { all: unset; cursor: zoom-in; border-radius: var(--raio); overflow: hidden; background: var(--fio); position: relative; box-shadow: var(--sombra-c); }
+.mosaico button:nth-child(1) { grid-row: span 2; }
+.mosaico button:focus-visible { outline: 2px solid var(--mar); outline-offset: 3px; }
+.mosaico img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+.mosaico button:hover img { transform: scale(1.04); }
+.mosaico span { position: absolute; left: 8px; bottom: 8px; right: 8px; font: 500 11px/1.3 var(--f-etiqueta); color: #fff; background: rgba(10,11,13,.6); padding: 5px 7px; border-radius: 6px; }
+.inicio-sec { padding-block: 44px 12px; display: grid; gap: 20px; }
+.inicio-cab { display: grid; gap: 6px; }
+.inicio-cab h2 { font-size: clamp(32px, 5vw, 48px); line-height: 1; }
+.inicio-cab p { margin: 0; max-width: 62ch; }
+.entradas { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+a.entrada { display: grid; grid-template-rows: 150px auto; text-decoration: none; color: var(--tinta); background: var(--papel); border: 1px solid var(--fio); border-radius: var(--raio); overflow: hidden; box-shadow: var(--sombra-c); transition: transform .18s, box-shadow .18s, border-color .18s; }
+a.entrada:hover { transform: translateY(-3px); box-shadow: var(--sombra-h); border-color: var(--mar); }
+.entrada-img { background: linear-gradient(135deg, var(--mar), #6B4E9B); overflow: hidden; }
+.entrada-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.entrada-txt { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.entrada-txt h3 { font-size: 26px; line-height: 1.05; display: flex; justify-content: space-between; gap: 8px; }
+.entrada-txt h3::after { content: "→"; font-family: var(--f-texto); color: var(--mar); transition: transform .18s; }
+a.entrada:hover h3::after { transform: translateX(4px); }
+.entrada-txt p { margin: 0; font-size: 15px; color: var(--sombra); }
+.entrada-txt .rotulo { color: var(--mar); }
+
+/* Faixa de movimentos */
+.mov-faixa { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 12px; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.mov-faixa.fixa { position: sticky; top: var(--topo-h); z-index: 6; background: var(--cal); padding-top: 12px; border-bottom: 1px solid var(--fio); margin-inline: -16px; padding-inline: 16px; }
+.mov-faixa a { --c: var(--mar); scroll-snap-align: start; flex: 0 0 auto; width: 170px; display: grid; gap: 4px; text-decoration: none; color: var(--tinta); padding: 12px 12px 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--c) 10%, var(--papel)); border: 1px solid color-mix(in srgb, var(--c) 35%, var(--fio)); border-left: 6px solid var(--c); transition: transform .15s, box-shadow .15s; }
+.mov-faixa a:hover { transform: translateY(-2px); box-shadow: var(--sombra-c); }
+.mov-faixa a[aria-current="true"] { background: var(--c); color: #fff; border-color: var(--c); }
+.mov-faixa a[aria-current="true"] small { color: rgba(255,255,255,.85); }
+.mov-faixa b { font: 400 18px/1.1 var(--f-display); }
+.mov-faixa small { font: 400 11px/1.3 var(--f-etiqueta); color: var(--sombra); }
+.mov-faixa .n { font: 500 11px/1 var(--f-etiqueta); opacity: .75; }
+.mov-faixa.compacta a { width: auto; padding: 9px 12px 9px 10px; }
+.mov-faixa.fixa { padding-block: 8px; gap: 6px; }
+.mov-faixa.fixa a { width: auto; max-width: 240px; grid-template-columns: auto auto; align-items: baseline; gap: 6px; padding: 8px 12px 8px 10px; border-left-width: 5px; }
+.mov-faixa.fixa small { display: none; }
+.mov-faixa.fixa b { font: 500 14px/1.2 var(--f-texto); white-space: nowrap; }
+.mov-faixa.compacta b { font: 500 14px/1.2 var(--f-texto); }
+
+/* Seções de movimento */
+.mov-sec { --c: var(--mar); position: relative; padding: 40px 0 28px 28px; border-bottom: 1px solid var(--fio); display: grid; gap: 22px; }
+.mov-sec::before { content: ""; position: absolute; left: 0; top: 40px; bottom: 28px; width: 6px; border-radius: 6px; background: var(--c); }
+.mov-sec .mov-cab { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 18px; align-items: start; max-width: 80ch; }
+.mov-num { grid-row: span 3; font: 400 64px/0.9 var(--f-display); color: var(--c); font-variant-numeric: tabular-nums; }
+.mov-epoca { display: inline-block; justify-self: start; font: 500 12px/1 var(--f-etiqueta); letter-spacing: .05em; text-transform: uppercase; color: #fff; background: var(--c); padding: 6px 9px; border-radius: 999px; }
+.mov-sec h2 { font-size: clamp(32px, 5vw, 52px); line-height: 1; }
+.mov-sec .mov-cab p { margin: 0; }
+.mov-sec .rotulo { color: var(--tinta); }
+.mov-sec .nomes a { border-radius: 999px; }
+.mov-sec .nomes a:hover { border-color: var(--c); }
+.mov-passos { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.mov-passos a { font: 500 13px/1.3 var(--f-etiqueta); text-decoration: none; color: var(--tinta); padding: 9px 12px; border: 1px solid var(--fio); border-radius: 999px; background: var(--papel); }
+.mov-passos a:hover { border-color: var(--c); }
+.minis.faixa { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 6px; scroll-snap-type: x proximity; }
+.minis.faixa .mini { flex: 0 0 250px; scroll-snap-align: start; }
+@media (max-width: 600px) { .mov-sec { padding-left: 18px; } .mov-num { font-size: 44px; } }
+
+/* Brasil agrupado por movimento */
+.g-saltos { position: sticky; top: var(--topo-h); z-index: 6; background: var(--cal); margin-inline: -16px; padding: 10px 16px; border-bottom: 1px solid var(--fio); display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.g-saltos::-webkit-scrollbar { display: none; }
+.g-saltos a { --c: var(--mar); flex: none; white-space: nowrap; font: 500 13px/1 var(--f-texto); text-decoration: none; color: var(--tinta); padding: 8px 12px 8px 10px; border-radius: 999px; border: 1px solid var(--fio); background: var(--papel); display: inline-flex; gap: 7px; align-items: center; }
+.g-saltos a::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+.g-saltos a[aria-current="true"] { background: var(--c); color: #fff; border-color: var(--c); }
+.g-saltos a[aria-current="true"]::before { background: #fff; }
+.g-saltos small { font: 400 11px var(--f-etiqueta); opacity: .75; }
+.bloco.g-sec { --c: var(--mar); }
+.g-cab { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; padding: 18px 20px; border-radius: var(--raio); background: color-mix(in srgb, var(--c) 12%, var(--papel)); border: 1px solid color-mix(in srgb, var(--c) 30%, var(--fio)); border-left: 8px solid var(--c); }
+.g-cab .g-num { font: 400 44px/1 var(--f-display); color: var(--c); }
+.g-cab h2 { font-size: clamp(28px, 4.2vw, 42px); line-height: 1.02; }
+.g-cab a { font: 500 13px/1.3 var(--f-etiqueta); text-decoration: none; color: var(--tinta); padding: 9px 12px; border-radius: 999px; background: var(--papel); border: 1px solid var(--fio); white-space: nowrap; }
+.g-cab a:hover { border-color: var(--c); }
+@media (max-width: 640px) { .g-cab { grid-template-columns: auto minmax(0, 1fr); } .g-cab a { grid-column: 1 / -1; justify-self: start; } .g-cab .g-num { font-size: 34px; } }
+
+/* Cartões mais leves */
+.artista { padding: 24px; border: 1px solid var(--fio); border-top: 4px solid var(--c, var(--tinta)); border-radius: var(--raio); background: var(--papel); box-shadow: var(--sombra-c); }
+.artista .obra button, .artista .obras-txt article { background: var(--cal); }
+@media (max-width: 600px) { .artista { padding: 16px; } }
+.obra button { border-radius: 10px; transition: transform .18s, box-shadow .18s, border-color .18s; }
+.obra button:hover { transform: translateY(-2px); box-shadow: var(--sombra-h); border-color: var(--mar); }
+.obra img { border-radius: 4px; }
+.obras-txt article, .lugares article, .mini, .esc .sem-img, .especial, .nomes a, .busca input, nav.planta a, .letras a { border-radius: 10px; }
+.mini { transition: box-shadow .15s, border-color .15s; }
+.mini:hover { box-shadow: var(--sombra-c); border-color: var(--mar); }
+.mini button, .mini button img, .mini .ph { border-radius: 6px; overflow: hidden; }
+nav.planta a { transition: transform .15s, box-shadow .15s; }
+nav.planta a:hover { transform: translateY(-2px); box-shadow: var(--sombra-c); }
+.aba-intro { padding-block: 28px 28px; }
+.aba-intro .rotulo { color: var(--mar); }
+.filtros { background: var(--papel); border: 1px solid var(--fio); border-radius: var(--raio); padding: 18px 20px; margin-top: 20px; }
+.ficha { transition: background .15s, border-color .15s; }
+.ficha[aria-pressed="true"] { box-shadow: 0 1px 6px color-mix(in srgb, var(--mar) 40%, transparent); }
+
+/* Botões flutuantes e painel */
+.flutuantes { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 30; display: flex; gap: 8px; align-items: center; }
+.flutua { font: 600 14px/1 var(--f-texto); color: var(--cal); background: var(--tinta); border: 0; border-radius: 999px; padding: 13px 16px; cursor: pointer; box-shadow: var(--sombra-h); transition: transform .15s, opacity .2s; }
+.flutua:hover { transform: translateY(-2px); }
+.flutua.redondo { width: 46px; height: 46px; padding: 0; font-size: 18px; }
+.flutua[hidden] { display: none !important; }
+.painel { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + 58px); z-index: 31; width: min(340px, calc(100vw - 32px)); max-height: min(60vh, 520px); overflow: auto; background: var(--papel); border: 1px solid var(--fio); border-radius: 14px; box-shadow: var(--sombra-h); padding: 14px 8px 10px; }
+.painel-cab { display: flex; justify-content: space-between; align-items: center; padding: 0 8px 8px; }
+.painel-cab button { all: unset; cursor: pointer; padding: 4px 8px; color: var(--sombra); }
+.painel ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.painel a { display: flex; gap: 10px; align-items: center; padding: 9px 10px; border-radius: 8px; text-decoration: none; color: var(--tinta); font-size: 15px; line-height: 1.3; }
+.painel a::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--fio)); }
+.painel a:hover { background: var(--cal); }
+.painel a[aria-current="true"] { background: var(--cal); font-weight: 600; }
+footer { margin-bottom: 72px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header class="abertura">
-  <p class="rotulo">Hub de artes plásticas · Brasil e Ceará · da pré-história a 2026</p>
-  <h1>Mar, Sertão <span>e Mundo</span></h1>
-  <p class="lead">Um guia da arte brasileira e cearense. Comece pelo Brasil, organizado por estado e por movimento, siga para o Ceará, compare os movimentos artísticos e os períodos da história, veja as esculturas e use o catálogo em ordem alfabética para achar qualquer artista ou obra. A aba Onde ver diz em que museus e galerias cada um está.</p>
-  <ul class="fatos">
-    <li><b id="n-br">0</b><span class="rotulo">artistas brasileiros</span></li>
-    <li><b id="n-ce">0</b><span class="rotulo">artistas cearenses</span></li>
-    <li><b id="n-obras">0</b><span class="rotulo">obras no catálogo</span></li>
-    <li><b id="n-mov">0</b><span class="rotulo">movimentos</span></li>
-  </ul>
+<header class="topo" id="topo">
+  <div class="topo-in">
+    <a class="marca" href="#inicio" aria-label="Atlas da Arte Brasileira, início"><span class="marca-sinal" aria-hidden="true"></span><span>Atlas da Arte <em>Brasileira</em></span></a>
+    <nav class="abas" aria-label="Seções do site">
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#brasil">Brasil</a></li>
+        <li><a href="#ceara">Ceará</a></li>
+        <li><a href="#movimentos">Movimentos</a></li>
+        <li><a href="#periodos">Períodos</a></li>
+        <li><a href="#esculturas">Esculturas</a></li>
+        <li><a href="#catalogo">Catálogo A–Z</a></li>
+        <li><a href="#onde">Onde ver</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="progresso" aria-hidden="true"><span id="progresso"></span></div>
 </header>
+<nav class="trilha" id="trilha" aria-label="Você está em"></nav>
 
-<nav class="abas" aria-label="Seções do hub">
-  <ul>
-    <li><a href="#brasil">Brasil</a></li>
-    <li><a href="#ceara">Ceará</a></li>
-    <li><a href="#movimentos">Movimentos artísticos</a></li>
-    <li><a href="#periodos">Períodos históricos</a></li>
-    <li><a href="#esculturas">Esculturas</a></li>
-    <li><a href="#catalogo">Catálogo A–Z</a></li>
-    <li><a href="#onde">Onde ver</a></li>
-  </ul>
-</nav>
+<!-- ABA: Início -->
+<div class="aba" id="aba-inicio" hidden>
+  <section class="hero">
+    <div class="hero-txt">
+      <p class="rotulo">Brasil e Ceará · do barroco a 2026</p>
+      <h1>Atlas da Arte <span>Brasileira</span></h1>
+      <p class="lead">Um guia para passear pela arte do Brasil e do Ceará: artistas, obras explicadas, movimentos, esculturas e os museus onde ver tudo isso. Escolha uma porta de entrada abaixo, busque um nome ou deixe o acaso escolher uma obra.</p>
+      <form class="hero-busca" id="hero-busca" role="search">
+        <label for="hero-q" class="rotulo">Buscar artista ou obra</label>
+        <div class="hero-busca-linha">
+          <input type="search" id="hero-q" placeholder="Ex.: Tarsila, Urutu, Iracema" autocomplete="off">
+          <button type="submit" class="botao">Buscar</button>
+        </div>
+      </form>
+      <div class="hero-acoes">
+        <button type="button" class="botao claro" id="surpresa">✦ Uma obra ao acaso</button>
+        <a class="botao claro" href="#movimentos">Ver a linha dos movimentos →</a>
+      </div>
+      <ul class="fatos">
+        <li><b id="n-br">0</b><span class="rotulo">artistas brasileiros</span></li>
+        <li><b id="n-ce">0</b><span class="rotulo">artistas cearenses</span></li>
+        <li><b id="n-obras">0</b><span class="rotulo">obras no catálogo</span></li>
+        <li><b id="n-mov">0</b><span class="rotulo">movimentos</span></li>
+      </ul>
+    </div>
+    <div class="mosaico" id="mosaico"></div>
+  </section>
+  <section class="inicio-sec">
+    <div class="inicio-cab"><p class="rotulo">Portas de entrada</p><h2>Por onde começar</h2></div>
+    <div class="entradas" id="entradas"></div>
+  </section>
+  <section class="inicio-sec">
+    <div class="inicio-cab"><p class="rotulo">Do mais antigo ao mais recente</p><h2>Viaje pelos movimentos</h2><p>Cada cor é um movimento. Toque num deles para ver a explicação, as obras e os artistas.</p></div>
+    <nav class="mov-faixa" id="faixa-inicio" aria-label="Movimentos artísticos"></nav>
+  </section>
+</div>
 
 <!-- ABA: artistas cearenses -->
 <div class="aba" id="aba-ceara" hidden>
@@ -341,9 +529,9 @@ a.ficha { text-decoration: none; display: inline-block; }
   <section class="aba-intro">
     <p class="rotulo">Do barroco ao contemporâneo</p>
     <h2>Movimentos artísticos</h2>
-    <p>Cada movimento com uma explicação curta e os artistas do Brasil e do Ceará que fazem parte dele. Clique num nome para ir até o artista.</p>
+    <p>Os movimentos em ordem, cada um com a sua cor, uma explicação curta, obras de exemplo e os artistas do Brasil e do Ceará que fazem parte dele. Use a faixa colorida para pular de um para outro; clique numa obra para ampliar ou num nome para ir até o artista.</p>
   </section>
-  <nav class="planta" aria-label="Movimentos"><ol id="mov-indice"></ol></nav>
+  <nav class="mov-faixa fixa" id="mov-indice" aria-label="Linha dos movimentos"></nav>
   <div id="mov-lista"></div>
 </div>
 
@@ -407,6 +595,15 @@ a.ficha { text-decoration: none; display: inline-block; }
 
 </div>
 
+
+<div class="flutuantes">
+  <button type="button" class="flutua" id="btn-indice" aria-expanded="false" aria-controls="painel-indice">☰ <span>Nesta página</span></button>
+  <button type="button" class="flutua redondo" id="btn-topo" aria-label="Voltar ao topo">↑</button>
+</div>
+<aside class="painel" id="painel-indice" hidden aria-label="Nesta página">
+  <div class="painel-cab"><p class="rotulo">Nesta página</p><button type="button" id="painel-fechar" aria-label="Fechar">✕</button></div>
+  <ol id="indice-lista"></ol>
+</aside>
 
 <dialog id="visor" aria-label="Obra ampliada">
   <div class="visor-in">
@@ -1559,6 +1756,9 @@ const ERAS = [
   {id:"e-ditadura", nome:"Ditadura militar", faixa:"1964–1985", ini:1964, fim:1984, desc:"Censura e resistência: Nova Figuração, Tropicália e arte conceitual que usa o próprio sistema para circular."},
   {id:"e-nova", nome:"Nova República", faixa:"1985 até hoje", ini:1985, fim:99999, desc:"Internacionalização da arte brasileira, arte indígena e afro-brasileira nos grandes museus e, no Ceará, a Pinacoteca (2022)."}
 ];
+const MOV_COR = { "m-rupestre": "#A0522D", "m-barroco": "#B8860B", "m-academico": "#7B5EA7", "m-moderno": "#D2452B", "m-expressionismo": "#C2185B", "m-abstracao": "#1E6FB8", "m-novafig": "#E07B00", "m-popular": "#2E8B57", "m-contemporanea": "#00897B" };
+const P_MOV = {}; MOVIMENTOS.forEach(m => m.br.forEach(k => { P_MOV[k] = m.id; }));
+const corP = k => MOV_COR[P_MOV[k]] || "var(--mar)";
 function anoDe(a) {
   if (!a) return null;
   if (/pré/i.test(a)) return -1;
@@ -1682,7 +1882,7 @@ let agruparBR = "p";
 const NOME_P = Object.fromEntries(PERIODOS);
 const cardsBR = BRASIL.map(b => {
   const ar = el("article", "artista"); ar.id = "br-" + slug(b.nome);
-  ar.dataset.ling = b.ling.join("|"); ar.dataset.p = b.p; ar.dataset.uf = b.uf;
+  ar.dataset.ling = b.ling.join("|"); ar.dataset.p = b.p; ar.dataset.uf = b.uf; ar.style.setProperty("--c", corP(b.p));
   const topo = el("div", "artista-topo");
   const cab = el("div");
   cab.append(el("p", "rotulo", NOME_P[b.p]), el("h3", null, b.nome), el("p", "datas", b.datas));
@@ -1711,14 +1911,28 @@ const cardsBR = BRASIL.map(b => {
 });
 function montarBR() {
   brasil.replaceChildren();
-  const grupos = agruparBR === "p"
+  const porMov = agruparBR === "p";
+  const grupos = porMov
     ? PERIODOS.map(([k, n]) => [k, n])
     : Object.keys(UFS).filter(k => BRASIL.some(b => b.uf === k)).sort((a, b) => UFS[a].localeCompare(UFS[b], "pt")).map(k => [k, UFS[k]]);
-  grupos.forEach(([k, n]) => {
-    const bloco = el("section", "bloco"); bloco.dataset.g = k;
-    bloco.append(el("h2", null, n));
-    cardsBR.filter(c => c.dataset[agruparBR] === k).forEach(c => bloco.append(c));
+  const saltos = el("nav", "g-saltos"); saltos.setAttribute("aria-label", porMov ? "Ir para o movimento" : "Ir para o estado");
+  brasil.append(saltos);
+  grupos.forEach(([k, n], i) => {
+    const cards = cardsBR.filter(c => c.dataset[agruparBR] === k);
+    if (!cards.length) return;
+    const bloco = el("section", "bloco g-sec"); bloco.dataset.g = k; bloco.id = "br-g-" + k;
+    const cab = el("header", "g-cab"), info = el("div");
+    const m = porMov ? MOVIMENTOS.find(x => x.id === P_MOV[k]) : null;
+    if (porMov) bloco.style.setProperty("--c", corP(k));
+    info.append(el("p", "rotulo", (m ? m.epoca + " · " : "") + cards.length + (cards.length === 1 ? " artista" : " artistas")), el("h2", null, n));
+    cab.append(el("span", "g-num", porMov ? String(i + 1).padStart(2, "0") : k), info);
+    if (m) { const a = el("a", null, "Entender o movimento →"); a.href = "#" + m.id; cab.append(a); }
+    bloco.append(cab); cards.forEach(c => bloco.append(c));
     brasil.append(bloco);
+    const sa = el("a"); sa.href = "#br-g-" + k; sa.dataset.g = k;
+    if (porMov) sa.style.setProperty("--c", corP(k));
+    sa.append(document.createTextNode(n), el("small", null, String(cards.length)));
+    saltos.append(sa);
   });
   filtrarBR();
 }
@@ -1730,7 +1944,10 @@ function filtrarBR() {
       a.hidden = !ok; if (ok) vis++;
     });
     bl.hidden = vis === 0;
+    const sa = brasil.querySelector('.g-saltos a[data-g="' + bl.dataset.g + '"]');
+    if (sa) { sa.hidden = vis === 0; sa.querySelector("small").textContent = vis; }
   });
+  if (window.atlasPronto) aoRolar();
 }
 fichas(document.getElementById("br-agrupar"), [["p", "Movimento"], ["uf", "Estado"]], v => { agruparBR = v || "p"; montarBR(); });
 document.querySelector('#br-agrupar .ficha').setAttribute("aria-pressed", "true");
@@ -1843,21 +2060,42 @@ function mini(w) {
 }
 
 /* ---------- Aba: Movimentos ---------- */
+function faixaMov(cont) {
+  MOVIMENTOS.forEach((m, i) => {
+    const a = el("a"); a.href = "#" + m.id; a.dataset.m = m.id; a.style.setProperty("--c", MOV_COR[m.id]);
+    a.append(el("span", "n", String(i + 1).padStart(2, "0")), el("b", null, m.nome), el("small", null, m.epoca));
+    cont.append(a);
+  });
+}
 const movLista = document.getElementById("mov-lista"), movIdx = document.getElementById("mov-indice");
+faixaMov(movIdx);
 MOVIMENTOS.forEach((m, i) => {
-  const li = el("li"); const a = el("a"); a.href = "#" + m.id; a.append(el("span", null, String(i + 1).padStart(2, "0")), document.createTextNode(m.nome)); li.append(a); movIdx.append(li);
-  const sec = el("section", "bloco"); sec.id = m.id;
+  const sec = el("section", "mov-sec"); sec.id = m.id; sec.style.setProperty("--c", MOV_COR[m.id]);
   const cab = el("div", "mov-cab");
-  cab.append(el("p", "rotulo", m.epoca), el("h2", null, m.nome), el("p", null, m.desc));
+  cab.append(el("span", "mov-num", String(i + 1).padStart(2, "0")), el("span", "mov-epoca", m.epoca), el("h2", null, m.nome), el("p", null, m.desc));
   sec.append(cab);
   const br = BRASIL.filter(b => m.br.includes(b.p) || (m.extra || []).includes(b.nome));
   const ce = SALAS.filter(s => s.id !== "outras" && (CEARA_INFO[s.id].e || []).some(e => m.ce.includes(e)));
   const hj = HOJE.filter(h => m.todosHoje || (m.hoje || []).includes(h.nome));
+  const ids = new Set([...br.map(b => "br-" + slug(b.nome)), ...ce.map(s => s.id), ...hj.map(h => "hoje-" + slug(h.nome))]);
+  const vistos = new Set();
+  const exemplos = OBRAS.filter(w => w.o && w.o.img && ids.has(w.id) && todas.includes(w.o) && !vistos.has(w.id) && vistos.add(w.id)).slice(0, 12);
+  if (exemplos.length) {
+    const g = el("div", "minis faixa"); exemplos.forEach(w => g.append(mini(w)));
+    sec.append(el("p", "rotulo", "Obras de exemplo · deslize para ver mais"), g);
+  }
   [["Brasil", br.map(b => linkArt(b.nome, "br-" + slug(b.nome), b.uf))], ["Ceará", [...ce.map(s => linkArt(s.nome, s.id)), ...hj.map(h => linkArt(h.nome, "hoje-" + slug(h.nome), "hoje"))]]].forEach(([rot, links]) => {
     if (!links.length) return;
     const ul = el("ul", "nomes"); links.forEach(l => { const li = el("li"); li.append(l); ul.append(li); });
     sec.append(el("p", "rotulo", rot + " · " + links.length + (links.length === 1 ? " artista" : " artistas")), ul);
   });
+  const passos = el("nav", "mov-passos"); passos.setAttribute("aria-label", "Navegar entre movimentos");
+  const ant = MOVIMENTOS[i - 1], prox = MOVIMENTOS[i + 1];
+  const esq = el("div"), dir = el("div");
+  if (ant) { const a = el("a", null, "← " + ant.nome); a.href = "#" + ant.id; esq.append(a); }
+  if (m.br.length && BRASIL.some(b => m.br.includes(b.p))) { const a = el("a", null, "Ver estes artistas na aba Brasil"); a.href = "#br-g-" + m.br.find(k => BRASIL.some(b => b.p === k)); esq.append(document.createTextNode(" "), a); }
+  if (prox) { const a = el("a", null, prox.nome + " →"); a.href = "#" + prox.id; dir.append(a); }
+  passos.append(esq, dir); sec.append(passos);
   movLista.append(sec);
 });
 
@@ -1921,25 +2159,140 @@ SUB_CE.forEach(([k]) => {
 const fontes = document.getElementById("fontes");
 Object.values(F).forEach(([nome, url]) => { const li = el("li"); const a = el("a", null, nome); a.href = url; a.target = "_blank"; a.rel = "noopener"; li.append(a); fontes.append(li); });
 
+/* ---------- Início ---------- */
+const achar = t => { const w = OBRAS.find(w => w.t.startsWith(t) && w.o && w.o.img && todas.includes(w.o)); return w ? w.o : null; };
+const mosaico = document.getElementById("mosaico");
+["Operários", "Independência ou Morte", "Os Doze Profetas", "Urutu", "Bandeiras e mastros"].map(achar).filter(Boolean).slice(0, 5).forEach(o => {
+  const b = el("button"); b.type = "button"; b.setAttribute("aria-label", "Ampliar: " + o.t);
+  const im = el("img"); im.src = o.img; im.alt = o.t; im.referrerPolicy = "no-referrer"; im.decoding = "async";
+  im.addEventListener("error", () => b.remove());
+  b.append(im, el("span", null, o.t + (o.artista ? " · " + o.artista : "")));
+  b.addEventListener("click", () => abrir(todas.indexOf(o)));
+  mosaico.append(b);
+});
+const capaCE = (() => { for (const s of SALAS) { const o = s.obras.find(o => o.img); if (o) return o.img; } return null; })();
+const cristo = ESCULTURAS.find(e => e.t === "Cristo Redentor");
+const ENTRADAS = [
+  ["brasil", "Brasil", "Artistas de todo o país, organizados por movimento ou por estado, com as obras explicadas.", BRASIL.length + " artistas", (achar("Bandeiras e mastros") || {}).img],
+  ["ceara", "Ceará", "Os grandes nomes, a cena de hoje e a história da arte no estado.", (SALAS.length - 1 + HOJE.length) + " artistas", capaCE],
+  ["movimentos", "Movimentos", "Do barroco à arte contemporânea, com cores, obras de exemplo e artistas.", MOVIMENTOS.length + " movimentos", (achar("Urutu") || {}).img],
+  ["periodos", "Períodos históricos", "As obras na história do Brasil, da Colônia à Nova República.", ERAS.length + " períodos", (achar("Independência ou Morte") || {}).img],
+  ["esculturas", "Esculturas", "Especial Fortaleza e Theatro José de Alencar, Brasília, Rio, São Paulo, Bahia e Minas.", ESCULTURAS.length + " esculturas", cristo && cristo.img],
+  ["catalogo", "Catálogo A–Z", "Todos os artistas e obras em ordem alfabética, com busca.", OBRAS.length + " obras", (achar("Operários") || {}).img],
+  ["onde", "Onde ver", "Museus, centros culturais e galerias para visitar.", "Roteiro", TEATRO.img]
+];
+const entradas = document.getElementById("entradas");
+ENTRADAS.forEach(([k, nome, desc, n, img]) => {
+  const a = el("a", "entrada"); a.href = "#" + k;
+  const fig = el("div", "entrada-img");
+  if (img) { const im = el("img"); im.src = img; im.alt = ""; im.loading = "lazy"; im.referrerPolicy = "no-referrer"; im.addEventListener("error", () => im.remove()); fig.append(im); }
+  const tx = el("div", "entrada-txt"); tx.append(el("p", "rotulo", n), el("h3", null, nome), el("p", null, desc));
+  a.append(fig, tx); entradas.append(a);
+});
+faixaMov(document.getElementById("faixa-inicio"));
+document.getElementById("surpresa").addEventListener("click", () => {
+  const ok = todas.map((o, i) => [o, i]).filter(([o]) => o.img);
+  abrir(ok[Math.floor(Math.random() * ok.length)][1]);
+});
+document.getElementById("hero-busca").addEventListener("submit", e => {
+  e.preventDefault();
+  const busca = document.getElementById("busca");
+  busca.value = document.getElementById("hero-q").value; catalogo();
+  if (location.hash === "#catalogo") mostrar(); else location.hash = "catalogo";
+  setTimeout(() => busca.focus({ preventScroll: true }), 50);
+});
+
 /* ---------- Abas pelo endereço (#brasil, #ceara, ou #id de um artista, obra ou seção) ---------- */
-const ABAS = ["brasil", "ceara", "hoje", "estado", "movimentos", "periodos", "esculturas", "catalogo", "onde"];
+const ABAS = ["inicio", "brasil", "ceara", "hoje", "estado", "movimentos", "periodos", "esculturas", "catalogo", "onde"];
 const TOPO = { hoje: "ceara", estado: "ceara" };
+const NOME_ABA = { inicio: "Início", brasil: "Brasil", ceara: "Ceará", hoje: "Ceará hoje", estado: "História e lugares", movimentos: "Movimentos artísticos", periodos: "Períodos históricos", esculturas: "Esculturas", catalogo: "Catálogo A–Z", onde: "Onde ver" };
+const raizEl = document.documentElement, topoEl = document.getElementById("topo");
+const trilha = document.getElementById("trilha"), btnIdx = document.getElementById("btn-indice"), btnTopo = document.getElementById("btn-topo");
+const painel = document.getElementById("painel-indice"), listaIdx = document.getElementById("indice-lista");
+let abaAtual = "inicio", itensIdx = [];
+function medirTopo() { raizEl.style.setProperty("--topo-h", topoEl.offsetHeight + "px"); }
+function tituloDe(n) { const h = n.matches("h2, h3") ? n : n.querySelector("h2, h3"); return (h ? h.textContent : n.textContent).trim().slice(0, 70); }
+function montarTrilha(aba, alvo) {
+  trilha.replaceChildren();
+  const passos = [["inicio", "Início"]];
+  if (aba !== "inicio") { if (TOPO[aba]) passos.push([TOPO[aba], NOME_ABA[TOPO[aba]]]); passos.push([aba, NOME_ABA[aba]]); }
+  if (alvo) passos.push([null, tituloDe(alvo)]);
+  trilha.append(el("span", null, "Você está em"));
+  passos.forEach(([k, n], i) => {
+    trilha.append(el("span", "sep", i ? "›" : ":"));
+    if (i === passos.length - 1) trilha.append(el("b", null, n));
+    else { const a = el("a", null, n); a.href = "#" + k; trilha.append(a); }
+  });
+}
+function montarIndice() {
+  listaIdx.replaceChildren(); itensIdx = [];
+  const raiz = document.getElementById("aba-" + abaAtual);
+  raiz.querySelectorAll("h2").forEach(h => {
+    if (h.closest(".aba-intro, .hero") || h.offsetParent === null) return;
+    const sec = h.closest("section, article") || h;
+    if (!sec.id) sec.id = "sec-" + slug(abaAtual + "-" + h.textContent);
+    const li = el("li"), a = el("a", null, h.textContent.trim()); a.href = "#" + sec.id;
+    const c = getComputedStyle(sec).getPropertyValue("--c").trim(); if (c) a.style.setProperty("--c", c);
+    a.addEventListener("click", () => { fecharPainel(); if (location.hash === "#" + sec.id) mostrar(); });
+    li.append(a); listaIdx.append(li); itensIdx.push([a, sec]);
+  });
+  btnIdx.hidden = itensIdx.length < 2 || abaAtual === "inicio";
+}
+function abrirPainel() { montarIndice(); painel.hidden = false; btnIdx.setAttribute("aria-expanded", "true"); aoRolar(); }
+function fecharPainel() { painel.hidden = true; btnIdx.setAttribute("aria-expanded", "false"); }
+btnIdx.addEventListener("click", () => painel.hidden ? abrirPainel() : fecharPainel());
+document.getElementById("painel-fechar").addEventListener("click", fecharPainel);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !painel.hidden) fecharPainel(); });
+btnTopo.addEventListener("click", () => window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
+function marcar(pares) {
+  const lim = topoEl.offsetHeight + 100; let atual = null;
+  pares.forEach(([a, sec]) => { if (!sec || sec.hidden || sec.offsetParent === null) return; if (sec.getBoundingClientRect().top < lim) atual = a; });
+  pares.forEach(([a]) => { if (a === atual) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+  return atual;
+}
+function centrar(cont, a) { if (a && cont.scrollWidth > cont.clientWidth) cont.scrollLeft = a.offsetLeft - cont.clientWidth / 2 + a.offsetWidth / 2; }
+let rolando = false;
+function aoRolar() {
+  const max = raizEl.scrollHeight - innerHeight;
+  document.getElementById("progresso").style.width = (max > 0 ? Math.min(100, scrollY / max * 100) : 0) + "%";
+  btnTopo.hidden = scrollY < 500;
+  let cor = "";
+  if (abaAtual === "movimentos") {
+    const a = marcar([...movIdx.querySelectorAll("a")].map(a => [a, document.getElementById(a.dataset.m)]));
+    if (a) { cor = a.style.getPropertyValue("--c"); centrar(movIdx, a); }
+  }
+  if (abaAtual === "brasil") {
+    const sal = brasil.querySelector(".g-saltos");
+    if (sal) { const a = marcar([...sal.querySelectorAll("a")].map(a => [a, document.getElementById("br-g-" + a.dataset.g)])); if (a) { cor = a.style.getPropertyValue("--c"); centrar(sal, a); } }
+  }
+  raizEl.style.setProperty("--cor-ativa", cor || "var(--mar)");
+  if (!painel.hidden) marcar(itensIdx);
+}
+window.addEventListener("scroll", () => { if (!rolando) { rolando = true; requestAnimationFrame(() => { rolando = false; aoRolar(); }); } }, { passive: true });
+window.addEventListener("resize", () => { medirTopo(); aoRolar(); });
 function mostrar() {
   const h = decodeURIComponent(location.hash.slice(1));
-  let aba = ABAS.includes(h) ? h : "brasil", alvo = null;
+  let aba = ABAS.includes(h) ? h : "inicio", alvo = null;
   if (h && !ABAS.includes(h)) { alvo = document.getElementById(h); const pai = alvo && alvo.closest(".aba"); if (pai) aba = pai.id.slice(4); else alvo = null; }
+  abaAtual = aba;
   ABAS.forEach(k => { document.getElementById("aba-" + k).hidden = k !== aba; });
   const topo = TOPO[aba] || aba;
-  document.querySelectorAll("nav.abas a").forEach(a => { if (a.getAttribute("href") === "#" + topo) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  const ul = document.querySelector("nav.abas ul");
+  ul.querySelectorAll("a").forEach(a => { if (a.getAttribute("href") === "#" + topo) { a.setAttribute("aria-current", "page"); centrar(ul, a); } else a.removeAttribute("aria-current"); });
+  document.title = (aba === "inicio" ? "" : NOME_ABA[aba] + " · ") + "Atlas da Arte Brasileira";
+  if (alvo) for (let n = alvo; n && !n.classList.contains("aba"); n = n.parentElement) n.hidden = false;
+  montarTrilha(aba, alvo && !alvo.matches(".aba-intro") ? alvo : null);
+  fecharPainel(); medirTopo(); montarIndice();
   if (alvo) {
-    for (let n = alvo; n && !n.classList.contains("aba"); n = n.parentElement) n.hidden = false;
     const ir = () => alvo.scrollIntoView({ behavior: "instant" });
     requestAnimationFrame(ir); setTimeout(ir, 400); setTimeout(ir, 1200);
-  } else if (ABAS.includes(h)) document.querySelector("nav.abas").scrollIntoView({ block: "start" });
+  } else window.scrollTo({ top: 0, behavior: "instant" });
+  aoRolar();
 }
+window.atlasPronto = true;
 window.addEventListener("hashchange", mostrar);
 mostrar();
-window.addEventListener("load", () => { if (location.hash.length > 1) mostrar(); });
+window.addEventListener("load", () => { medirTopo(); if (location.hash.length > 1) mostrar(); });
 
 /* ---------- Visor ---------- */
 const visor = document.getElementById("visor"), vImg = document.getElementById("visor-img"), vLeg = document.getElementById("visor-leg");
