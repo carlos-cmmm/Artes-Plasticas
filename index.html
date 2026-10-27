@@ -364,15 +364,15 @@ a.ficha { text-decoration: none; display: inline-block; }
 <!-- ABA: Esculturas -->
 <div class="aba" id="aba-esculturas" hidden>
   <section class="aba-intro">
-    <p class="rotulo">Escultura · Brasil e Ceará</p>
+    <p class="rotulo">Escultura · Brasília, Ceará, Rio, São Paulo e além</p>
     <h2>Esculturas</h2>
-    <p>Do barroco de Aleijadinho às peças cinéticas de Sérvulo Esmeraldo e aos galos de bronze de Efrain Almeida: as esculturas mais importantes, com material, data e o lugar onde estão.</p>
+    <p>As principais esculturas de Brasília, do Ceará, do Rio de Janeiro e de São Paulo, com autor, material, data e o lugar onde estão, além de peças importantes de outros lugares e coleções. Quando a fonte não informa o autor ou a data, isso aparece escrito no cartão.</p>
   </section>
   <section class="filtros" aria-label="Filtrar esculturas">
-    <p class="rotulo">Região</p>
+    <p class="rotulo">Lugar</p>
     <div class="grupo" id="filtro-reg"></div>
   </section>
-  <div class="escs" id="escs"></div>
+  <div id="escs"></div>
 </div>
 
 <!-- ABA: Onde ver -->
@@ -860,10 +860,28 @@ Object.assign(F, {
   identTM: ["Toda Matéria — Identidade cultural brasileira através da arte", "https://www.todamateria.com.br/identidade-cultural-brasileira-atraves-da-arte/"],
   brechEB: ["eBiografia — Victor Brecheret", "https://www.ebiografia.com/victor_brecheret/"],
   krajEB: ["eBiografia — Frans Krajcberg", "https://www.ebiografia.com/frans_krajcberg/"],
-  giorgiWP: ["Wikipedia — Bruno Giorgi", "https://en.wikipedia.org/wiki/Bruno_Giorgi"]
+  giorgiWP: ["Wikipedia — Bruno Giorgi", "https://en.wikipedia.org/wiki/Bruno_Giorgi"],
+  danko: ["Stephen Danko — esculturas de Brasília", "https://stephendanko.com/blog/10118"],
+  catMH: ["Manchester History — Catedral de Brasília", "https://manchesterhistory.net/architecture/1960/brasilcathedral.html"],
+  ceschWP: ["Wikipedia — Alfredo Ceschiatti", "https://en.wikipedia.org/wiki/Alfredo_Ceschiatti"],
+  bandSP: ["Prefeitura de SP — Monumento às Bandeiras", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/4526"],
+  cristoCG: ["Cultura Genial — Cristo Redentor", "https://www.culturagenial.com/"],
+  pedroRM: ["Rio Memórias — Estátua de D. Pedro I", "https://riomemorias.com.br/statue-of-dom-pedro-i-tiradentes-square/"],
+  zumbiTP: ["Super Rádio Tupi — Monumento Zumbi dos Palmares", "https://www.tupi.fm/rio/cariocas-celebram-o-dia-da-consciencia-negra-no-monumento-zumbi-dos-palmares-no-rio/"],
+  indepSP: ["Prefeitura de SP — Monumento à Independência", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/4539"],
+  gloriaSP: ["Prefeitura de SP — Glória Imortal aos Fundadores", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/4523"],
+  faunoSP: ["Prefeitura de SP — Fauno", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/4527"],
+  borbaWP: ["Wikipedia — Statue of Borba Gato", "https://en.wikipedia.org/wiki/Statue_of_Borba_Gato"],
+  maeSP: ["Prefeitura de SP — Mãe Preta", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/8291"],
+  tomieSP: ["Prefeitura de SP — Oitenta Anos da Imigração Japonesa", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/4525"],
+  cicDN: ["Diário do Nordeste — Estátua do Padre Cícero completa 50 anos", "https://diariodonordeste.verdesmares.com.br/regiao/emblematica-e-imponente-estatua-do-pe-cicero-completa-50-anos-1.2168918"],
+  santosDN: ["Diário do Nordeste — Santos gigantes do Ceará", "https://diariodonordeste.verdesmares.com.br/ceara/ceara-tem-pelo-menos-oito-santos-gigantes-de-ate-54-metros-de-altura-conheca-1.3708632"],
+  iracDN: ["Diário do Nordeste — Fortaleza é composta por Iracemas", "https://diariodonordeste.verdesmares.com.br/metro/fortaleza-e-composta-por-iracemas-1.1541220"]
 });
 const CG = "https://cdn.culturagenial.com/imagens/";
 const TM = "https://static.todamateria.com.br/upload/";
+const SD = "https://stephendanko.com/blog/wp-content/uploads/2010/11/";
+const MH = "https://manchesterhistory.net/architecture/1960/";
 const OC = "https://files.ocula.com/ri/";
 
 /* Estilo e onde ver para as salas do Ceará */
@@ -1185,30 +1203,48 @@ const BRASIL = [
 
 /* Esculturas */
 const ESCULTURAS = [
-  {reg:"Brasil", t:"Os Doze Profetas", art:"Aleijadinho", a:"1800–1805", mat:"Pedra-sabão", loc:"Santuário do Bom Jesus de Matosinhos, Congonhas (MG)", exp:"O auge da escultura barroca brasileira: figuras teatrais que dialogam entre si no adro.", img:TM+"al/ei/aleijadinhoprofetasdosantuariodobomjesusdematosinhos-cke.jpg", f:"identTM"},
-  {reg:"Brasil", t:"Monumento às Bandeiras", art:"Victor Brecheret", a:"Encomendado em 1921, inaugurado em 1953", mat:"Granito", loc:"Parque Ibirapuera, São Paulo", exp:"Bandeirantes, indígenas e negros puxando uma canoa, em blocos geométricos. Glorifica os bandeirantes, hoje questionados pela violência contra indígenas, e virou alvo de protestos.", f:"brechEB"},
-  {reg:"Brasil", t:"Eva", art:"Victor Brecheret", a:"1919–1920", mat:"Escultura", loc:"Centro Cultural São Paulo", exp:"Nu alongado da fase anterior à Semana de 1922, que fez de Brecheret o escultor do grupo modernista.", f:"brechEB"},
-  {reg:"Brasil", t:"Os Candangos (Os Guerreiros)", art:"Bruno Giorgi", a:"1959", mat:"Bronze", loc:"Praça dos Três Poderes, Brasília", exp:"Duas figuras longilíneas de lança em homenagem aos trabalhadores que construíram Brasília.", f:"giorgiWP"},
-  {reg:"Brasil", t:"Meteoro", art:"Bruno Giorgi", a:"1967–1968", mat:"Mármore", loc:"Espelho d'água do Palácio do Itamaraty, Brasília", exp:"Formas curvas que parecem flutuar sobre a água, em diálogo com a arquitetura de Niemeyer.", f:"giorgiWP"},
-  {reg:"Brasil", t:"Os Evangelistas", art:"Alfredo Ceschiatti", a:"1968", mat:"Bronze", loc:"Entrada da Catedral de Brasília", exp:"Quatro figuras de 3 m que recebem quem entra na catedral de Niemeyer."},
-  {reg:"Brasil", t:"Bichos", art:"Lygia Clark", a:"1960", mat:"Alumínio com dobradiças", loc:"MAM Rio, MoMA e outras coleções", exp:"Escultura sem forma fixa, que o público monta e desmonta."},
-  {reg:"Brasil", t:"Esculturas de corte e dobra", art:"Amilcar de Castro", a:"A partir dos anos 1950", mat:"Chapa de aço", loc:"Espaços públicos de Belo Horizonte e museus", exp:"Uma única chapa cortada e dobrada vira volume, sem solda; o vazio faz parte da peça."},
-  {reg:"Brasil", t:"Cubo vazado", art:"Franz Weissmann", a:"1951", mat:"Metal", loc:"Coleções diversas", exp:"O cubo aberto, que deixa o espaço atravessar a escultura, é marca do construtivismo brasileiro."},
-  {reg:"Brasil", t:"Relevos e cilindros", art:"Sergio Camargo", a:"Anos 1960–1980", mat:"Madeira pintada de branco e mármore de Carrara", loc:"Coleções diversas", exp:"Pequenos cilindros cortados em ângulo que fazem a luz e a sombra vibrarem na superfície."},
-  {reg:"Brasil", t:"Esculturas de madeira calcinada", art:"Frans Krajcberg", a:"A partir de 1972", mat:"Troncos e raízes queimados", loc:"Espaço Krajcberg, Jardim Botânico de Curitiba; Sítio Natura, Nova Viçosa (BA)", exp:"O artista recolhia restos de queimadas da Amazônia e da Mata Atlântica e os pintava com pigmentos naturais: escultura como denúncia ecológica.", f:"krajEB"},
-  {reg:"Brasil", t:"Bonecos de barro", art:"Mestre Vitalino", a:"Anos 1940–1960", mat:"Cerâmica", loc:"Casa-Museu Mestre Vitalino, Caruaru (PE)", exp:"A escultura popular do sertão em pequena escala."},
-  {reg:"Brasil", t:"True Rouge", art:"Tunga", a:"1997", mat:"Vidro, redes, líquido vermelho", loc:"Inhotim, Brumadinho (MG)", exp:"Escultura-instalação suspensa que lembra um organismo."},
-  {reg:"Ceará", t:"Iracema Guardiã", art:"Zenon Barreto", a:"1995–1996", mat:"Fibra de vidro", loc:"Praia de Iracema, Fortaleza", exp:"Homenagem a José de Alencar que virou símbolo da orla; tombou em 2022.", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/iracema_guardia_zenon_barreto3_gigapixel_standard_scale_2_00x-17892412.jpg", f:"zenOP"},
-  {reg:"Ceará", t:"Rendeira, Cafuné, Mulher ao Pilão, Mulher com Pote", art:"Zenon Barreto", a:"1971", mat:"Ferrocimento", loc:"Residência Oficial do Governador, Fortaleza", exp:"Figuras de mulheres trabalhadoras do Nordeste.", f:"zenBNB"},
-  {reg:"Ceará", t:"La Femme Bateau", art:"Sérvulo Esmeraldo", a:"1994", mat:"Escultura pública", loc:"Ponte dos Ingleses, Fortaleza", exp:"Mulher e barco numa só forma; levada pelo mar, reconstruída e depois vandalizada.", img:DN+"policy:7.5328867:1772819261/07.La%20Femme%20Bateau%20-%20Cr%C3%A9dito%20Thiago%20Gadelha%20(4).webp?q=0.8&$p$q=68e3b54", f:"servDN"},
-  {reg:"Ceará", t:"Excitáveis", art:"Sérvulo Esmeraldo", a:"Desde 1964", mat:"Acrílico e elementos leves com eletricidade estática", loc:"Instituto Sérvulo Esmeraldo e coleções", exp:"Escultura cinética que se move quando o espectador se aproxima.", f:"servOP"},
-  {reg:"Ceará", t:"Pirâmides", art:"Sérvulo Esmeraldo", a:"2008", mat:"Metal", loc:"Encosta do Seminário, Crato", exp:"Doação do artista à cidade natal.", img:"https://mais.opovo.com.br/_midias/jpg/2021/09/08/gb_servulo_expo_cariri_2016_09img_2932-17002804.jpg", f:"servOP2"},
-  {reg:"Ceará", t:"Uma coisa linda", art:"Efrain Almeida", a:"2014", mat:"Bronze e óleo, 50 peças", loc:"Exposta na Pinacoteca do Ceará", exp:"Um bando de galos-de-campina pousado no chão do museu.", img:DN+"policy:7.4743119:1672063347/WhatsApp%20Image%202022-12-23%20at%2010.46.36%20(20).webp?q=0.8&$p$q=3179480", f:"dezDN"},
-  {reg:"Ceará", t:"Pintinhos", art:"Efrain Almeida", a:"2006–2007", mat:"Umburana, 32 peças", loc:"Coleção não informada", exp:"Escultura mínima em madeira, herdeira dos ex-votos de Canindé.", img:DN+"policy:7.5079259:1727465495/ea10035-pintinhos-ddh-1200x678_Easy-Resize.com.webp?q=0.8&$p$q=f30fd63", f:"efrDN"},
-  {reg:"Ceará", t:"Galos", art:"Aldemir Martins", a:"Data não informada", mat:"Metal e acrílico", loc:"Exibidos na Pinacoteca do Ceará", exp:"O galo de briga, tema-símbolo do artista, em três dimensões.", img:DN+"policy:7.4743118:1672063296/WhatsApp%20Image%202022-12-23%20at%2010.41.27%20(11).webp?q=0.8&$p$q=56e1f62", f:"dezDN"},
-  {reg:"Ceará", t:"Relevos brancos", art:"Heloysa Juaçaba", a:"1983", mat:"Linha de algodão sobre eucatex", loc:"Coleção da família", exp:"Relevo abstrato feito com cordas de punho de rede.", img:P+"2023/03/DSC9221_site-5.png", f:"helo"},
-  {reg:"Ceará", t:"Esculturas de santos e Padre Cícero", art:"Mestre Noza", a:"A partir de 1930", mat:"Madeira", loc:"Juazeiro do Norte", exp:"O santeiro que também abriu o caminho da xilogravura do Cariri.", f:"nozaP"},
-  {reg:"Ceará", t:"Esculturas híbridas", art:"Júlio Jardim", a:"Anos 2020", mat:"Não informado", loc:"Cave Galeria", exp:"Formas entre animal e planta.", f:"rotas"}
+  {cid:"Outros", reg:"Brasil", t:"Os Doze Profetas", art:"Aleijadinho", a:"1800–1805", mat:"Pedra-sabão", loc:"Santuário do Bom Jesus de Matosinhos, Congonhas (MG)", exp:"O auge da escultura barroca brasileira: figuras teatrais que dialogam entre si no adro.", img:TM+"al/ei/aleijadinhoprofetasdosantuariodobomjesusdematosinhos-cke.jpg", f:"identTM"},
+  {cid:"São Paulo", reg:"Brasil", t:"Monumento às Bandeiras", art:"Victor Brecheret", a:"Encomendado em 1921, inaugurado em 1953", mat:"Granito", loc:"Parque Ibirapuera, São Paulo", exp:"Bandeirantes, indígenas e negros puxando uma canoa, em blocos geométricos. Glorifica os bandeirantes, hoje questionados pela violência contra indígenas, e virou alvo de protestos.", img:"https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/monumentos-as-bandeiras-victor-brecheret-008-12-foto-cecilia-bastos-48-copia.jpeg.webp?w=760&h=504", f:"bandSP"},
+  {cid:"São Paulo", reg:"Brasil", t:"Eva", art:"Victor Brecheret", a:"1919–1920", mat:"Escultura", loc:"Centro Cultural São Paulo", exp:"Nu alongado da fase anterior à Semana de 1922, que fez de Brecheret o escultor do grupo modernista.", f:"brechEB"},
+  {cid:"Brasília", reg:"Brasil", t:"Os Candangos (Os Guerreiros)", art:"Bruno Giorgi", a:"1959", mat:"Bronze", loc:"Praça dos Três Poderes, Brasília", exp:"Duas figuras longilíneas de lança em homenagem aos trabalhadores que construíram Brasília.", img:"https://stephendanko.com/blog/wp-content/uploads/2010/11/Dois-Candangos-1024x682.jpg", f:"danko"},
+  {cid:"Brasília", reg:"Brasil", t:"Meteoro", art:"Bruno Giorgi", a:"1967–1968", mat:"Mármore", loc:"Espelho d'água do Palácio do Itamaraty, Brasília", exp:"Formas curvas que parecem flutuar sobre a água, em diálogo com a arquitetura de Niemeyer.", img:"https://stephendanko.com/blog/wp-content/uploads/2010/11/Meteor-Sculpture-1024x682.jpg", f:"danko"},
+  {cid:"Brasília", reg:"Brasil", t:"Os Evangelistas", art:"Alfredo Ceschiatti", a:"1968", mat:"Bronze", loc:"Entrada da Catedral de Brasília", exp:"Quatro figuras de 3 m que recebem quem entra na catedral de Niemeyer.", img:"https://manchesterhistory.net/architecture/1960/brasilcathedral3.jpg", f:"catMH"},
+  {cid:"Outros", reg:"Brasil", t:"Bichos", art:"Lygia Clark", a:"1960", mat:"Alumínio com dobradiças", loc:"MAM Rio, MoMA e outras coleções", exp:"Escultura sem forma fixa, que o público monta e desmonta."},
+  {cid:"Outros", reg:"Brasil", t:"Esculturas de corte e dobra", art:"Amilcar de Castro", a:"A partir dos anos 1950", mat:"Chapa de aço", loc:"Espaços públicos de Belo Horizonte e museus", exp:"Uma única chapa cortada e dobrada vira volume, sem solda; o vazio faz parte da peça."},
+  {cid:"Outros", reg:"Brasil", t:"Cubo vazado", art:"Franz Weissmann", a:"1951", mat:"Metal", loc:"Coleções diversas", exp:"O cubo aberto, que deixa o espaço atravessar a escultura, é marca do construtivismo brasileiro."},
+  {cid:"Outros", reg:"Brasil", t:"Relevos e cilindros", art:"Sergio Camargo", a:"Anos 1960–1980", mat:"Madeira pintada de branco e mármore de Carrara", loc:"Coleções diversas", exp:"Pequenos cilindros cortados em ângulo que fazem a luz e a sombra vibrarem na superfície."},
+  {cid:"Outros", reg:"Brasil", t:"Esculturas de madeira calcinada", art:"Frans Krajcberg", a:"A partir de 1972", mat:"Troncos e raízes queimados", loc:"Espaço Krajcberg, Jardim Botânico de Curitiba; Sítio Natura, Nova Viçosa (BA)", exp:"O artista recolhia restos de queimadas da Amazônia e da Mata Atlântica e os pintava com pigmentos naturais: escultura como denúncia ecológica.", f:"krajEB"},
+  {cid:"Outros", reg:"Brasil", t:"Bonecos de barro", art:"Mestre Vitalino", a:"Anos 1940–1960", mat:"Cerâmica", loc:"Casa-Museu Mestre Vitalino, Caruaru (PE)", exp:"A escultura popular do sertão em pequena escala."},
+  {cid:"Outros", reg:"Brasil", t:"True Rouge", art:"Tunga", a:"1997", mat:"Vidro, redes, líquido vermelho", loc:"Inhotim, Brumadinho (MG)", exp:"Escultura-instalação suspensa que lembra um organismo."},
+  {cid:"Brasília", reg:"Brasil", t:"A Justiça", art:"Alfredo Ceschiatti", a:"1961", mat:"Granito", loc:"Em frente ao Supremo Tribunal Federal, Praça dos Três Poderes, Brasília", exp:"Mulher sentada, de olhos vendados e com a espada no colo: a imagem mais conhecida do Judiciário brasileiro.", img:SD+"Justice-682x1024.jpg", f:"danko"},
+  {cid:"Brasília", reg:"Brasil", t:"Os Anjos", art:"Alfredo Ceschiatti", a:"1970", mat:"Alumínio suspenso por cabos de aço", loc:"Nave da Catedral de Brasília", exp:"Três anjos que parecem voar sob os vitrais da catedral de Niemeyer.", img:MH+"brasilcathedral6.jpg", f:"catMH"},
+  {cid:"Brasília", reg:"Brasil", t:"As Iaras", art:"Alfredo Ceschiatti", a:"Data não informada pela fonte", mat:"Bronze", loc:"Espelho d'água do Palácio da Alvorada, Brasília", exp:"Figuras femininas das águas que acompanham a fachada do palácio presidencial.", f:"ceschWP"},
+  {cid:"Brasília", reg:"Brasil", t:"As Gêmeas", art:"Alfredo Ceschiatti", a:"Data não informada pela fonte", mat:"Bronze", loc:"Palácio do Itamaraty, Brasília", exp:"Duas figuras femininas entrelaçadas, outra peça do escultor oficial da Brasília de Niemeyer.", f:"ceschWP"},
+  {cid:"Rio de Janeiro", reg:"Brasil", t:"Cristo Redentor", autor:"Paul Landowski", art:"Paul Landowski, com projeto de Heitor da Silva Costa e rosto de Gheorghe Leonida", a:"1922–1931", mat:"Concreto armado revestido de pedra-sabão", loc:"Morro do Corcovado, Rio de Janeiro", exp:"Com 30 m de altura sobre um pedestal de 8 m, é a escultura mais famosa do Brasil e uma das Novas Sete Maravilhas do Mundo.", img:"https://cdn.culturagenial.com/imagens/cristo-redentor.jpg?class=article", f:"cristoCG"},
+  {cid:"Rio de Janeiro", reg:"Brasil", t:"Estátua equestre de D. Pedro I", autor:"Louis Rochet", art:"Louis Rochet, sobre desenho de João Maximiano Mafra", a:"1862", mat:"Bronze", loc:"Praça Tiradentes, Rio de Janeiro", exp:"O imperador ergue a Declaração de Independência; na base, figuras de indígenas representam os rios do Brasil. É considerada a primeira escultura monumental pública do país.", f:"pedroRM"},
+  {cid:"Rio de Janeiro", reg:"Brasil", t:"As três forças armadas", art:"Alfredo Ceschiatti", a:"1960", mat:"Granito", loc:"Monumento aos Mortos da Segunda Guerra Mundial, Aterro do Flamengo, Rio de Janeiro", exp:"Três figuras que representam Exército, Marinha e Aeronáutica no memorial aos pracinhas.", f:"ceschWP"},
+  {cid:"Rio de Janeiro", reg:"Brasil", t:"Monumento a Zumbi dos Palmares", art:"Autoria não informada pela fonte", a:"Data não informada pela fonte", mat:"Bronze", loc:"Avenida Presidente Vargas, Centro do Rio de Janeiro", exp:"Grande cabeça de Zumbi, ponto de encontro das celebrações do Dia da Consciência Negra, em 20 de novembro.", img:"https://www.tupi.fm/wp-content/uploads/WhatsApp-Image-2021-11-20-at-08.53.55-1000x600.jpeg", f:"zumbiTP"},
+  {cid:"São Paulo", reg:"Brasil", t:"Monumento à Independência", art:"Ettore Ximenes", a:"Inaugurado em 1922", mat:"Granito e bronze", loc:"Parque da Independência, Ipiranga, São Paulo", exp:"Conjunto monumental no lugar do Grito do Ipiranga, feito para o centenário da Independência. Abriga a cripta com os restos de D. Pedro I e das imperatrizes.", f:"indepSP"},
+  {cid:"São Paulo", reg:"Brasil", t:"Glória Imortal aos Fundadores de São Paulo", art:"Amadeo Zani", a:"1925", mat:"Granito e bronze", loc:"Pátio do Colégio, São Paulo", exp:"Homenagem aos jesuítas e indígenas ligados à fundação da cidade, no lugar onde ela nasceu.", f:"gloriaSP"},
+  {cid:"São Paulo", reg:"Brasil", t:"Fauno", art:"Victor Brecheret", a:"1942", mat:"Escultura em pedra", loc:"Parque Tenente Siqueira Campos (Trianon), Avenida Paulista", exp:"Figura mitológica sentada entre as árvores do Trianon, em frente ao MASP.", f:"faunoSP"},
+  {cid:"São Paulo", reg:"Brasil", t:"Estátua de Borba Gato", art:"Júlio Guerra", a:"1963", mat:"Argamassa revestida de mosaico de pedras", loc:"Santo Amaro, São Paulo", exp:"Bandeirante de cerca de 10 m que virou símbolo do bairro. Foi incendiada em 2021, no debate sobre homenagens a bandeirantes.", img:DN+"policy:1.3114235:1627227492/borbagato.webp?f=16x9&h=720&w=1280&$p$f$h$w=60da0c2", f:"borbaWP"},
+  {cid:"São Paulo", reg:"Brasil", t:"Mãe Preta", art:"Júlio Guerra", a:"1955", mat:"Bronze", loc:"Largo do Paissandu, São Paulo", exp:"Mulher negra amamentando uma criança branca: homenagem às amas de leite escravizadas, ao lado da Igreja de Nossa Senhora do Rosário dos Homens Pretos.", img:"https://www.prefeitura.sp.gov.br/cidade/upload/mae_preta_1285080244.jpg", f:"maeSP"},
+  {cid:"São Paulo", reg:"Brasil", t:"Oitenta Anos da Imigração Japonesa", art:"Tomie Ohtake", a:"1988", mat:"Concreto", loc:"Avenida 23 de Maio, São Paulo", exp:"Quatro grandes ondas abstratas que celebram a chegada dos imigrantes japoneses em 1908.", f:"tomieSP"},
+  {cid:"Ceará", reg:"Ceará", t:"Estátua do Padre Cícero", art:"Armando Lacerda", a:"1969", mat:"Concreto", loc:"Colina do Horto, Juazeiro do Norte", exp:"Com 27 m, é destino de milhões de romeiros e símbolo da fé popular do Cariri.", img:DN+"policy:1.3708653:1762880820/padre%20c%C3%ADcero%20juazeiro%20do%20norte.webp?q=0.8&$p$q=f7b516c", f:"cicDN"},
+  {cid:"Ceará", reg:"Ceará", t:"São Francisco das Chagas", art:"Autoria não informada pela fonte", a:"2005", mat:"Escultura monumental", loc:"Canindé", exp:"Com 30 m, recebe os romeiros de um dos maiores centros franciscanos do mundo.", img:DN+"policy:1.3708641:1762880553/s%C3%A3o%20francisco%20de%20canind%C3%A9%20hln.webp?q=0.8&$p$q=9d26d41", f:"santosDN"},
+  {cid:"Ceará", reg:"Ceará", t:"Iracema do Mucuripe", art:"José Corbiniano Lins", a:"Data não informada pela fonte", mat:"Escultura pública", loc:"Praia do Mucuripe, Fortaleza", exp:"A personagem de José de Alencar olhando o mar, uma das várias Iracemas espalhadas por Fortaleza.", f:"iracDN"},
+  {cid:"Ceará", reg:"Ceará", t:"Monumento a José de Alencar", art:"Autoria não informada pela fonte", a:"1929", mat:"Granito", loc:"Praça José de Alencar, Fortaleza", exp:"Inaugurado no centenário do escritor, com a estátua de Alencar de quase 7 m, no centro da cidade.", f:"iracDN"},
+  {cid:"Ceará", reg:"Ceará", t:"Iracema Guardiã", art:"Zenon Barreto", a:"1995–1996", mat:"Fibra de vidro", loc:"Praia de Iracema, Fortaleza", exp:"Homenagem a José de Alencar que virou símbolo da orla; tombou em 2022.", img:"https://mais.opovo.com.br/_midias/jpg/2022/01/15/iracema_guardia_zenon_barreto3_gigapixel_standard_scale_2_00x-17892412.jpg", f:"zenOP"},
+  {cid:"Ceará", reg:"Ceará", t:"Rendeira, Cafuné, Mulher ao Pilão, Mulher com Pote", art:"Zenon Barreto", a:"1971", mat:"Ferrocimento", loc:"Residência Oficial do Governador, Fortaleza", exp:"Figuras de mulheres trabalhadoras do Nordeste.", f:"zenBNB"},
+  {cid:"Ceará", reg:"Ceará", t:"La Femme Bateau", art:"Sérvulo Esmeraldo", a:"1994", mat:"Escultura pública", loc:"Ponte dos Ingleses, Fortaleza", exp:"Mulher e barco numa só forma; levada pelo mar, reconstruída e depois vandalizada.", img:DN+"policy:7.5328867:1772819261/07.La%20Femme%20Bateau%20-%20Cr%C3%A9dito%20Thiago%20Gadelha%20(4).webp?q=0.8&$p$q=68e3b54", f:"servDN"},
+  {cid:"Ceará", reg:"Ceará", t:"Excitáveis", art:"Sérvulo Esmeraldo", a:"Desde 1964", mat:"Acrílico e elementos leves com eletricidade estática", loc:"Instituto Sérvulo Esmeraldo e coleções", exp:"Escultura cinética que se move quando o espectador se aproxima.", f:"servOP"},
+  {cid:"Ceará", reg:"Ceará", t:"Pirâmides", art:"Sérvulo Esmeraldo", a:"2008", mat:"Metal", loc:"Encosta do Seminário, Crato", exp:"Doação do artista à cidade natal.", img:"https://mais.opovo.com.br/_midias/jpg/2021/09/08/gb_servulo_expo_cariri_2016_09img_2932-17002804.jpg", f:"servOP2"},
+  {cid:"Ceará", reg:"Ceará", t:"Uma coisa linda", art:"Efrain Almeida", a:"2014", mat:"Bronze e óleo, 50 peças", loc:"Exposta na Pinacoteca do Ceará", exp:"Um bando de galos-de-campina pousado no chão do museu.", img:DN+"policy:7.4743119:1672063347/WhatsApp%20Image%202022-12-23%20at%2010.46.36%20(20).webp?q=0.8&$p$q=3179480", f:"dezDN"},
+  {cid:"Ceará", reg:"Ceará", t:"Pintinhos", art:"Efrain Almeida", a:"2006–2007", mat:"Umburana, 32 peças", loc:"Coleção não informada", exp:"Escultura mínima em madeira, herdeira dos ex-votos de Canindé.", img:DN+"policy:7.5079259:1727465495/ea10035-pintinhos-ddh-1200x678_Easy-Resize.com.webp?q=0.8&$p$q=f30fd63", f:"efrDN"},
+  {cid:"Ceará", reg:"Ceará", t:"Galos", art:"Aldemir Martins", a:"Data não informada", mat:"Metal e acrílico", loc:"Exibidos na Pinacoteca do Ceará", exp:"O galo de briga, tema-símbolo do artista, em três dimensões.", img:DN+"policy:7.4743118:1672063296/WhatsApp%20Image%202022-12-23%20at%2010.41.27%20(11).webp?q=0.8&$p$q=56e1f62", f:"dezDN"},
+  {cid:"Ceará", reg:"Ceará", t:"Relevos brancos", art:"Heloysa Juaçaba", a:"1983", mat:"Linha de algodão sobre eucatex", loc:"Coleção da família", exp:"Relevo abstrato feito com cordas de punho de rede.", img:P+"2023/03/DSC9221_site-5.png", f:"helo"},
+  {cid:"Ceará", reg:"Ceará", t:"Esculturas de santos e Padre Cícero", art:"Mestre Noza", a:"A partir de 1930", mat:"Madeira", loc:"Juazeiro do Norte", exp:"O santeiro que também abriu o caminho da xilogravura do Cariri.", f:"nozaP"},
+  {cid:"Ceará", reg:"Ceará", t:"Esculturas híbridas", art:"Júlio Jardim", a:"Anos 2020", mat:"Não informado", loc:"Cave Galeria", exp:"Formas entre animal e planta.", f:"rotas"}
 ];
 
 /* Fora do Ceará: onde ver cearenses e brasileiros */
@@ -1633,23 +1669,30 @@ montarBR();
 
 /* ---------- Aba: Esculturas ---------- */
 const escs = document.getElementById("escs");
-ESCULTURAS.forEach(e => {
-  const card = el("div", "esc"); card.dataset.reg = e.reg; card.id = "esc-" + slug(e.t + "-" + e.art);
-  if (e.img) {
-    const o = { t: e.t, a: e.a, img: e.img, f: e.f, leg: e.art + " — " + [e.t, e.a, e.mat, e.loc].join(" · ") };
-    e._o = o; card.append(figura(o, e.art, [e.art + " · " + e.a, e.mat, e.loc]));
-  } else {
-    card.append(el("div", "sem-img", "Sem imagem verificável"));
-    const cap = el("figcaption");
-    cap.append(el("span", "tit", e.t), el("span", null, e.art + " · " + e.a), el("span", null, e.mat), el("span", null, e.loc));
-    const fa = linkFonte(e.f); if (fa) { const l = el("span", "linha"); l.append(fa); cap.append(l); }
-    card.append(cap);
-  }
-  card.append(el("p", null, e.exp));
-  escs.append(card);
+const CIDADES = [["Brasília", "Brasília"], ["Ceará", "Ceará"], ["Rio de Janeiro", "Rio de Janeiro"], ["São Paulo", "São Paulo"], ["Outros", "Outros lugares e coleções"]];
+CIDADES.forEach(([cid, nome]) => {
+  const bl = el("section", "bloco"); bl.dataset.cid = cid;
+  const grade = el("div", "escs");
+  bl.append(el("h2", null, nome), grade);
+  ESCULTURAS.filter(e => e.cid === cid).forEach(e => {
+    const card = el("div", "esc"); card.id = "esc-" + slug(e.t + "-" + e.art);
+    if (e.img) {
+      const o = { t: e.t, a: e.a, img: e.img, f: e.f, leg: e.art + " — " + [e.t, e.a, e.mat, e.loc].join(" · ") };
+      e._o = o; card.append(figura(o, e.art, [e.art + " · " + e.a, e.mat, e.loc]));
+    } else {
+      card.append(el("div", "sem-img", "Sem imagem verificável"));
+      const cap = el("figcaption");
+      cap.append(el("span", "tit", e.t), el("span", null, e.art + " · " + e.a), el("span", null, e.mat), el("span", null, e.loc));
+      const fa = linkFonte(e.f); if (fa) { const l = el("span", "linha"); l.append(fa); cap.append(l); }
+      card.append(cap);
+    }
+    card.append(el("p", null, e.exp));
+    grade.append(card);
+  });
+  escs.append(bl);
 });
-fichas(document.getElementById("filtro-reg"), [["", "Todas"], ["Brasil", "Brasil"], ["Ceará", "Ceará"]], v => {
-  escs.querySelectorAll(".esc").forEach(c => { c.hidden = !!v && c.dataset.reg !== v; });
+fichas(document.getElementById("filtro-reg"), [["", "Todas"], ...CIDADES.map(([c, n]) => [c, c === "Outros" ? "Outros" : n])], v => {
+  escs.querySelectorAll(".bloco").forEach(b => { b.hidden = !!v && b.dataset.cid !== v; });
 });
 
 /* ---------- Aba: Onde ver ---------- */
@@ -1667,7 +1710,7 @@ SALAS.filter(s => s.id !== "outras").forEach(s => ARTISTAS.push({ nome: s.nome, 
 HOJE.forEach(h => ARTISTAS.push({ nome: h.nome, datas: h.datas, onde: "Ceará hoje", id: "hoje-" + slug(h.nome) }));
 BRASIL.forEach(b => ARTISTAS.push({ nome: b.nome, datas: b.datas, onde: "Brasil · " + UFS[b.uf], id: "br-" + slug(b.nome) }));
 const idArtista = Object.fromEntries(ARTISTAS.map(a => [a.nome, a.id]));
-ESCULTURAS.forEach(e => { if (!idArtista[e.art]) { const id = "esc-" + slug(e.t + "-" + e.art); ARTISTAS.push({ nome: e.art, datas: "Escultor(a)", onde: "Esculturas", id }); idArtista[e.art] = id; } });
+ESCULTURAS.forEach(e => { const nome = e.autor || e.art; if (nome.startsWith("Autoria") || idArtista[nome]) return; const id = "esc-" + slug(e.t + "-" + e.art); ARTISTAS.push({ nome, datas: "Escultor(a)", onde: "Esculturas", id }); idArtista[nome] = id; });
 const OBRAS = [];
 SALAS.forEach(s => s.obras.forEach(o => {
   let art = s.nome;
