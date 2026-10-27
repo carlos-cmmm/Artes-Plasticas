@@ -382,6 +382,18 @@ nav.planta a:hover { transform: translateY(-2px); box-shadow: var(--sombra-c); }
 .painel a:hover { background: var(--cal); }
 .painel a[aria-current="true"] { background: var(--cal); font-weight: 600; }
 footer { margin-bottom: 72px; }
+.museu .mov-cab { max-width: 80ch; }
+.bloco .mov-cab h2 { font-size: clamp(30px, 4.5vw, 44px); line-height: 1.05; }
+.galerias { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+.galeria-card { display: grid; grid-template-rows: auto 1fr; background: var(--papel); border: 1px solid var(--fio); border-radius: var(--raio); overflow: hidden; box-shadow: var(--sombra-c); min-width: 0; scroll-margin-top: calc(var(--topo-h) + 64px); }
+.galeria-img { height: 160px; background: var(--fio); }
+.galeria-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.galeria-txt { padding: 16px 18px; display: grid; gap: 8px; align-content: start; }
+.galeria-txt h3 { font-size: 26px; line-height: 1.1; }
+.galeria-txt p { margin: 0; font-size: 15px; }
+.galeria-txt .end { font: 400 13px/1.5 var(--f-etiqueta); color: var(--sombra); }
+.galeria-txt .art { font-size: 14px; }
+.galeria-txt .linha { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; }
 </style>
 </head>
 <body>
@@ -450,7 +462,7 @@ footer { margin-bottom: 72px; }
     <p class="rotulo">Arte cearense · 1890–2024</p>
     <h2>Grandes artistas cearenses</h2>
     <p>Dezesseis artistas, de Raimundo Cela a Efrain Almeida, em salas pela ordem de nascimento. Cada sala tem a trajetória, as obras principais explicadas, o estilo e os lugares onde a obra pode ser vista. O ponto de partida é o acervo da Pinacoteca do Ceará, aberta em 2022 na Estação das Artes, em Fortaleza.</p>
-    <p>Veja também o <a href="#teatro-jose-de-alencar">especial sobre o Theatro José de Alencar</a> e os <a href="#esculturas">monumentos de Fortaleza</a>, na aba Esculturas.</p>
+    <p>Veja também as <a href="#museus">telas do Mauc e do Espaço Cultural Unifor e as galerias de Fortaleza</a>, o <a href="#teatro-jose-de-alencar">especial sobre o Theatro José de Alencar</a> e os <a href="#esculturas">monumentos de Fortaleza</a>.</p>
   </section>
   <section class="filtros" aria-label="Filtrar por estilo">
     <p class="rotulo">Filtrar por estilo artístico</p>
@@ -502,6 +514,16 @@ footer { margin-bottom: 72px; }
   </section>
   <section class="bloco"><h2>Linha do tempo</h2><ol class="tempo" id="tempo"></ol></section>
   <section class="bloco"><h2>Museus, centros e galerias do Ceará</h2><div class="lugares" id="lugares"></div></section>
+</div>
+
+<!-- ABA: Museus e galerias de Fortaleza -->
+<div class="aba" id="aba-museus" hidden>
+  <section class="aba-intro">
+    <p class="rotulo">Ceará · Fortaleza</p>
+    <h2>Museus e galerias de Fortaleza</h2>
+    <p>As telas mais importantes do Museu de Arte da UFC (Mauc) e do Espaço Cultural Unifor, e as principais galerias da cidade, com endereço, perfil e artistas. Cada obra diz se a fonte confirma que ela pertence ao acervo ou se só foi exposta lá. Endereços, horários e artistas representados pelas galerias mudam com frequência; confira no perfil de cada uma antes de ir.</p>
+  </section>
+  <div id="museus-lista"></div>
 </div>
 
 <!-- ABA: Brasil -->
@@ -1085,6 +1107,18 @@ Object.assign(F, {
   tomieSP: ["Prefeitura de SP — Oitenta Anos da Imigração Japonesa", "https://prefeitura.sp.gov.br/web/cultura/w/patrimonio_historico/adote_obra/4525"],
   cicDN: ["Diário do Nordeste — Estátua do Padre Cícero completa 50 anos", "https://diariodonordeste.verdesmares.com.br/regiao/emblematica-e-imponente-estatua-do-pe-cicero-completa-50-anos-1.2168918"],
   santosDN: ["Diário do Nordeste — Santos gigantes do Ceará", "https://diariodonordeste.verdesmares.com.br/ceara/ceara-tem-pelo-menos-oito-santos-gigantes-de-ate-54-metros-de-altura-conheca-1.3708632"],
+  maucOP60: ["O Povo — 60 anos do Mauc: a ideia de um museu", "https://mais.opovo.com.br/reportagens-especiais/mauc-60-anos-de-historia/2021/06/21/60-anos-do-mauc--a-ideia-de-um-museu.html"],
+  maucSFM: ["O Povo — Exposição no Mauc debate o modernismo", "https://mais.opovo.com.br/jornal/vidaearte/2022/05/02/exposicao-no-mauc-debate-o-modernismo-com-mais-de-300-obras.html"],
+  maucCF: ["Repositório UFC — Estudo da obra Cidade em Festa", "https://repositorio.ufc.br/handle/riufc/58731?mode=full"],
+  uniSemana: ["Diário do Nordeste — Semana de Arte Moderna na Fundação Edson Queiroz", "https://diariodonordeste.verdesmares.com.br/verso/semana-de-arte-moderna-e-homenageada-pela-fundacao-edson-queiroz-em-exposicao-1.3207721"],
+  uniElas: ["Diário do Nordeste — Elas, de Musas a Autoras", "https://diariodonordeste.verdesmares.com.br/verso/unifor-abre-as-comemoracoes-dos-50-anos-com-exposicao-que-destaca-as-mulheres-nas-artes-plasticas-1.3346845"],
+  uniCent: ["Diário do Nordeste — Centelhas em Movimento no Espaço Cultural Unifor", "https://diariodonordeste.verdesmares.com.br/verso/espaco-cultural-unifor-abre-exposicoes-gratuitas-com-mais-de-380-obras-que-focam-na-arte-brasileira-1.3488825"],
+  galOP2: ["O Povo — Quatro galerias de arte em Fortaleza", "https://www.opovo.com.br/vidaearte/guia-vidaearte/2024/10/03/guia-v-a-quatro-galerias-de-arte-que-voce-deve-conhecer-em-fortaleza.html"],
+  galOP3: ["O Povo — Galerias com entrada gratuita", "https://mais.opovo.com.br/jornal/vidaearte/2024/04/18/conheca-quatro-galerias-de-arte-em-fortaleza-com-entrada-gratuita.html"],
+  caveDN: ["Diário do Nordeste — Cave Galeria", "https://diariodonordeste.verdesmares.com.br/verso/novo-espaco-de-arte-em-fortaleza-cave-galeria-destaca-obras-de-35-artistas-contemporaneos-1.3548474"],
+  artesanoPI: ["Portal IN — Artesano Casa Galeria", "https://www.portalin.com.br/notas/roberta-aguiar-tomaz-inaugura-artesano-casa-galeria-em-fortaleza-na-sexta-feira-14/"],
+  espacosOP: ["O Povo — Seis espaços de arte em Fortaleza", "https://www.opovo.com.br/vidaearte/guia-vidaearte/2026/08/04/seis-espacos-para-apreciar-arte-e-cultura-em-fortaleza.html"],
+  museusDN: ["Diário do Nordeste — Museus de Fortaleza", "https://diariodonordeste.verdesmares.com.br/ceara/fortaleza-reune-museus-com-exposicoes-acervos-variados-e-experiencias-culturais-1.3786899"],
   iracDN: ["Diário do Nordeste — Fortaleza é composta por Iracemas", "https://diariodonordeste.verdesmares.com.br/metro/fortaleza-e-composta-por-iracemas-1.1541220"],
   messDN: ["Diário do Nordeste — Estátua de Iracema da Lagoa de Messejana", "https://diariodonordeste.verdesmares.com.br/ceara/estatua-de-iracema-volta-a-jorrar-agua-na-lagoa-da-messejana-apos-mais-de-5-anos-sem-fonte-funcionar-1.3490845"],
   tumDN: ["Diário do Nordeste — Monumentos com restos mortais em Fortaleza", "https://diariodonordeste.verdesmares.com.br/ceara/tumulo-fora-de-cemiterio-conheca-monumentos-em-fortaleza-com-restos-mortais-em-areas-publicas-1.3438192"],
@@ -1254,6 +1288,46 @@ const LUGARES = [
   {nome:"Teatro São José", cidade:"Fortaleza", tipo:"Teatro", desc:"Tem sobre o palco a grande pintura de Vicente Leite, restaurada em 2021.", artistas:["Vicente Leite"]},
   {nome:"Espaço público de Fortaleza", cidade:"Fortaleza", tipo:"Arte pública", desc:"Iracema Guardiã (Zenon), La Femme Bateau, Monumento ao Jangadeiro e outras peças de Sérvulo Esmeraldo, murais do Festival Concreto.", artistas:["Zenon Barreto","Sérvulo Esmeraldo","Narcélio Grud"]},
   {nome:"Salão de Abril", cidade:"Fortaleza", tipo:"Salão de arte da Prefeitura", desc:"Desde 1943, o salão mais antigo da cidade; revelou quase todos os artistas desta página.", artistas:[]}
+];
+
+
+/* Museus de arte de Fortaleza e galerias */
+const MUSEUS_FOR = [
+  { id: "mauc", nome: "Museu de Arte da UFC (Mauc)", onde: "Benfica, Fortaleza · museu universitário", f: "maucOP60",
+    desc: "Fundado em 1961, o Mauc foi o primeiro museu de arte do Ceará. O acervo nasceu de doações e compras feitas com colecionadores como Heloysa Juaçaba e Floriano Teixeira e tem mais de 250 peças de Raimundo Cela, guaches que Chico da Silva pintou na universidade, salas dedicadas a Antonio Bandeira (1968) e Aldemir Martins (1979), gravura, arte popular do Nordeste e até um Rembrandt. Em 2022, a exposição \"Sempre Fomos Modernos\" mostrou mais de 300 obras só do acervo do museu.",
+    obras: [
+      { t: "Cidade em Festa", art: "Antonio Bandeira", a: "1961", tec: "Óleo sobre tela, tríptico", st: "Acervo Mauc", exp: "Pintado no ateliê improvisado do próprio museu, por encomenda para a Faculdade de Direito, sobre o tema da lei e da liberdade. Faz parte do acervo desde a criação do Mauc.", f: "maucCF" },
+      { t: "Jangadas (painel)", art: "Zenon Barreto", a: "1965", tec: "Painel de azulejo, 8,20 × 5,80 m", st: "Acervo Mauc", exp: "O grande painel de jangadas que marca o prédio do museu.", img: "https://mais.opovo.com.br/_midias/jpg/2022/01/15/painelzenonbarreto_mauc-17892911.jpg", f: "zenOP" },
+      { t: "Rendeira", art: "Raimundo Cela", a: "1931", tec: "Óleo sobre madeira, 32 × 40,5 cm", st: "Acervo Mauc, segundo catálogo Almeida & Dale", exp: "A rendeira cearense pintada com a luz forte e a sobriedade que marcam Cela.", img: BL + "AVvXsEhmNmwesyE2ujZqNZ0UTqACAgyEOHgkimGh_Wl1aWRYb091MkMYHa3Aigw_7_gxF45VJQtYJpT4hAmyKLwJOZw-RzTkQhqElBw6YSvr1zXunoeQPMW_EOn-jQvJWm6l9EPtO-CzwdzhrY0/s1600/imgRendeira.jpg", f: "celaFF" },
+      { t: "Cabeça de homem", art: "Raimundo Cela", a: "1931", tec: "Óleo sobre madeira", st: "Acervo Mauc, segundo catálogo Almeida & Dale", exp: "Estudo de rosto do homem do litoral, tema de toda a obra do pintor.", img: BL + "AVvXsEge4S7VSiEX9tGiUFYArCnyg4le7x9Bg8_wD4oK92ut0WCtEhx3Sq9_PcpW7lJcVuz87aTnab0StxHAKkeX-SgGqxabPnkz63aNA0tUK1QbvDvziW6YSn3g5gyMNu2r0um4Ll6DZ-wLM9I/s1600/cabe%C3%A7a+de+homem.jpg", f: "celaFF" },
+      { t: "Maternidade", art: "Raimundo Cela", a: "Data não informada pela fonte", tec: "Pintura", st: "Acervo Mauc (exposta em \"Sempre Fomos Modernos\", 2022)", exp: "Uma das obras de Cela destacadas na exposição que reuniu o acervo modernista do museu.", f: "maucSFM" },
+      { t: "O Cangaceiro", art: "Aldemir Martins", a: "Data não informada pela fonte", tec: "Pintura", st: "Acervo Mauc (exposta em \"Sempre Fomos Modernos\", 2022)", exp: "O cangaceiro, personagem central de Aldemir, que tem sala própria no museu desde 1979.", f: "maucSFM" },
+      { t: "Guaches da residência na UFC", art: "Chico da Silva", a: "Anos 1960", tec: "Guache", st: "Acervo Mauc", exp: "Série comprada pela universidade, feita enquanto Chico da Silva trabalhava no museu: bichos fantásticos, dragões e pássaros em cores intensas.", f: "maucOP60" },
+      { t: "Retrato do reitor Antônio Martins Filho", art: "Oswaldo Teixeira", a: "Antes de 1961", tec: "Óleo", st: "Acervo Mauc", exp: "Uma das duas primeiras obras compradas, antes mesmo da abertura do museu, ao lado de uma cena de pesca de Raimundo Cela.", f: "maucOP60" }
+    ] },
+  { id: "unifor", nome: "Espaço Cultural Unifor", onde: "Av. Washington Soares, 1321, Edson Queiroz · Fundação Edson Queiroz", f: "uniCent",
+    desc: "O museu de arte da Universidade de Fortaleza mostra a coleção da Fundação Edson Queiroz, uma das maiores de arte brasileira do Nordeste, em exposições temporárias de entrada gratuita: \"100 anos da Semana de Arte Moderna em acervos do Ceará\" (2022), \"Elas, de Musas a Autoras\" (2023) e \"Centelhas em Movimento\" (2024), com Tarsila, Anita, Di Cavalcanti, Portinari, Volpi, Brecheret, Lygia Pape, Sérvulo Esmeraldo, Bandeira e Leonilson. O acervo em exposição muda a cada mostra.",
+    obras: [
+      { t: "Figuras (Seresta)", art: "Di Cavalcanti", a: "Década de 1930", tec: "Óleo sobre tela", st: "Exposta no Espaço Cultural Unifor (2022); coleção não informada pela fonte", exp: "A obra-símbolo da exposição dos 100 anos da Semana de 1922, que reuniu acervos do Ceará.", img: DN + "policy:1.3207148:1647894305/Di%20Cavalcanti,%20Figuras%20%28Seresta%29,%20d%C3%A9c.%20de%201930,%20%C3%B3leo%20sobre%20tela%20%281%29.webp?q=0.8&%24p%24q=0ec1140", f: "uniSemana" },
+      { t: "A mulher do cabelo verde", art: "Anita Malfatti", a: "1915", tec: "Óleo sobre tela", st: "Exposta no Espaço Cultural Unifor (2022); coleção não informada pela fonte", exp: "Da fase expressionista de Anita, anterior à exposição de 1917 que abriu caminho para o modernismo.", img: DN + "policy:1.3207145:1647893609/Anita%20Malfatti,%20A%20mulher%20do%20cabelo%20verde,%201915,%20%C3%B3leo%20sobre%20tela.webp?q=0.8&%24p%24q=6c0f23b", f: "uniSemana" },
+      { t: "Folha de Figo", art: "Beatriz Milhazes", a: "Data não informada pela fonte", tec: "Pintura", st: "Acervo Fundação Edson Queiroz", exp: "Arabescos, flores e círculos em camadas de cor, exibida em \"Elas, de Musas a Autoras\".", img: DN + "policy:7.4782410:1678975468/Beatriz-Milhazes-Folha-de-Figo2.webp?q=0.8&%24p%24q=e64928a", f: "uniElas" },
+      { t: "Cidade Gente", art: "Ione Saldanha", a: "Data não informada pela fonte", tec: "Pintura", st: "Acervo Fundação Edson Queiroz", exp: "As casinhas coloridas e geométricas da pintora gaúcha, uma das abstratas mais originais do país.", img: DN + "policy:7.4782415:1678975633/Ione-Saldanha-Cidade-Gente1.webp?q=0.8&%24p%24q=7a165b7", f: "uniElas" },
+      { t: "Chocalho II", art: "Gabriela Machado", a: "Data não informada pela fonte", tec: "Pintura", st: "Acervo Fundação Edson Queiroz", exp: "Pintura gestual de cores fortes, também exibida em \"Elas, de Musas a Autoras\".", img: DN + "policy:7.4782413:1678975531/Gabriela-Machado-Chocalho-II1.webp?q=0.8&%24p%24q=cb49499", f: "uniElas" },
+      { t: "Relicários (série Relicários da Seca)", art: "Zé Tarcísio", a: "2013", tec: "Técnica não informada", st: "Acervo Fundação Edson Queiroz", exp: "Objetos que guardam a memória da seca no sertão cearense.", img: DN + "policy:7.5305955:1767986383/relic%C3%A1rios%20-%20obra%20de%20z%C3%A9%20tarc%C3%ADsio%20-%20funda%C3%A7%C3%A3o%20edson%20queiroz.webp?q=0.8&$p$q=10a12db", f: "zeDN" },
+      { t: "Obras de Sérvulo Esmeraldo em \"Centelhas em Movimento\"", art: "Sérvulo Esmeraldo", a: "Exposição de 2024", tec: "Vista da exposição", st: "Coleção Igor Queiroz Barroso, exposta no Espaço Cultural Unifor", exp: "Cerca de 190 das 400 obras da coleção foram expostas, com curadoria de Paulo Miyada e Tiago Gualberto.", img: DN + "policy:7.4966417:1710289955/expocentelhasemmovimento-unifor1.webp?q=0.8&%24p%24q=ac9fd17", f: "uniCent" }
+    ] }
+];
+const GALERIAS_FOR = [
+  { nome: "Galeria Multiarte", end: "Rua Barbosa de Freitas, 1727, Aldeota", tipo: "Galeria comercial · desde 1987", desc: "Uma das galerias mais antigas da cidade, com curadoria de Max Perlingeiro e unidades também no Rio e em São Paulo. Trabalha com modernos e mestres cearenses e promove cursos e grupos de estudo.", artistas: "Antonio Bandeira, Raimundo Cela, Portinari, Di Cavalcanti, Cícero Dias, Iberê Camargo, Antonio Dias, Rubens Gerchman", hor: "Seg. a sex., 9h às 18h", img: "https://mais.opovo.com.br/_midias/jpg/2024/03/28/995x663/1_servulo_esmeraldo-26154557.jpg", f: "galOP2" },
+  { nome: "Cave Galeria", end: "Rua Pereira Valente, 757, casa 03, Aldeota", tipo: "Galeria de arte contemporânea · criada em 2020, sede desde 2024", desc: "Dirigida por Pedro Diógenes, foca em arte contemporânea nordestina e brasileira. Abriu a sede com \"Delírio Ardente\", com 35 artistas, e leva artistas cearenses a feiras como a SP-Arte.", artistas: "Charles Lessa, Navegante Tremembé, Júlio Jardim, Arivanio, Samuel Macedo, Nicolas Gondim, Sérgio Gurgel", img: DN + "policy:1.3548534:1724190330/galeria.webp?q=0.8&%24p%24q=9dcaa01", f: "caveDN" },
+  { nome: "Galeria Leonardo Leal", end: "Rua Visconde de Mauá, 1515, Aldeota", tipo: "Galeria comercial", desc: "Aposta na produção local e em novos nomes, levando o trabalho do ateliê para o mercado. Avalia portfólios de artistas que a procuram.", artistas: "Cadeh Juaçaba, Arrudas, Beatrice Arraes, Diego de Santos, Gustavo Diogenes, Alice Dote, Mario Sanders, Tetê de Alencar", hor: "Ter. a sex., 12h às 20h", img: "https://mais.opovo.com.br/_midias/jpg/2024/03/28/galerialeonardoleal2-26154529.jpg", f: "galOP2" },
+  { nome: "Expedição Galeria", end: "Rua Osvaldo Cruz, 1346, Aldeota", tipo: "Galeria de arte popular", desc: "Dedicada à arte popular e naïf brasileira, com forte presença do Nordeste.", artistas: "VEIO, Célio Sousa, Alice Mascarenhas, Patrícia Barros, Cornélio, Juão de Fibra, Sil de Capela, João das Alagoas", hor: "Seg. a sex., 10h às 19h; sáb., 9h às 13h", img: "https://mais.opovo.com.br/_midias/jpg/2024/03/28/295x445/1_expedicoes-26155578.jpg", f: "galOP2" },
+  { nome: "Pano de Roda", end: "Rua Padre Valdevino, 2362, Dionísio Torres", tipo: "Galeria e ateliê independente · desde 2016", desc: "Espaço autônomo e experimental, com ateliê aberto por chamadas públicas para artistas em início de carreira; também edita, pesquisa e promove cursos. Entrada gratuita.", artistas: "Eduardo Frota, Célio Celestino, Lana Benigno, Anderson Morais, Camila Albuquerque", img: "https://mais.opovo.com.br/_midias/jpg/2024/03/28/pano__2_-26155553.jpg", f: "galOP3" },
+  { nome: "Galeria Mariana Furlani", end: "Rua Canuto de Aguiar, 1401, Meireles", tipo: "Galeria e escola de arte", desc: "Exposições e cursos de arte, como laboratórios de pintura. Atende com agendamento.", artistas: "Artistas não listados pela fonte", hor: "Seg. a sex., 10h às 19h; sáb., 9h às 13h", f: "galOP2" },
+  { nome: "Artesano Casa Galeria", end: "Meireles", tipo: "Galeria · aberta em 2025", desc: "Casa de dois andares dirigida por Roberta Aguiar Tomaz, com curadoria de Andréa Dall'Olio, cursos e oficinas. Abriu com artistas cearenses contemporâneos e uma mostra de nomes históricos como Bandeira, Barrica, Chico da Silva, Estrigas e Vicente Leite.", artistas: "Nicolas Gondim, Ana Cristina Mendes, Jeová Siebra, Bosco Feitosa, Ingrid Barreira, Sílânia Cavalcante", f: "artesanoPI" },
+  { nome: "Ateliês do Pocinho", end: "Rua do Pocinho, 33, Centro (Palácio Progresso)", tipo: "Coletivo de ateliês", desc: "Coletivo criativo no Palácio Progresso, com ateliês de pintores e fotógrafos, eventos e conversas abertas.", artistas: "Coletivo de artistas residentes", img: "https://www.opovo.com.br/_midias/jpg/2022/12/17/open_estudios_pocinho_39-20569872.jpg", f: "espacosOP" },
+  { nome: "Instituto Sérvulo Esmeraldo", end: "Av. Rogaciano Leite, 300, casa 14, Salinas", tipo: "Instituto sem fins lucrativos", desc: "Guarda obras de Sérvulo Esmeraldo e promove eventos, intercâmbios e visitas guiadas gratuitas.", artistas: "Sérvulo Esmeraldo", f: "espacosOP" },
+  { nome: "Museu da Fotografia Fortaleza", end: "Rua Frederico Borges, 545, Varjota", tipo: "Museu privado · entrada gratuita", desc: "Uma das maiores coleções de fotografia do país, com fotógrafos brasileiros e estrangeiros, exposições temporárias e cursos.", artistas: "Fotógrafos brasileiros e internacionais", hor: "Ter. a dom., 12h às 17h", f: "museusDN" }
 ];
 
 /* Brasil */
@@ -1958,6 +2032,52 @@ fichas(document.getElementById("filtro-periodo"), [["", "Todos"], ...PERIODOS], 
 fichas(document.getElementById("filtro-ling"), [["", "Todas"], ...LINGUAGENS.map(l => [l, l])], v => { filtroBR.l = v; filtrarBR(); });
 montarBR();
 
+/* ---------- Subaba: Museus e galerias de Fortaleza ---------- */
+const museusLista = document.getElementById("museus-lista");
+MUSEUS_FOR.forEach(m => {
+  const sec = el("section", "bloco museu"); sec.id = "museu-" + m.id;
+  const cab = el("div", "mov-cab");
+  cab.append(el("p", "rotulo", m.onde), el("h2", null, m.nome), el("p", null, m.desc));
+  const fa = linkFonte(m.f); if (fa) cab.append(fa);
+  sec.append(cab);
+  const comImg = m.obras.filter(o => o.img), semImg = m.obras.filter(o => !o.img);
+  if (comImg.length) {
+    const parede = el("div", "parede");
+    comImg.forEach(o => { o.leg = o.art + " — " + [o.t, o.a, o.tec, o.st].join(" · "); o.loc = m.nome; parede.append(figura(o, o.art, [o.art + " · " + o.a, o.tec, o.st, o.exp])); });
+    sec.append(parede);
+  }
+  if (semImg.length) {
+    const grade = el("div", "obras-txt");
+    semImg.forEach(o => {
+      const c = el("article");
+      c.append(el("p", "rotulo", o.st + " · sem imagem verificável"), el("h4", null, o.t), el("p", "loc", o.art + " · " + o.a + " · " + o.tec), el("p", null, o.exp));
+      const l = linkFonte(o.f); if (l) c.append(l);
+      grade.append(c);
+    });
+    sec.append(grade);
+  }
+  museusLista.append(sec);
+});
+{
+  const sec = el("section", "bloco"); sec.id = "galerias-fortaleza";
+  const cab = el("div", "mov-cab");
+  cab.append(el("p", "rotulo", "Fortaleza · " + GALERIAS_FOR.length + " endereços"), el("h2", null, "Galerias e espaços de arte"), el("p", null, "As principais galerias comerciais, espaços independentes e institutos da cidade, citados pela imprensa local entre 2024 e 2026. A Pinacoteca do Ceará, o MAC do Dragão do Mar e o CCBNB estão na aba História e lugares."));
+  sec.append(cab);
+  const g = el("div", "galerias");
+  GALERIAS_FOR.forEach(x => {
+    const c = el("article", "galeria-card"); c.id = "gal-" + slug(x.nome);
+    if (x.img) { const fig = el("div", "galeria-img"); const im = el("img"); im.src = x.img; im.alt = x.nome; im.loading = "lazy"; im.referrerPolicy = "no-referrer"; im.addEventListener("error", () => fig.remove()); fig.append(im); c.append(fig); }
+    const t = el("div", "galeria-txt");
+    t.append(el("p", "rotulo", x.tipo), el("h3", null, x.nome), el("p", "end", "📍 " + x.end + (x.hor ? " · " + x.hor : "")), el("p", null, x.desc));
+    const ar = el("p", "art"); ar.append(el("b", null, "Artistas: "), document.createTextNode(x.artistas)); t.append(ar);
+    const mapa = el("a", null, "Abrir no mapa ↗"); mapa.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(x.nome + ", " + x.end + ", Fortaleza"); mapa.target = "_blank"; mapa.rel = "noopener";
+    const linha = el("p", "linha"); linha.append(mapa); const l = linkFonte(x.f); if (l) linha.append(l); t.append(linha);
+    c.append(t); g.append(c);
+  });
+  sec.append(g);
+  museusLista.append(sec);
+}
+
 /* ---------- Aba: Esculturas ---------- */
 const escs = document.getElementById("escs");
 const CIDADES = [["Fortaleza", "Especial Fortaleza"], ["Ceará", "Ceará: interior e coleções"], ["Brasília", "Brasília"], ["Rio de Janeiro", "Rio de Janeiro"], ["São Paulo", "São Paulo"], ["Bahia", "Bahia"], ["Minas Gerais", "Minas Gerais"], ["Outros", "Outros lugares e coleções"]];
@@ -2148,7 +2268,7 @@ document.getElementById("n-obras").textContent = OBRAS.length;
 document.getElementById("n-mov").textContent = MOVIMENTOS.length;
 
 /* Subabas do Ceará */
-const SUB_CE = [["ceara", "Grandes artistas (por estilo)"], ["hoje", "Ceará hoje"], ["estado", "História e lugares"]];
+const SUB_CE = [["ceara", "Grandes artistas (por estilo)"], ["hoje", "Ceará hoje"], ["museus", "Museus e galerias de Fortaleza"], ["estado", "História e lugares"]];
 SUB_CE.forEach(([k]) => {
   const nav = el("nav", "subabas"); nav.setAttribute("aria-label", "Seções do Ceará");
   SUB_CE.forEach(([k2, n]) => { const a = el("a", null, n); a.href = "#" + k2; if (k2 === k) a.setAttribute("aria-current", "true"); nav.append(a); });
@@ -2174,7 +2294,7 @@ const capaCE = (() => { for (const s of SALAS) { const o = s.obras.find(o => o.i
 const cristo = ESCULTURAS.find(e => e.t === "Cristo Redentor");
 const ENTRADAS = [
   ["brasil", "Brasil", "Artistas de todo o país, organizados por movimento ou por estado, com as obras explicadas.", BRASIL.length + " artistas", (achar("Bandeiras e mastros") || {}).img],
-  ["ceara", "Ceará", "Os grandes nomes, a cena de hoje e a história da arte no estado.", (SALAS.length - 1 + HOJE.length) + " artistas", capaCE],
+  ["ceara", "Ceará", "Os grandes nomes, a cena de hoje, o Mauc, a Unifor e as galerias de Fortaleza.", (SALAS.length - 1 + HOJE.length) + " artistas", capaCE],
   ["movimentos", "Movimentos", "Do barroco à arte contemporânea, com cores, obras de exemplo e artistas.", MOVIMENTOS.length + " movimentos", (achar("Urutu") || {}).img],
   ["periodos", "Períodos históricos", "As obras na história do Brasil, da Colônia à Nova República.", ERAS.length + " períodos", (achar("Independência ou Morte") || {}).img],
   ["esculturas", "Esculturas", "Especial Fortaleza e Theatro José de Alencar, Brasília, Rio, São Paulo, Bahia e Minas.", ESCULTURAS.length + " esculturas", cristo && cristo.img],
@@ -2203,9 +2323,9 @@ document.getElementById("hero-busca").addEventListener("submit", e => {
 });
 
 /* ---------- Abas pelo endereço (#brasil, #ceara, ou #id de um artista, obra ou seção) ---------- */
-const ABAS = ["inicio", "brasil", "ceara", "hoje", "estado", "movimentos", "periodos", "esculturas", "catalogo", "onde"];
-const TOPO = { hoje: "ceara", estado: "ceara" };
-const NOME_ABA = { inicio: "Início", brasil: "Brasil", ceara: "Ceará", hoje: "Ceará hoje", estado: "História e lugares", movimentos: "Movimentos artísticos", periodos: "Períodos históricos", esculturas: "Esculturas", catalogo: "Catálogo A–Z", onde: "Onde ver" };
+const ABAS = ["inicio", "brasil", "ceara", "hoje", "museus", "estado", "movimentos", "periodos", "esculturas", "catalogo", "onde"];
+const TOPO = { hoje: "ceara", estado: "ceara", museus: "ceara" };
+const NOME_ABA = { inicio: "Início", brasil: "Brasil", ceara: "Ceará", hoje: "Ceará hoje", museus: "Museus e galerias de Fortaleza", estado: "História e lugares", movimentos: "Movimentos artísticos", periodos: "Períodos históricos", esculturas: "Esculturas", catalogo: "Catálogo A–Z", onde: "Onde ver" };
 const raizEl = document.documentElement, topoEl = document.getElementById("topo");
 const trilha = document.getElementById("trilha"), btnIdx = document.getElementById("btn-indice"), btnTopo = document.getElementById("btn-topo");
 const painel = document.getElementById("painel-indice"), listaIdx = document.getElementById("indice-lista");
